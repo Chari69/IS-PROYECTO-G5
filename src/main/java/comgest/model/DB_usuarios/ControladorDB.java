@@ -1,4 +1,4 @@
-package comgest.model;
+package comgest.model.DB_usuarios;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.lang.reflect.Type;
@@ -16,17 +16,20 @@ public class ControladorDB {
 
     public ControladorDB() {
         this.lista_usuarios = new ArrayList<>();
+        cargarUsuarios();
     }
 
-    public void RegistrarUsuario(String name, String password,String email){
-        String path = "C:\\Users\\proso\\OneDrive\\Desktop\\ProyectoGitIS\\IS-PROYECTO-G5\\src\\main\\java\\comgest\\model";
+    public void RegistrarUsuario(String name, String password,String email,float saldo){
+        //firewalls;
+        verificarCorreoExistente();
+        String path_json = "src\\main\\java\\comgest\\data";
 
         String password_hasheada = BCrypt.hashpw(password, BCrypt.gensalt());
 
         Gson gson = new Gson();
-        lista_usuarios.add(new Usuario(name, password_hasheada, email));
+        lista_usuarios.add(new Usuario(name, password_hasheada, email,saldo));
 
-        try (FileWriter writer = new FileWriter(path+"/DB_usuarios.json")) {
+        try (FileWriter writer = new FileWriter(path_json+"/DB_usuarios.json")) {
             gson.toJson(lista_usuarios, writer); 
             System.out.println("Lista actualizada exitosamente.");
         } catch (IOException e) {
@@ -35,24 +38,20 @@ public class ControladorDB {
     }
 
     public boolean InicioDeSesion(String email,String password_candidata){
-        cargarUsuarios();
-        
         for(Usuario u: lista_usuarios){
             if(u.getEmail().equals(email)){
                 if(BCrypt.checkpw(password_candidata, u.getPassword())){
-                    System.out.println("Bienvenido");
                     return true;
                 }
             }
         }
-        System.out.println("Usuario o contraseña invalidos");
         return false;
     }
 
     public void cargarUsuarios() {
-        String path_json = "C:\\Users\\proso\\OneDrive\\Desktop\\ProyectoGitIS\\IS-PROYECTO-G5\\src\\main\\java\\comgest\\model/DB_usuarios.json";
+        String path_json = "src\\main\\java\\comgest\\data";
 
-        try (FileReader reader = new FileReader(path_json)) {
+        try (FileReader reader = new FileReader(path_json+"/DB_usuarios.json")) {
             // Definimos que el JSON es una lista de objetos Usuario
             Type tipoLista = new TypeToken<ArrayList<Usuario>>(){}.getType();
             
@@ -66,5 +65,9 @@ public class ControladorDB {
             this.lista_usuarios = new ArrayList<>();
             System.out.println("No se encontró el archivo, se creó una lista nueva.");
         }
+    }
+
+    private void verificarCorreoExistente(){
+
     }
 }

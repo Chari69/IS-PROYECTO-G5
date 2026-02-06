@@ -1,4 +1,4 @@
-package comgest.model;
+package comgest.model.DB_usuarios;
 import java.util.UUID;
 //LIBRERIAS USADAS: UUID para generar un id aleatorio e irrepetible para los usuarios
 
@@ -7,11 +7,13 @@ public class Usuario {
     private String password;
     private String email;
     private String id;
+    private float saldo;
 
-    public Usuario(String name, String password,String email){
+    public Usuario(String name, String password,String email, float saldo){
         this.name=name;
         this.password=password;
         this.email=email;
+        this.saldo=saldo;
         this.id = UUID.randomUUID().toString();
     }
 
@@ -20,4 +22,5 @@ public class Usuario {
     public String getPassword() { return password; }
     public String getName() { return name; }
     public String getEmail() { return email; }
+    public float getSaldo() { return saldo; }
 }
