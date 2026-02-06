@@ -16,7 +16,7 @@ public class BotonSimple extends JButton {
         setFocusPainted(false);
         setOpaque(true);
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        setPreferredSize(new Dimension(200, 50));
+        setPreferredSize(new Dimension(250, 50));
         setBackground(new Color(200, 177, 200));
         setForeground(Color.black);
         setFont(new Font("Segoe UI", Font.BOLD, 18));

@@ -1,9 +1,11 @@
 package main.view;
 import javax.swing.*;
 
-
+import main.view.components.BotonPlayHolder;
 import main.view.components.BotonSimple;
-import main.view.components.CampoEtiquetaUI;
+
+// import main.view.components.BotonSimple;
+// import main.view.components.CampoEtiquetaUI;
 import java.awt.event.*;
 import java.awt.*;
 
@@ -20,7 +22,6 @@ public static void crearVentana() {
 JFrame frame = new JFrame("SGCU");
 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 frame.setSize(1280, 720);
-frame.setVisible(true);
 frame.setLocationRelativeTo(null);
 frame.setIconImage(new ImageIcon(LoginGUI.class.getResource("resources/logocompng.png")).getImage());
 frame.setLayout(new GridBagLayout());
@@ -66,23 +67,41 @@ ctextos.add(invis,gdc);
 
 
 //cajatexto NOMBRE USUARIO
+BotonPlayHolder usuarname = new BotonPlayHolder("Usuario");
 
-CampoEtiquetaUI nombreusuario = new CampoEtiquetaUI("Nombre De Usuario");
 gdc.gridx = 0;
 gdc.gridy = 0; // FILA 0 MAS ARRIBA
 gdc.weightx = 1.0;
 gdc.weighty= 0.1;
 gdc.anchor = GridBagConstraints.SOUTH;
-ctextos.add(nombreusuario,gdc);
+ctextos.add(usuarname,gdc);
 
 //caja texto CONTRASEÑA
-CampoEtiquetaUI contraseña = new CampoEtiquetaUI("Contraseña");
+BotonPlayHolder contraseña = new BotonPlayHolder("Contraseña");
 gdc.gridx = 0;
 gdc.gridy = 1; // FILA 1 MAS ABAJO
 gdc.weightx = 1.0;
 gdc.weighty= 0.1;
 gdc.anchor = GridBagConstraints.SOUTH;
 ctextos.add(contraseña,gdc);
+
+//boton de confirmar login
+BotonSimple bttmlogin = new BotonSimple("Loguearse");
+gdc.gridx = 0;
+gdc.gridy = 2; // FILA 1 MAS ABAJO
+gdc.weightx = 1.0;
+gdc.weighty= 0.1;
+gdc.anchor = GridBagConstraints.SOUTH;
+ctextos.add(bttmlogin,gdc);
+
+//Accion del boton de confirmar
+
+bttmlogin.addMouseListener(new MouseAdapter() {
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        JOptionPane.showMessageDialog(null, "Confirmando...");}
+    }
+);
 
 
 //Añadir
@@ -145,7 +164,7 @@ GridBagConstraints gpdc = new GridBagConstraints(); // CREO MI OBJETO PARA CONTR
 gpdc.insets = new Insets(1, 10,1, 10);
 registrogo.setOpaque(false);
 
-//TEXTO
+//TEXTO PREGUNTA
 JLabel lblregtxt = new JLabel("¿No tienes una cuenta?");
 lblregtxt.setForeground(Color.black);
 //TEXTO PARA IR REGISTRO
@@ -179,7 +198,7 @@ gpdc.weightx = 1.0;
 gpdc.weighty= 0.1;
 gpdc.anchor = GridBagConstraints.NORTH;
 registrogo.add(lblreg,gpdc);
-//Agregar texto DE PREGUNTA
+//Agregar texto DE PREGUNTA UN POCO MAS ARRIBA DE LA FUNCION COMO TAL
 gpdc.gridx = 0; 
 gpdc.gridy = 5; // MAS ABAJO
 gpdc.weightx = 1.0;
@@ -197,5 +216,6 @@ panel.add(registrogo,gpdc);
 
 //AÑADIR TODO A LA VENTANA
 frame.add(panel);
+frame.setVisible(true);
   }
 }
