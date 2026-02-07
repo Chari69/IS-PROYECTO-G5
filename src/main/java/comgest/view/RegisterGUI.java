@@ -1,4 +1,5 @@
 package comgest.view;
+import comgest.model.ControladorDB;
 
 import javax.swing.*;
 import comgest.view.components.BotonPlayHolder;
@@ -70,6 +71,7 @@ public class RegisterGUI {
         gdc.weighty = 0;
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(NombreUsuario, gdc);
+
         // Caja para correo
         BotonPlayHolder Correo = new BotonPlayHolder("Correo electrónico");
         gdc.gridx = 0;
@@ -173,12 +175,7 @@ public class RegisterGUI {
         botones.add(bttmreg, gdc);
 
         // Accion del boton de confirmar
-        bttmreg.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(null, "Confirmando...");
-            }
-        });
+        accionBotonRegistro(bttmreg,NombreUsuario,contraseña1,contraseñaconf,Correo);
 
         // CheckBox de terminos y condiciones, lo agrego al panel de botones
 
@@ -199,5 +196,27 @@ public class RegisterGUI {
         frame.add(panel, BorderLayout.CENTER);
         frame.setVisible(true);
 
+    }
+
+    //¡¡¡¡¡¡¡¡¡¡¡ESTA FUNCION ES PRIVADA Y ESTA APARTADA PORQUE ACCEDE DIRECTAMENTE A LA BASE DE DATOS POR FAVOR NO TOCAR!!!!!!!!!!!!!
+
+    private static void accionBotonRegistro(BotonSimple bttmreg, BotonPlayHolder NombreUsuario, BotonPlayHolder contraseña1, BotonPlayHolder contraseñaconf, BotonPlayHolder Correo){
+        bttmreg.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(!contraseña1.getTexto().equals(contraseñaconf.getTexto())){ JOptionPane.showMessageDialog(null, "las contraseñas no coinciden"); return;}
+                if(contraseña1.isEmpty()){ JOptionPane.showMessageDialog(null, "el campo contraseña es obligatorio");return;}
+                if(NombreUsuario.isEmpty()){JOptionPane.showMessageDialog(null, "el campo Nombre de usuario es obligatorio");return;}
+                if(Correo.isEmpty()){JOptionPane.showMessageDialog(null, "el campo Correo es obligatorio");return;}
+                
+                //------------------CONEXION CON LA BASE DE DATOS-----------------//
+                ControladorDB controladorDB = new ControladorDB();
+                if(controladorDB.verificarCorreoExistente(Correo.getTexto())){JOptionPane.showMessageDialog(null, "ya hay una cuenta asociada a este correo");return;}
+                JOptionPane.showMessageDialog(null, "Registrado exitosamente");
+
+                controladorDB.RegistrarUsuario(NombreUsuario.getTexto(), contraseña1.getTexto(), Correo.getTexto(),0);
+                controladorDB = null;
+            }
+        });
     }
 }

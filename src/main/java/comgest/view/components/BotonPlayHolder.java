@@ -83,4 +83,15 @@ public class BotonPlayHolder extends JPanel {
         });
     }
 
+    public String getTexto() {
+        String contenido = Texto.getText();
+        // Si el texto es igual a la sugerencia, devolvemos vacío para no guardar basura
+        if (contenido.equals(textoSugerencia)) {
+            return "";
+        }
+        return contenido;
+    }
+    public boolean isEmpty() {
+        return getTexto().isEmpty();
+    }
 }

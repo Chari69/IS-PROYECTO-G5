@@ -1,4 +1,6 @@
 package comgest.view;
+import comgest.model.ControladorDB;
+import comgest.model.Usuario;
 
 import javax.swing.*;
 
@@ -100,7 +102,19 @@ public class LoginGUI {
         bttmlogin.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(null, "Confirmando...");
+
+
+                //------------------CONEXION CON LA BASE DE DATOS-----------------//
+
+                
+                ControladorDB controladorDB = new ControladorDB();
+                if(controladorDB.InicioDeSesion(usuarname.getTexto(), contraseña.getTexto())){
+                    JOptionPane.showMessageDialog(null, "Bienvenido");
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Usuario o contraseña invalidos");
+                }
+                controladorDB =null;
             }
         });
 

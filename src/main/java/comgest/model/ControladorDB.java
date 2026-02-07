@@ -22,9 +22,6 @@ public class ControladorDB {
     }
 
     public void RegistrarUsuario(String name, String password, String email, float saldo) {
-        // firewalls;
-        verificarCorreoExistente();
-
         String password_hasheada = BCrypt.hashpw(password, BCrypt.gensalt());
 
         Gson gson = new Gson();
@@ -67,7 +64,12 @@ public class ControladorDB {
         }
     }
 
-    private void verificarCorreoExistente() {
-
+    public boolean verificarCorreoExistente(String email) {
+        for (Usuario u : lista_usuarios) {
+            if (u.getEmail().equalsIgnoreCase(email)) {
+                return true; // El correo ya está registrado
+            }
+        }
+        return false;
     }
 }
