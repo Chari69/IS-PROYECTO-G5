@@ -24,7 +24,7 @@ public class LoginGUI {
         frame.setIconImage(new ImageIcon(LoginGUI.class.getResource("resources/logocompng.png")).getImage());
         frame.setLayout(new GridBagLayout());
         frame.setResizable(false);
-        frame.getContentPane().setBackground(new Color(200, 185, 200));
+        frame.getContentPane().setBackground(new Color(228, 228, 255));
 
         // Panel Principal
         JPanel panel = new JPanel();

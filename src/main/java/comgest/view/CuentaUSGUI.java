@@ -1,8 +1,13 @@
 package comgest.view;
 
 import javax.swing.*;
+
+
 import comgest.view.components.BotonSimple;
+import comgest.view.components.Panel_Inferior_PUI;
+
 import java.awt.*;
+import java.awt.event.*;
 
 public class CuentaUSGUI {
     public static void main(String[] args) {
@@ -21,7 +26,7 @@ public class CuentaUSGUI {
         // frame.setLayout(new GridBagLayout());
         frame.setLayout(new BorderLayout(10, 5));
         frame.setResizable(false);
-        frame.getContentPane().setBackground(new Color(200, 185, 200));
+        frame.getContentPane().setBackground(new Color(228, 228, 255));
 
         // Panel Principal
         JPanel panel = new JPanel();
@@ -61,6 +66,7 @@ public class CuentaUSGUI {
         GridBagConstraints gdc = new GridBagConstraints(); // CREO MI OBJETO PARA CONTROLAR
         gdc.insets = new Insets(10, 10, 10, 100);
         botones.setOpaque(false);
+        botones.setBorder(BorderFactory.createEmptyBorder(0, 0, 100, 0)); // PARA SUBIRLOS A LA ALTURA DEL PERFIL
 
         // Boton logout
         BotonSimple logout = new BotonSimple("Logout");
@@ -70,6 +76,15 @@ public class CuentaUSGUI {
         gdc.weighty = 0.0;
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(logout, gdc);
+
+        //Accion del boton logout
+         logout.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JOptionPane.showMessageDialog(null, "Saliendo...");
+            }
+        });
+
         // Boton Ver Saldo
         BotonSimple saldo = new BotonSimple("Ver Saldo");
         gdc.gridx = 0;
@@ -79,25 +94,115 @@ public class CuentaUSGUI {
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(saldo, gdc);
 
-        // Panel Para Foto Perfil
+        //Accion del boton ver saldo
+         saldo.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JOptionPane.showMessageDialog(null, "Saldo Actual:0$");
+            }
+        });
+
+        //PANEL DE LA FOTO DE PERFIL (ESTA CARGADA UNA FOTO GENERICA)
 
         JPanel perfil = new JPanel();
         // perfil.setSize(300,200);
-        perfil.setLayout(new GridLayout());
+        perfil.setLayout(new GridBagLayout());
+        GridBagConstraints gpc = new GridBagConstraints(); // CREO MI OBJETO PARA CONTROLAR
         perfil.setOpaque(false);
-        perfil.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-
-        // imagen de perfil
+        
+        // imagen de perfil (AQUI DEBERIA ESTAR LA FUNCION PARA BUSCAR LA IMAGEN)
         ImageIcon PerfilIcon = new ImageIcon(LoginGUI.class.getResource("resources/perfilgenerico.png"));
         // PARA REDIMENSIONAR
-        Image perfilEsca = PerfilIcon.getImage().getScaledInstance(100, 120, Image.SCALE_SMOOTH);
+        Image perfilEsca = PerfilIcon.getImage().getScaledInstance(120, 140, Image.SCALE_SMOOTH);
         ImageIcon Redimen = new ImageIcon(perfilEsca);
         // CREAMOS EL JLABEL YA CON LA IMAGEN
         JLabel perfilLabel = new JLabel(Redimen);
-        perfil.add(perfilLabel, BorderLayout.CENTER);
+        perfilLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); //BORDE PARA MARCAR LA IMAGEN
+        
+        
+        //TEXTO CON ACCION PARA CAMBIAR LA FOTO
 
+        JLabel lblchangephoto = new JLabel("Cambiar");
+        lblchangephoto.setLayout(new GridBagLayout());
+        lblchangephoto.setForeground(Color.BLUE);
+        lblchangephoto.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        lblchangephoto.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JOptionPane.showMessageDialog(null, "BUSCA LA FOTO");
+            }
+             @Override
+            public void mouseEntered(MouseEvent e) {
+                // Efecto visual: Poner negrita o subrayar al pasar el mouse
+                lblchangephoto.setText("<html><u>Cambiar</u></html>");
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // Quitar el subrayado al salir
+                lblchangephoto.setText("Cambiar");
+            }
+        });
+
+     //AÑADO EL JLABEL PARA CAMBIAR LA FOTO AL PANEL DEL PERFIL
+        gpc.gridx = 0;
+        gpc.gridy = 0;
+        gpc.weightx = 0.0;
+        gpc.weighty = 0.0;
+        gpc.anchor = GridBagConstraints.CENTER;
+        gpc.insets = new Insets(0, 85, 15, 0);
+        perfil.add(lblchangephoto,gpc);
+
+
+      //AÑADIMOS LA IMAGEN AL PANEL DE PERFL
+        gpc.gridx = 0;
+        gpc.gridy = 0;
+        gpc.weightx = 0.0;
+        gpc.weighty = 0.0;
+        gpc.anchor = GridBagConstraints.CENTER;
+        gpc.insets = new Insets(10, 100, 100, 10);
+        gpc.gridheight = 2; // COMO LA IMAGEN ES TAN GRANDE UTILIZAMOS 2 FILAS
+        perfil.add(perfilLabel, gpc);
+
+
+        //Datos del usuario
+
+        //DATO NOMBRE
+        JLabel lblNombre = new JLabel("Juan Pérez");
+        lblNombre.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lblNombre.setForeground(Color.BLACK);
+        gpc.gridx = 1;
+        gpc.gridy = 0;
+        gpc.weightx = 0.0;
+        gpc.weighty = 0.0;
+        gpc.insets = new Insets(50, 0, 0, 0); // MUEVO EL TOP PARA QUE EMPUJE AL DE ABAJO Y QUEDEN EN EL MEDIO
+        gpc.anchor = GridBagConstraints.SOUTHWEST;
+        gpc.gridheight = 1; // LUEGO PARA LOS CAMPOS DE NOMBRE Y REGISTER LO VOLVEMOS A LA NORMALIDAD
+        //AÑADIMOS EL DATO DEL NOMBRE AL PANEL PERFIL
+        perfil.add(lblNombre,gpc);
+
+        //DATO CORREO
+        JLabel lblcorreo = new JLabel("juanpepito@gmail.com");
+        lblcorreo.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lblcorreo.setForeground(Color.BLACK);
+        gpc.gridx = 1;
+        gpc.gridy = 1;
+        gpc.weightx = 0.0;
+        gpc.weighty = 0.0;
+        gpc.insets = new Insets(0, 0, 0, 0);
+        gpc.anchor = GridBagConstraints.NORTHWEST;
+        //AÑADIMOS EL DATO DEL CORREO AL PANEL PERFIL
+        perfil.add(lblcorreo,gpc);
+
+
+        Panel_Inferior_PUI PanelAbajo = new Panel_Inferior_PUI();
+        panel.add(PanelAbajo.getPanel_inf(),BorderLayout.SOUTH);
+
+
+        //AÑADIMOS EL PANEL DE PERFIL Y DE BOTONES AL PANEL PRINCIPAL
         panel.add(perfil, BorderLayout.WEST);
         panel.add(botones, BorderLayout.EAST);
+        //AÑADIMOS EL PANEL PRINCIPAL AL FRAME
         frame.add(panel, BorderLayout.CENTER);
         frame.setVisible(true);
     }
