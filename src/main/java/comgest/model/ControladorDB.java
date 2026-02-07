@@ -1,4 +1,4 @@
-package comgest.model.DB_usuarios;
+package comgest.model;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.lang.reflect.Type;
@@ -13,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class ControladorDB {
     private List<Usuario> lista_usuarios;
+    private String database_path = "src\\main\\java\\comgest\\data";
 
     public ControladorDB() {
         this.lista_usuarios = new ArrayList<>();
@@ -22,14 +23,13 @@ public class ControladorDB {
     public void RegistrarUsuario(String name, String password,String email,float saldo){
         //firewalls;
         verificarCorreoExistente();
-        String path_json = "src\\main\\java\\comgest\\data";
 
         String password_hasheada = BCrypt.hashpw(password, BCrypt.gensalt());
 
         Gson gson = new Gson();
         lista_usuarios.add(new Usuario(name, password_hasheada, email,saldo));
 
-        try (FileWriter writer = new FileWriter(path_json+"/DB_usuarios.json")) {
+        try (FileWriter writer = new FileWriter(database_path+"/DB_usuarios.json")) {
             gson.toJson(lista_usuarios, writer); 
             System.out.println("Lista actualizada exitosamente.");
         } catch (IOException e) {
@@ -49,9 +49,7 @@ public class ControladorDB {
     }
 
     public void cargarUsuarios() {
-        String path_json = "src\\main\\java\\comgest\\data";
-
-        try (FileReader reader = new FileReader(path_json+"/DB_usuarios.json")) {
+        try (FileReader reader = new FileReader(database_path+"/DB_usuarios.json")) {
             // Definimos que el JSON es una lista de objetos Usuario
             Type tipoLista = new TypeToken<ArrayList<Usuario>>(){}.getType();
             

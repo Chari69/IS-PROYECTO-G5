@@ -1,4 +1,4 @@
-package comgest.model.DB_usuarios;
+package comgest.model;
 import java.util.UUID;
 //LIBRERIAS USADAS: UUID para generar un id aleatorio e irrepetible para los usuarios
 
