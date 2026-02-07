@@ -1,4 +1,5 @@
 package comgest.model;
+
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.lang.reflect.Type;
@@ -20,27 +21,27 @@ public class ControladorDB {
         cargarUsuarios();
     }
 
-    public void RegistrarUsuario(String name, String password,String email,float saldo){
-        //firewalls;
+    public void RegistrarUsuario(String name, String password, String email, float saldo) {
+        // firewalls;
         verificarCorreoExistente();
 
         String password_hasheada = BCrypt.hashpw(password, BCrypt.gensalt());
 
         Gson gson = new Gson();
-        lista_usuarios.add(new Usuario(name, password_hasheada, email,saldo));
+        lista_usuarios.add(new Usuario(name, password_hasheada, email, saldo));
 
-        try (FileWriter writer = new FileWriter(database_path+"/DB_usuarios.json")) {
-            gson.toJson(lista_usuarios, writer); 
+        try (FileWriter writer = new FileWriter(database_path + "/DB_usuarios.json")) {
+            gson.toJson(lista_usuarios, writer);
             System.out.println("Lista actualizada exitosamente.");
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 
-    public boolean InicioDeSesion(String email,String password_candidata){
-        for(Usuario u: lista_usuarios){
-            if(u.getEmail().equals(email)){
-                if(BCrypt.checkpw(password_candidata, u.getPassword())){
+    public boolean InicioDeSesion(String email, String password_candidata) {
+        for (Usuario u : lista_usuarios) {
+            if (u.getEmail().equals(email)) {
+                if (BCrypt.checkpw(password_candidata, u.getPassword())) {
                     return true;
                 }
             }
@@ -49,12 +50,13 @@ public class ControladorDB {
     }
 
     public void cargarUsuarios() {
-        try (FileReader reader = new FileReader(database_path+"/DB_usuarios.json")) {
+        try (FileReader reader = new FileReader(database_path + "/DB_usuarios.json")) {
             // Definimos que el JSON es una lista de objetos Usuario
-            Type tipoLista = new TypeToken<ArrayList<Usuario>>(){}.getType();
-            
+            Type tipoLista = new TypeToken<ArrayList<Usuario>>() {
+            }.getType();
+
             this.lista_usuarios = new Gson().fromJson(reader, tipoLista);
-            
+
             if (this.lista_usuarios == null) {
                 this.lista_usuarios = new ArrayList<>();
             }
@@ -65,7 +67,7 @@ public class ControladorDB {
         }
     }
 
-    private void verificarCorreoExistente(){
+    private void verificarCorreoExistente() {
 
     }
 }
