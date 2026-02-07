@@ -1,6 +1,8 @@
-package comgest.view.components;
+package comgest.view;
 
 import javax.swing.*;
+
+import comgest.view.components.Boton_JPanel;
 
 //import javax.swing.border.Border;
 import java.awt.*;
@@ -46,15 +48,19 @@ public class Panel_Inferior_PUI {
             this.setOpaque(false);
             this.setLayout(new BorderLayout());
             this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+            //Botones JPanel
             boton = new Boton_JPanel(ruta);
             Inferior = new JLabel(nombre);
 
             Modificar_Superior();
             Modificar_Inferior();
 
+            
             this.add(boton.getBoton(), BorderLayout.CENTER); // Parte clickeable (más grande)
             this.add(Inferior, BorderLayout.SOUTH); // Texto abajo
 
+            
         }
 
         void Modificar_Superior() {

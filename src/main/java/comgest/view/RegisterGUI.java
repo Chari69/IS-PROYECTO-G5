@@ -3,6 +3,7 @@ package comgest.view;
 import javax.swing.*;
 import comgest.view.components.BotonPlayHolder;
 import comgest.view.components.BotonSimple;
+
 import java.awt.event.*;
 import java.awt.*;
 

@@ -1,6 +1,9 @@
-package comgest.view.components;
+package comgest.view;
 
 import javax.swing.*;
+
+import comgest.view.components.Boton_JPanel;
+
 //import javax.swing.border.Border;
 import java.awt.*;
 
@@ -115,38 +118,74 @@ public class panel_menu_UI extends JPanel {
 
         // Fila3
 
-        JPanel fila3 = new JPanel();
-        fila3.setBackground(Color.WHITE);
-        fila3.setLayout(new BorderLayout());
-        // Todo en una sola línea
-        fila3.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.BLACK, 1, true),
-                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+JPanel fila3 = new JPanel();
+fila3.setBackground(Color.WHITE);
+fila3.setLayout(new BorderLayout());
 
-        // 1. El texto (JTextArea multilínea a la izquierda)
-        JTextArea descArea = new JTextArea(descripcion);
-        descArea.setLineWrap(true);
-        descArea.setWrapStyleWord(true);
-        descArea.setEditable(false);
-        descArea.setOpaque(false);
-        descArea.setFont(new Font("Arial", Font.PLAIN, 12));
+// Borde y padding
+fila3.setBorder(BorderFactory.createCompoundBorder(
+        BorderFactory.createLineBorder(Color.BLACK, 1, true),
+        BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
-        fila3.add(descArea, BorderLayout.CENTER);
+// 1. El texto (Centro)
+JTextArea descArea = new JTextArea(descripcion);
+descArea.setLineWrap(true);
+descArea.setWrapStyleWord(true);
+descArea.setEditable(false);
+descArea.setOpaque(false);
+descArea.setFont(new Font("Arial", Font.PLAIN, 12));
+fila3.add(descArea, BorderLayout.CENTER);
 
-        // 2. El botón (En un panel al SUR)
-        JPanel panelBoton = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        panelBoton.setOpaque(false);
-        JButton boton = new JButton("Ordenar");
-        boton.setBackground(new Color(87, 35, 100));
-        boton.setForeground(Color.WHITE);
-        boton.setPreferredSize(new Dimension(100, 35));
-        boton.setFont(new Font("Arial", Font.BOLD, 16));
-        panelBoton.add(boton);
+// --- Contenedor para la parte Inferior (Sur) ---
 
-        // Añadimos el panel del botón abajo
-        fila3.add(panelBoton, BorderLayout.SOUTH);
+JPanel contenedorInferior = new JPanel(new BorderLayout());
+contenedorInferior.setOpaque(false);
 
-        panel.add(fila3);
+    // 2. Sub-panel IZQUIERDA (Controles de Admin)
+    JPanel panelIzquierda = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
+    panelIzquierda.setOpaque(false);
+    
+    // Configuración de botones admin (Basura y Editar)
+ 
+    Boton_JPanel Basura = new Boton_JPanel("resources/papelera.jpg");
+    Boton_JPanel Editable = new Boton_JPanel("resources/lapiz.png");
+    
+
+    Basura.getBoton().setBackground(Color.WHITE);
+    Editable.getBoton().setBackground(Color.WHITE);
+
+    panelIzquierda.add(Basura.getBoton());
+    panelIzquierda.add(Editable.getBoton());
+   
+
+    //Logica de visibilidad (aqui deben implementar con el controlador cuando se logueen con admin)
+    Boolean admin = true;
+
+    if(!admin){
+        panelIzquierda.setVisible(false);
+    }
+
+
+    // 3. Sub-panel DERECHA (Botón Ordenar)
+    JPanel panelBotonDerecha = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
+    panelBotonDerecha.setOpaque(false);
+    
+    JButton boton = new JButton("Ordenar");
+    boton.setBackground(new Color(87, 35, 100));
+    boton.setForeground(Color.WHITE);
+    boton.setPreferredSize(new Dimension(100, 35));
+    boton.setFont(new Font("Arial", Font.BOLD, 16));
+    panelBotonDerecha.add(boton);
+
+// Unir todo en el contenedor inferior
+contenedorInferior.add(panelIzquierda, BorderLayout.WEST);
+contenedorInferior.add(panelBotonDerecha, BorderLayout.EAST);
+
+// Agregar el contenedor inferior al SUR de la fila 3
+fila3.add(contenedorInferior, BorderLayout.SOUTH);
+
+// Finalmente agregar fila3 al panel principal de la tarjeta
+panel.add(fila3);
 
     }
 }

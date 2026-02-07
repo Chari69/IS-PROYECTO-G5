@@ -27,12 +27,7 @@ public class Boton_JPanel {
         Boton.setPreferredSize(new Dimension(35, 35)); // Un poco más de margen
         Boton.setBackground(colorNormal);
 
-        // Cargamos imagen
-
-        ImageIcon icon = new ImageIcon(Boton_JPanel.class.getResource(Imagen_ruta));
-        Image imgEscalada = icon.getImage().getScaledInstance(25, 20, Image.SCALE_SMOOTH);
-        label = new JLabel(new ImageIcon(imgEscalada));
-        Boton.add(label, BorderLayout.CENTER);
+        CambiarIcono(Imagen_ruta);
 
     }
 
@@ -65,5 +60,12 @@ public class Boton_JPanel {
 
     public JPanel getBoton() {
         return Boton;
+    }
+
+    public void CambiarIcono(String ruta){
+        ImageIcon icon = new ImageIcon(Boton_JPanel.class.getResource("../"+ruta));
+        Image imgEscalada = icon.getImage().getScaledInstance(25, 20, Image.SCALE_SMOOTH);
+        label = new JLabel(new ImageIcon(imgEscalada));
+        Boton.add(label, BorderLayout.CENTER);
     }
 }

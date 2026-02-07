@@ -1,7 +1,10 @@
 package comgest.view;
 
 import javax.swing.*;
+
+//import comgest.view.LoginGUI;
 import comgest.view.components.BotonSimple;
+
 import java.awt.*;
 
 public class CuentaUSGUI {
