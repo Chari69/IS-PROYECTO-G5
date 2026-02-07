@@ -4,9 +4,6 @@ import javax.swing.*;
 //import javax.swing.border.Border;
 import java.awt.*;
 
-
-
-
 public class panel_menu_UI extends JPanel{
 
 
@@ -24,7 +21,7 @@ JPanel Panel_Almuerzo;
     
     //Panel izq Logo
     JPanel panelIzquierdo = new JPanel(new BorderLayout());
-    panelIzquierdo.setBackground(new Color(228, 228, 249)); // Mismo color de fondo que el contenedor
+    panelIzquierdo.setBackground(new Color(228, 228, 255)); // Mismo color de fondo que el contenedor
     panelIzquierdo.setPreferredSize(new Dimension(100, 400));
     
         ImageIcon iconoOriginal = new ImageIcon(panel_menu_UI.class.getResource("resources/IconoPrincipal.jpg"));
@@ -67,7 +64,7 @@ JPanel Panel_Almuerzo;
         //Estética
         panel.setPreferredSize(new Dimension(250, 400));
         panel.setBackground(Color.WHITE);
-        panel.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220), 3, true));
+        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
 
 
         //Componentes internos
@@ -77,7 +74,7 @@ JPanel Panel_Almuerzo;
         JPanel fila1 = new JPanel();
         panel.add(fila1);
         fila1.setBackground(Color.WHITE);
-        fila1.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1)); 
+        fila1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); 
 
             //Configuración de la fila1
                 fila1.setLayout(new GridLayout(2, 1));
@@ -106,7 +103,7 @@ JPanel Panel_Almuerzo;
         // Configurar tamaños para BoxLayout
         fila2.setPreferredSize(new Dimension(300, 150));
         fila2.setMaximumSize(new Dimension(Short.MAX_VALUE, 150));
-        fila2.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        fila2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         
         panel.add(fila2);
 
@@ -127,7 +124,7 @@ JPanel Panel_Almuerzo;
                 fila3.setLayout(new BorderLayout());
                 // Todo en una sola línea
                 fila3.setBorder(BorderFactory.createCompoundBorder(
-                    BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1, true), 
+                    BorderFactory.createLineBorder(Color.BLACK, 1, true), 
                     BorderFactory.createEmptyBorder(10, 10, 10, 10)                 
                 ));
                 
@@ -157,12 +154,8 @@ JPanel Panel_Almuerzo;
                 fila3.add(panelBoton, BorderLayout.SOUTH);
 
                 panel.add(fila3);
-                       
-
+                    
     }
-
-    
-
 }
 
 
