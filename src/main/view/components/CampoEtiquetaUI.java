@@ -42,13 +42,13 @@ public class CampoEtiquetaUI extends JPanel {
         Texto.setBackground(COLOR_BASE);
         Texto.setCaretColor(Color.BLACK); // Color del cursor parpadeante
 
-        // 2.1 BORDES Y PADDING
+        // BORDES Y PADDING
         // Borde negro exterior + Margen interior de 10px para que el texto no se pegue
         Border bordeLinea = BorderFactory.createLineBorder(Color.BLACK, 2);
         Border bordeVacio = BorderFactory.createEmptyBorder(0, 10, 0, 10);
         Texto.setBorder(BorderFactory.createCompoundBorder(bordeLinea, bordeVacio));
 
-        //Eventicos
+        //Eventos
         agregarEventos();
 
         //Añadir

@@ -1,9 +1,7 @@
 package main.view;
 import javax.swing.*;
-
 import main.view.components.BotonPlayHolder;
 import main.view.components.BotonSimple;
-import main.view.components.CampoEtiquetaUI;
 import java.awt.event.*;
 import java.awt.*;
 
@@ -20,7 +18,7 @@ public class RegisterGUI {
 public static void crearVentana() {
 JFrame frame = new JFrame("SGCU");
 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-frame.setSize(1280, 720);
+frame.setSize(800, 600);
 frame.setLocationRelativeTo(null);
 frame.setIconImage(new ImageIcon(LoginGUI.class.getResource("resources/logocompng.png")).getImage());
 frame.setLayout(new BorderLayout(10,5));
@@ -30,7 +28,7 @@ frame.getContentPane().setBackground(new Color(200, 185, 200));
 //Panel Principal
 JPanel panel = new JPanel();
 panel.setLayout(new BorderLayout(10,10));
-panel.setSize(1280,720);
+panel.setSize(800,600);
 panel.setOpaque(false);
 
 //LOGO 

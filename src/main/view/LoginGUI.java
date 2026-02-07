@@ -3,9 +3,6 @@ import javax.swing.*;
 
 import main.view.components.BotonPlayHolder;
 import main.view.components.BotonSimple;
-
-// import main.view.components.BotonSimple;
-// import main.view.components.CampoEtiquetaUI;
 import java.awt.event.*;
 import java.awt.*;
 
@@ -21,7 +18,7 @@ public class LoginGUI {
 public static void crearVentana() {
 JFrame frame = new JFrame("SGCU");
 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-frame.setSize(1280, 720);
+frame.setSize(800, 600);
 frame.setLocationRelativeTo(null);
 frame.setIconImage(new ImageIcon(LoginGUI.class.getResource("resources/logocompng.png")).getImage());
 frame.setLayout(new GridBagLayout());
@@ -30,6 +27,7 @@ frame.getContentPane().setBackground(new Color(200, 185, 200));
 
 //Panel Principal
 JPanel panel = new JPanel();
+panel.setSize(800,600);
 panel.setLayout(new GridBagLayout()); // ESCOJO EL GDL
 GridBagConstraints gdc = new GridBagConstraints(); // CREO MI OBJETO PARA CONTROLAR 
 gdc.insets = new Insets(10, 10,10, 10);
@@ -37,7 +35,11 @@ panel.setOpaque(false);
 
 //LOGO 
 ImageIcon logoIcon = new ImageIcon(LoginGUI.class.getResource("resources/logocompng.png"));
-JLabel imagenlabel = new JLabel(logoIcon);
+//PARA REDIMENSIONAR
+Image imgEscalada = logoIcon.getImage().getScaledInstance(160, 200, Image.SCALE_SMOOTH);
+ImageIcon Redimensionado = new ImageIcon(imgEscalada);
+//CREAMOS EL JLABEL YA CON LA IMAGEN
+JLabel imagenlabel = new JLabel(Redimensionado);
 
 
 
@@ -46,6 +48,8 @@ JLabel imagenlabel = new JLabel(logoIcon);
 //PANEL PARA CAMPOS DE TEXTO
 
 JPanel ctextos = new JPanel();
+// panel.setSize(800,600);
+
 ctextos.setLayout(new GridBagLayout()); // ESCOJO EL GDL
 GridBagConstraints g2dc = new GridBagConstraints(); // CREO MI OBJETO PARA CONTROLAR 
 g2dc.insets = new Insets(10, 10,10, 10);
@@ -60,9 +64,9 @@ invis.setOpaque(false);
 gdc.gridx = 0;
 gdc.gridy = 0;
 gdc.weightx = 0.0;
-gdc.weighty= 0.0;
-gdc.anchor = GridBagConstraints.SOUTH;
-ctextos.add(invis,gdc);
+gdc.weighty= 1.0;
+gdc.anchor = GridBagConstraints.NORTH;
+frame.add(invis,gdc);
 
 
 
