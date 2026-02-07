@@ -22,6 +22,8 @@ public class BotonSimple extends JButton {
         setForeground(Color.black);
         setFont(new Font("Segoe UI", Font.BOLD, 18));
         setCursor(new Cursor(Cursor.HAND_CURSOR));
+        setMaximumSize(new Dimension(250, 50)); // Para evitar que me lo cambian despues
+        setMinimumSize(new Dimension(250, 50));
 
         // Efecto "Hover" (cambio de color al pasar el mouse)
         addMouseListener(new MouseAdapter() {

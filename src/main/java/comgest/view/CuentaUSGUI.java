@@ -9,6 +9,8 @@ import comgest.view.components.Panel_Inferior_PUI;
 import java.awt.*;
 import java.awt.event.*;
 
+
+
 public class CuentaUSGUI {
     public static void main(String[] args) {
 
@@ -18,6 +20,8 @@ public class CuentaUSGUI {
     }
 
     public static void crearVentana() {
+
+        boolean Admin= false; // ROL DE MIENTRAS CAMBIARRRR
         JFrame frame = new JFrame("SGCU");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
@@ -37,7 +41,7 @@ public class CuentaUSGUI {
         // LOGO
         ImageIcon logoIcon = new ImageIcon(LoginGUI.class.getResource("resources/logocompng.png"));
         // PARA REDIMENSIONAR
-        Image imgEscalada = logoIcon.getImage().getScaledInstance(100, 120, Image.SCALE_SMOOTH);
+        Image imgEscalada = logoIcon.getImage().getScaledInstance(80, 100, Image.SCALE_SMOOTH);
         ImageIcon Redimensionado = new ImageIcon(imgEscalada);
         // CREAMOS EL JLABEL YA CON LA IMAGEN
         JLabel imagenlabel = new JLabel(Redimensionado);
@@ -51,14 +55,11 @@ public class CuentaUSGUI {
         // Agregar el panel imagen al panel principal
         panel.add(panelim, BorderLayout.NORTH);
 
-        // //Panel fantasma para tener simetria por la derecha.
-        JPanel fant = new JPanel();
-        fant.setLayout(new BorderLayout(10, 10));
-        fant.setOpaque(false);
-        fant.setPreferredSize(new Dimension(100, 120)); // MISMO TAMAÑO QUE LA IMAGEN
-        panel.add(fant, BorderLayout.EAST);
 
         // Panel Para Botones
+
+
+        //Botones para todos los roles
 
         JPanel botones = new JPanel();
         botones.setSize(800, 600);
@@ -84,7 +85,7 @@ public class CuentaUSGUI {
                 JOptionPane.showMessageDialog(null, "Saliendo...");
             }
         });
-
+       
         // Boton Ver Saldo
         BotonSimple saldo = new BotonSimple("Ver Saldo");
         gdc.gridx = 0;
@@ -101,6 +102,44 @@ public class CuentaUSGUI {
                 JOptionPane.showMessageDialog(null, "Saldo Actual:0$");
             }
         });
+
+        //Botones para admin
+        if(Admin)
+        {
+
+            BotonSimple AdministrarMenu= new BotonSimple("Administrar Menù");
+        gdc.gridx = 0;
+        gdc.gridy = 2;
+        gdc.weightx = 0.0;
+        gdc.weighty = 0.0;
+        gdc.anchor = GridBagConstraints.CENTER;
+        botones.add(AdministrarMenu, gdc);
+
+        //Accion del boton ver saldo
+         AdministrarMenu.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JOptionPane.showMessageDialog(null, "Cargando Menu...");
+            }
+        });
+
+        BotonSimple CCB= new BotonSimple("CCB");
+        gdc.gridx = 0;
+        gdc.gridy = 3;
+        gdc.weightx = 0.0;
+        gdc.weighty = 0.0;
+        gdc.anchor = GridBagConstraints.CENTER;
+        botones.add(CCB, gdc);
+
+        //Accion del boton ver saldo
+         CCB.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JOptionPane.showMessageDialog(null, "Cargando...");
+            }
+        });
+
+        }
 
         //PANEL DE LA FOTO DE PERFIL (ESTA CARGADA UNA FOTO GENERICA)
 
@@ -161,7 +200,7 @@ public class CuentaUSGUI {
         gpc.weighty = 0.0;
         gpc.anchor = GridBagConstraints.CENTER;
         gpc.insets = new Insets(10, 100, 100, 10);
-        gpc.gridheight = 2; // COMO LA IMAGEN ES TAN GRANDE UTILIZAMOS 2 FILAS
+        gpc.gridheight = 3; // COMO LA IMAGEN ES TAN GRANDE UTILIZAMOS 3 FILAS
         perfil.add(perfilLabel, gpc);
 
 
@@ -176,7 +215,7 @@ public class CuentaUSGUI {
         gpc.weightx = 0.0;
         gpc.weighty = 0.0;
         gpc.insets = new Insets(50, 0, 0, 0); // MUEVO EL TOP PARA QUE EMPUJE AL DE ABAJO Y QUEDEN EN EL MEDIO
-        gpc.anchor = GridBagConstraints.SOUTHWEST;
+        gpc.anchor = GridBagConstraints.NORTHWEST;
         gpc.gridheight = 1; // LUEGO PARA LOS CAMPOS DE NOMBRE Y REGISTER LO VOLVEMOS A LA NORMALIDAD
         //AÑADIMOS EL DATO DEL NOMBRE AL PANEL PERFIL
         perfil.add(lblNombre,gpc);
@@ -194,7 +233,28 @@ public class CuentaUSGUI {
         //AÑADIMOS EL DATO DEL CORREO AL PANEL PERFIL
         perfil.add(lblcorreo,gpc);
 
+        //DATO ROL
+        String rolsito=" ";
+        if(Admin){
+            rolsito = "Admininistrador";
+        }
+        else {
+            rolsito = "Usuario";
+        }
+        JLabel lblrol = new JLabel(rolsito);
+        lblrol.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lblrol.setForeground(Color.BLACK);
+        gpc.gridx = 1;
+        gpc.gridy = 2;
+        gpc.weightx = 0.0;
+        gpc.weighty = 0.0;
+        gpc.insets = new Insets(0, 0, 0, 0);
+        gpc.anchor = GridBagConstraints.NORTHWEST;
+        //AÑADIMOS EL DATO DEL ROL AL PANEL PERFIL
+        perfil.add(lblrol,gpc);
 
+
+       //AÑADIMOS EL PANEL INFERIOR
         Panel_Inferior_PUI PanelAbajo = new Panel_Inferior_PUI();
         panel.add(PanelAbajo.getPanel_inf(),BorderLayout.SOUTH);
 
