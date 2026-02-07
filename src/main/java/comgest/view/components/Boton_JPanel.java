@@ -1,11 +1,12 @@
-package main.view.Components;
+package comgest.view.components;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Boton_JPanel {
-    
+
     JPanel Boton;
     String Imagen_ruta;
     JLabel label;
@@ -26,16 +27,14 @@ public class Boton_JPanel {
         Boton.setPreferredSize(new Dimension(35, 35)); // Un poco más de margen
         Boton.setBackground(colorNormal);
 
-        // Cargamos imagen 
-      
-            ImageIcon icon = new ImageIcon(Boton_JPanel.class.getResource(Imagen_ruta));
-            Image imgEscalada = icon.getImage().getScaledInstance(25, 20, Image.SCALE_SMOOTH);
-            label = new JLabel(new ImageIcon(imgEscalada));
-            Boton.add(label, BorderLayout.CENTER);
-            
+        // Cargamos imagen
+
+        ImageIcon icon = new ImageIcon(Boton_JPanel.class.getResource(Imagen_ruta));
+        Image imgEscalada = icon.getImage().getScaledInstance(25, 20, Image.SCALE_SMOOTH);
+        label = new JLabel(new ImageIcon(imgEscalada));
+        Boton.add(label, BorderLayout.CENTER);
 
     }
-        
 
     void AnimarBoton() {
         Boton.setCursor(new Cursor(Cursor.HAND_CURSOR));

@@ -1,10 +1,9 @@
-package main.view.components;
+package comgest.view.components;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
-
 
 public class CampoEtiquetaUI extends JPanel {
 
@@ -23,18 +22,18 @@ public class CampoEtiquetaUI extends JPanel {
     public CampoEtiquetaUI(String titulo) {
         // Configuración del Panel Contenedor
         setLayout(new BorderLayout(0, 8)); // Distancia vertical entre el titulo y el campo.
-        setOpaque(false); //Transparente para que no me cubra todo.
+        setOpaque(false); // Transparente para que no me cubra todo.
         initComponentes(titulo);
     }
 
     private void initComponentes(String titulo) {
-      //TEXTO DE ARRIBA
+        // TEXTO DE ARRIBA
         etiqueta = new JLabel(titulo);
         etiqueta.setFont(FUENTE_TITULO);
         etiqueta.setForeground(COLOR_TEXTO);
         etiqueta.setHorizontalAlignment(SwingConstants.LEFT);
 
-        //CAMPO DE TEXTO
+        // CAMPO DE TEXTO
         Texto = new JTextField();
         Texto.setPreferredSize(new Dimension(250, 50));
         Texto.setFont(FUENTE_CAMPO);
@@ -48,17 +47,17 @@ public class CampoEtiquetaUI extends JPanel {
         Border bordeVacio = BorderFactory.createEmptyBorder(0, 10, 0, 10);
         Texto.setBorder(BorderFactory.createCompoundBorder(bordeLinea, bordeVacio));
 
-        //Eventos
+        // Eventos
         agregarEventos();
 
-        //Añadir
+        // Añadir
         add(etiqueta, BorderLayout.NORTH); // Título arriba
         add(Texto, BorderLayout.CENTER); // Caja abajo
     }
 
     private void agregarEventos() {
         // Cambio de color al pasar el mouse
-      Texto.addMouseListener(new MouseAdapter() {
+        Texto.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 if (!Texto.isFocusOwner()) { // Solo si no estás escribiendo
@@ -69,13 +68,13 @@ public class CampoEtiquetaUI extends JPanel {
             @Override
             public void mouseExited(MouseEvent e) {
                 if (!Texto.isFocusOwner()) {
-                   Texto.setBackground(COLOR_BASE);
+                    Texto.setBackground(COLOR_BASE);
                 }
             }
         });
 
         // Cambio de color al hacer clic para escribir
-       Texto.addFocusListener(new FocusAdapter() {
+        Texto.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
                 Texto.setBackground(COLOR_BLANCO); // Se pone blanco para escribir
@@ -83,7 +82,7 @@ public class CampoEtiquetaUI extends JPanel {
 
             @Override
             public void focusLost(FocusEvent e) {
-               Texto.setBackground(COLOR_BASE); // Vuelve al color base
+                Texto.setBackground(COLOR_BASE); // Vuelve al color base
             }
         });
     }

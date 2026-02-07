@@ -1,4 +1,4 @@
-package main.view.components;
+package comgest.view.components;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -6,7 +6,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class BotonPlayHolder extends JPanel {
-
 
     private JTextField Texto;
 
@@ -83,6 +82,5 @@ public class BotonPlayHolder extends JPanel {
             }
         });
     }
-
 
 }

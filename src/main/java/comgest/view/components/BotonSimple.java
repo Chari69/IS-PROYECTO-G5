@@ -1,4 +1,5 @@
-package main.view.components;
+package comgest.view.components;
+
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
@@ -7,7 +8,7 @@ public class BotonSimple extends JButton {
 
     public BotonSimple(String texto) {
         super(texto); // Llama al constructor original de JButton
-         configurarEstilo();
+        configurarEstilo();
     }
 
     private void configurarEstilo() {

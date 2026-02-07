@@ -9,8 +9,7 @@ public class MenuItem {
     private String imgPath;
     private String id;
 
-
-    public MenuItem(String name, String descripcion, double precio , String imgPath) {
+    public MenuItem(String name, String descripcion, double precio, String imgPath) {
         this.name = name;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -22,11 +21,16 @@ public class MenuItem {
     public String getName() {
         return name;
     }
+
     public String getDescripcion() {
         return descripcion;
     }
+
     public String getImgPath() {
         return imgPath;
     }
-    public double getPrecio() { return precio; }
+
+    public double getPrecio() {
+        return precio;
+    }
 }

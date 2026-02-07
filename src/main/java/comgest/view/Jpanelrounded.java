@@ -6,12 +6,15 @@ import java.awt.geom.RoundRectangle2D;
 
 public class Jpanelrounded extends JPanel {
     private int radioEsquina = 20;
+
     public Jpanelrounded() {
         setOpaque(false); // Necesario para que el fondo sea transparente
     }
-    public void SetRounded(int radio){
+
+    public void SetRounded(int radio) {
         this.radioEsquina = radio;
     }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
