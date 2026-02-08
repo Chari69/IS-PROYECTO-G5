@@ -147,7 +147,7 @@ public static void crearVentana() {
 
         //AÑADIMOS EL PANEL INFERIOR
         Panel_Inferior_PUI PanelAbajo = new Panel_Inferior_PUI();
-        frame.add(PanelAbajo.getPanel_inf(),BorderLayout.SOUTH);
+        frame.add(PanelAbajo,BorderLayout.SOUTH);
 
 
         // Agregar el panel botones al principal

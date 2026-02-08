@@ -105,7 +105,7 @@ public class LoginGUI {
 
                 
                 ControladorDB controladorDB = new ControladorDB();
-                if(controladorDB.InicioDeSesion(usuarname.getTexto(), contraseña.getTexto())){
+                if(controladorDB.InicioDeSesion(usurnname.getTexto(), contraseña.getTexto())){
                     JOptionPane.showMessageDialog(null, "Bienvenido");
                 }
                 else{

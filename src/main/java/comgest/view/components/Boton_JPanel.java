@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Boton_JPanel {
+public class Boton_JPanel{
 
     JPanel Boton;
     JLabel label;
@@ -22,6 +22,7 @@ public class Boton_JPanel {
         Boton.setLayout(new BorderLayout());
         Boton.setPreferredSize(new Dimension(35, 35)); 
         Boton.setBackground(colorNormal);
+        Boton.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         CambiarIcono(Imagen_ruta);
         AnimarBoton(); 
     }
@@ -76,7 +77,7 @@ public class Boton_JPanel {
     public void CambiarIcono(String ruta){
 
         ImageIcon icon = new ImageIcon(Boton_JPanel.class.getResource("../"+ruta));
-        Image imgEscalada = icon.getImage().getScaledInstance(x, y, Image.SCALE_SMOOTH);
+        Image imgEscalada = icon.getImage().getScaledInstance(x+10, y, Image.SCALE_SMOOTH);
         label = new JLabel(new ImageIcon(imgEscalada));
         label.setOpaque(false); 
         Boton.add(label, BorderLayout.CENTER);

@@ -69,7 +69,7 @@ public class Panel_Inferior_PUI extends JPanel{
 
         void Modificar_Inferior() {
 
-            Inferior.setFont(new Font("Arial", Font.PLAIN, 20));
+            Inferior.setFont(new Font("Segoe UI", Font.BOLD, 20));
             Inferior.setOpaque(true);
             Inferior.setBackground(new Color(228, 228, 255));
 
