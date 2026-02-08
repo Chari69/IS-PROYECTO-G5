@@ -16,10 +16,13 @@ public class CalculoCCBGUI {
         });
     }
 
-    public static void crearVentana() {
+    public static JPanel crearVentana() {
 
-        // Frame
-        JFrame frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
+        // // Frame
+        // JFrame frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
+
+
+
 
         // Panel Principal
         JPanel panel = new JPanel();
@@ -49,7 +52,7 @@ public class CalculoCCBGUI {
         fant.setLayout(new BorderLayout(10, 10));
         fant.setOpaque(false);
         fant.setPreferredSize(new Dimension(160, 200)); // MISMO TAMAÑO QUE LA IMAGEN
-        frame.add(fant, BorderLayout.EAST);
+        panel.add(fant, BorderLayout.EAST);
 
         // Agregar Panel Para Campos de texto
         JPanel botones = new JPanel();
@@ -141,13 +144,14 @@ public class CalculoCCBGUI {
 
         // AÑADIMOS EL PANEL INFERIOR
         Panel_Inferior_PUI PanelAbajo = new Panel_Inferior_PUI();
-        frame.add(PanelAbajo, BorderLayout.SOUTH);
+        panel.add(PanelAbajo, BorderLayout.SOUTH);
 
         // Agregar el panel botones al principal
         panel.add(botones, BorderLayout.CENTER);
         // Agregar el panel principal al frame
-        frame.add(panel, BorderLayout.CENTER);
-        frame.setVisible(true);
+        // frame.add(panel, BorderLayout.CENTER);
+        // frame.setVisible(true);
+        return panel;
 
     }
 }

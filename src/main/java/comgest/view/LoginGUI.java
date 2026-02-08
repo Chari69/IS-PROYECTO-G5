@@ -20,9 +20,10 @@ public class LoginGUI {
         });
     }
 
-    public static void crearVentana() {
+    public static JPanel crearVentana() {
         // Frame
-        JFrame frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
+    //    JFrame frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
+    
 
         // Panel Principal
         JPanel panel = new JPanel();
@@ -63,8 +64,8 @@ public class LoginGUI {
         gdc.weightx = 0.0;
         gdc.weighty = 1.0;
         gdc.anchor = GridBagConstraints.NORTH;
-        // frame.add(invis, gdc);
-        frame.add(invis, BorderLayout.NORTH);
+        // frame.add(invis, );
+        panel.add(invis, gdc);
 
         // cajatexto NOMBRE USUARIO
         BotonPlayHolder cedulita = new BotonPlayHolder("Cédula Ej 13322122");
@@ -221,7 +222,8 @@ public class LoginGUI {
         panel.add(registrogo, gpdc);
 
         // AÑADIR TODO A LA VENTANA
-        frame.add(panel, BorderLayout.CENTER);
-        frame.setVisible(true);
+        // frame.add(panel, BorderLayout.CENTER);
+        // frame.setVisible(true);
+        return panel;
     }
 }

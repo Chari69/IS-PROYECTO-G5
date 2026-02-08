@@ -26,7 +26,7 @@ public class RegisterGUI {
             RegisterGUI view = new RegisterGUI();
             RegisterController controller = new RegisterController(view);
             view.asignarControlador(controller);
-            view.mostrar();
+           
         });
     }
 
@@ -34,9 +34,10 @@ public class RegisterGUI {
         crearVentana();
     }
 
-    public void crearVentana() {
-        // Frame
-        frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
+    public JPanel crearVentana() {
+        // // Frame
+        // frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
+
 
         // Panel Principal
         JPanel panel = new JPanel();
@@ -66,7 +67,8 @@ public class RegisterGUI {
         fant.setLayout(new BorderLayout(10, 10));
         fant.setOpaque(false);
         fant.setPreferredSize(new Dimension(160, 200)); // MISMO TAMAÑO QUE LA IMAGEN
-        frame.add(fant, BorderLayout.EAST);
+        // frame.add(fant, BorderLayout.EAST);
+        panel.add(fant,BorderLayout.EAST);
 
         // Agregar Panel Para Campos de texto
         JPanel botones = new JPanel();
@@ -209,8 +211,9 @@ public class RegisterGUI {
         // Agregar el panel botones al principal
         panel.add(botones, BorderLayout.CENTER);
         // Agregar el panel principal al frame
-        frame.add(panel, BorderLayout.CENTER);
-        frame.setVisible(false);
+        // frame.add(panel, BorderLayout.CENTER);
+        // frame.setVisible(false);
+        return panel;
     }
 
     public void asignarControlador(RegisterController registerController) {
@@ -218,9 +221,7 @@ public class RegisterGUI {
         bttmreg.addActionListener(registerController);
     }
 
-    public void mostrar() {
-        frame.setVisible(true);
-    }
+  
 
     public String getNombreUsuario() {
         return NombreUsuario.getTexto();

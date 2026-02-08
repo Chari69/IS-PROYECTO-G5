@@ -17,11 +17,13 @@ public class CuentaUSGUI {
         });
     }
 
-    public static void crearVentana() {
+    public static JPanel crearVentana() {
 
         boolean Admin = true; // ROL DE MIENTRAS PARA CAMBIAR
         // Frame
-        JFrame frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
+        // JFrame frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
+
+
 
         // Panel Principal
         JPanel panel = new JPanel();
@@ -262,8 +264,9 @@ public class CuentaUSGUI {
         panel.add(perfil, BorderLayout.WEST);
         panel.add(botones, BorderLayout.EAST);
         // AÑADIMOS EL PANEL PRINCIPAL AL FRAME
-        frame.add(panel, BorderLayout.CENTER);
-        frame.setVisible(true);
+        // frame.add(panel, BorderLayout.CENTER);
+        // frame.setVisible(true);
+        return panel;
     }
 
 }
