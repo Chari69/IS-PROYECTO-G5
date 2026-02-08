@@ -12,8 +12,6 @@ import java.awt.*;
 
 public class panel_menu_UI extends JPanel {
 
-    boolean LoginActive = true;
-
     JPanel Panel_Desayuno;
     JPanel Panel_Almuerzo;
 
@@ -99,9 +97,23 @@ public class panel_menu_UI extends JPanel {
         gbc.weightx = 0.1;
         this.add(panelDerecho, gbc);
 
+    }
 
-        //VISIBILIDAD DEL PANEL PRINCIPAL
-        this.setVisible(LoginActive);
+    
+    public static JPanel CrearVentana(JFrame Leonardo){
+        
+        JPanel vp = new JPanel(new BorderLayout());
+
+        Panel_Inferior_PUI panel = new Panel_Inferior_PUI();
+        vp.add(panel, BorderLayout.SOUTH);
+        panel_menu_UI panel_menu = new panel_menu_UI();
+        vp.add(panel_menu, BorderLayout.CENTER);
+        vp.revalidate();
+        vp.repaint();
+        Leonardo.add(vp);
+
+        return vp;
+        
     }
 
     void configurarTarjeta(JPanel panel, String titulo, String descripcion, String Horario, String imagenRuta, double precio) {
@@ -224,15 +236,6 @@ public class panel_menu_UI extends JPanel {
 
     panelIzquierda.add(Basura.getBoton());
     panelIzquierda.add(Editable.getBoton());
-   
-
-    //Logica de visibilidad (aqui deben implementar con el controlador cuando se logueen con admin)
-    Boolean admin = true;
-
-    if(!admin){
-        panelIzquierda.setVisible(false);
-    }
-
 
     JPanel panelBotonDerecha = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
     panelBotonDerecha.setOpaque(false);
