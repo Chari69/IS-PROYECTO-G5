@@ -2,15 +2,15 @@ package comgest.view;
 
 import javax.swing.*;
 
-import comgest.view.Utils.Estilo_Boton_Sistema;
+import comgest.view.Utils.JTextArea_Personalizado;
+import comgest.view.Utils.JTextPane_Personalizado;
+import comgest.view.components.BotonSimple;
 import comgest.view.components.Boton_JPanel;
 
 //import javax.swing.border.Border;
 import java.awt.*;
 
 public class panel_menu_UI extends JPanel {
-
-    boolean LoginActive = true;
 
     JPanel Panel_Desayuno;
     JPanel Panel_Almuerzo;
@@ -49,7 +49,7 @@ public class panel_menu_UI extends JPanel {
        
         //TARJETAS
 
-        
+        gbc.fill = GridBagConstraints.NONE;
         gbc.gridx = 1;
         gbc.weightx = 0.4;
         Panel_Agregar = new JPanel();
@@ -64,10 +64,10 @@ public class panel_menu_UI extends JPanel {
         configurarTarjeta(Panel_Agregar2);
         this.add(Panel_Agregar2, gbc);
          //VISIBILIDAD DEL BOTON AGREGAR2
-        Panel_Agregar2.setVisible(false);
+        Panel_Agregar2.setVisible(true);
 
 
-
+         gbc.fill = GridBagConstraints.BOTH;
        // Tarjeta 1: Desayuno
         gbc.gridx = 1;
         gbc.weightx = 0.4;
@@ -87,7 +87,7 @@ public class panel_menu_UI extends JPanel {
         this.add(Panel_Almuerzo, gbc);
 
         //VISIBILIDAD DEL PANEL ALMUERZO
-        Panel_Almuerzo.setVisible(true);
+        Panel_Almuerzo.setVisible(false);
 
         //panel derecho
         JPanel panelDerecho = new JPanel(new BorderLayout());
@@ -97,9 +97,23 @@ public class panel_menu_UI extends JPanel {
         gbc.weightx = 0.1;
         this.add(panelDerecho, gbc);
 
+    }
 
-        //VISIBILIDAD DEL PANEL PRINCIPAL
-        this.setVisible(LoginActive);
+    
+    public static JPanel CrearVentana(JFrame Leonardo){
+        
+        JPanel vp = new JPanel(new BorderLayout());
+
+        Panel_Inferior_PUI panel = new Panel_Inferior_PUI();
+        vp.add(panel, BorderLayout.SOUTH);
+        panel_menu_UI panel_menu = new panel_menu_UI();
+        vp.add(panel_menu, BorderLayout.CENTER);
+        vp.revalidate();
+        vp.repaint();
+        Leonardo.add(vp);
+
+        return vp;
+        
     }
 
     void configurarTarjeta(JPanel panel, String titulo, String descripcion, String Horario, String imagenRuta, double precio) {
@@ -122,19 +136,27 @@ public class panel_menu_UI extends JPanel {
 
         // Configuración de la fila1
         fila1.setLayout(new GridLayout(2, 1));
-        // Labels
-        JLabel tituloLabel = new JLabel(titulo, JLabel.CENTER);
-        tituloLabel.setFont(new Font("Arial", Font.BOLD, 25));
-        tituloLabel.setAlignmentY(Component.LEFT_ALIGNMENT);
-        tituloLabel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        JLabel tituLabel2 = new JLabel(Horario, JLabel.CENTER);
-        tituLabel2.setFont(new Font("Arial", Font.ITALIC, 16));
-        tituLabel2.setAlignmentY(Component.LEFT_ALIGNMENT);
+        // Labels
+        JTextPane tituloCentrado = new JTextPane();
+        JTextPane_Personalizado.Centrar(tituloCentrado, titulo);
+        tituloCentrado.setEditable(false); //ESTO ES PARA EDITAR EL TITULO
+        tituloCentrado.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        tituloCentrado.setBorder(BorderFactory.createMatteBorder(0,0,2,0, Color.BLACK));
+        tituloCentrado.setBackground(new Color(200, 177, 200));
+        fila1.add(tituloCentrado);
+
+
+
+
+        JTextArea tituloLabel2 = new JTextArea(Horario);
+        JTextArea_Personalizado.AplicarPersonalización(tituloLabel2);
+        tituloLabel2.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        
 
         // Agregar los labels a la fila1
-        fila1.add(tituloLabel);
-        fila1.add(tituLabel2);
+        fila1.add(tituloCentrado);
+        fila1.add(tituloLabel2);
 
 
 
@@ -163,9 +185,10 @@ public class panel_menu_UI extends JPanel {
 
 
         //BOTON CAMBIAR IMAGEN
-        JButton hola = new JButton("Cambiar");
-        Estilo_Boton_Sistema.aplicarEstiloPrincipal(hola);
-        hola.setFont(new Font("Arial", Font.BOLD,11));
+        BotonSimple hola = new BotonSimple("Cambiar");
+        hola.setPreferredSize(new Dimension(60,30));
+        hola.setFont(new Font("Segoe UI", Font.BOLD, 13));
+
         JPanel contenedor2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         contenedor2.setOpaque(false);
         contenedor2.add(hola);
@@ -188,15 +211,11 @@ public class panel_menu_UI extends JPanel {
 
         // 1. El texto (Centro)
         JTextArea descArea = new JTextArea(descripcion);
-        descArea.setLineWrap(true);
-        descArea.setWrapStyleWord(true);
-        descArea.setEditable(false);
-        descArea.setOpaque(false);
-        descArea.setFont(new Font("Arial", Font.PLAIN, 13));
+        JTextArea_Personalizado.AplicarPersonalización(descArea);
         fila3.add(descArea, BorderLayout.CENTER);
 
 
-        // --- Contenedor para la parte Inferior (Sur) ---
+        // Contenedor para la parte Inferior
 
         JPanel contenedorInferior = new JPanel(new BorderLayout());
         contenedorInferior.setOpaque(false);
@@ -210,21 +229,13 @@ public class panel_menu_UI extends JPanel {
     Boton_JPanel Basura = new Boton_JPanel("resources/papelera.jpg");
     Boton_JPanel Editable = new Boton_JPanel("resources/lapiz.png");
     
+    
 
     Basura.getBoton().setBackground(Color.WHITE);
     Editable.getBoton().setBackground(Color.WHITE);
 
     panelIzquierda.add(Basura.getBoton());
     panelIzquierda.add(Editable.getBoton());
-   
-
-    //Logica de visibilidad (aqui deben implementar con el controlador cuando se logueen con admin)
-    Boolean admin = true;
-
-    if(!admin){
-        panelIzquierda.setVisible(false);
-    }
-
 
     JPanel panelBotonDerecha = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
     panelBotonDerecha.setOpaque(false);
@@ -233,11 +244,13 @@ public class panel_menu_UI extends JPanel {
     contenedor.setOpaque(false);
 
     JLabel Precio = new JLabel("Precio:"+" 16$", SwingConstants.CENTER);
-    Precio.setFont(new Font("Arial", Font.BOLD, 15));
+    Precio.setFont(new Font("Segoe UI", Font.BOLD, 15));
     
     
-    JButton boton = new JButton("Ordenar");
-    Estilo_Boton_Sistema.aplicarEstiloPrincipal(boton);
+    BotonSimple boton = new BotonSimple("Ordenar");
+    boton.setPreferredSize(new Dimension(40,30));
+    boton.setFont(new Font("Segoe UI", Font.BOLD, 15));
+    
     
     contenedor.add(boton, BorderLayout.SOUTH);
     contenedor.add(Precio, BorderLayout.CENTER);

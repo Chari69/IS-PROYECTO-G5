@@ -21,9 +21,6 @@ public class CalculoCCBGUI {
         // // Frame
         // JFrame frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
 
-
-
-
         // Panel Principal
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout(10, 10));

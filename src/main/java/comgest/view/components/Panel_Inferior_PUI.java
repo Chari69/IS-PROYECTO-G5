@@ -7,7 +7,6 @@ import java.awt.*;
 
 public class Panel_Inferior_PUI extends JPanel {
 
-    Boolean LoginActive = true;
     Boton_Menu boton_menu;
     Boton_Menu boton_Micuenta;
 
@@ -16,7 +15,6 @@ public class Panel_Inferior_PUI extends JPanel {
 
         boton_menu = new Boton_Menu("resources/image1.png", "Menú");
         boton_Micuenta = new Boton_Menu("resources/myaccount.png", "Mi Cuenta");
-
         Modificar_Panel_inf();
         this.add(boton_menu);
         this.add(boton_Micuenta);
@@ -64,7 +62,7 @@ public class Panel_Inferior_PUI extends JPanel {
 
         void Modificar_Inferior() {
 
-            Inferior.setFont(new Font("Arial", Font.PLAIN, 20));
+            Inferior.setFont(new Font("Segoe UI", Font.BOLD, 20));
             Inferior.setOpaque(true);
             Inferior.setBackground(new Color(228, 228, 255));
 
