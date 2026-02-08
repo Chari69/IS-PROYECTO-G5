@@ -2,6 +2,7 @@ package comgest.view;
 
 import javax.swing.*;
 
+import comgest.view.Utils.Estilo_Boton_Sistema;
 import comgest.view.components.Boton_JPanel;
 
 //import javax.swing.border.Border;
@@ -9,8 +10,13 @@ import java.awt.*;
 
 public class panel_menu_UI extends JPanel {
 
+
     JPanel Panel_Desayuno;
     JPanel Panel_Almuerzo;
+
+    JPanel Panel_Agregar;
+    JPanel Panel_Agregar2;
+    
 
     // Constructor
     public panel_menu_UI() {
@@ -33,24 +39,52 @@ public class panel_menu_UI extends JPanel {
         panelIzquierdo.add(labelImg, BorderLayout.NORTH);
 
         gbc.gridx = 0;
-        gbc.weightx = 0.1; // IMPORTANTE: Esto hace que ocupe espacio
+        gbc.weightx = 0.1; 
         this.add(panelIzquierdo, gbc);
 
-        // Tarjeta 1: Desayuno
-        Panel_Desayuno = new JPanel();
-        configurarTarjeta(Panel_Desayuno, "Desayuno", "Descripción del desayuno", "Horario: 7:00 - 10:00",
-                "resources/arepa.jpg");
+       
+       
+       
+        //Tarjetas agregar
+
+      
         gbc.gridx = 1;
-        gbc.weightx = 0.4; // Más espacio para los paneles principales
+        gbc.weightx = 0.4;
+        Panel_Agregar = new JPanel();
+        configurarTarjeta(Panel_Agregar);
+        this.add(Panel_Agregar, gbc);
+
+        Panel_Agregar.setVisible(false);
+
+        gbc.gridx = 2;
+        Panel_Agregar2 = new JPanel();
+        configurarTarjeta(Panel_Agregar2);
+        this.add(Panel_Agregar2, gbc);
+
+        Panel_Agregar2.setVisible(false);
+
+
+
+       // Tarjeta 1: Desayuno
+        
+        gbc.gridx = 1;
+        gbc.weightx = 0.4;
+        Panel_Desayuno = new JPanel();
+        configurarTarjeta(Panel_Desayuno, "Desayuno", "Descripción del desayuno", "Horario: 7:00 - 10:00",  "resources/arepa.jpg", 17);
         this.add(Panel_Desayuno, gbc);
+      // Panel_Desayuno.setVisible(false);
+
+
 
         // Tarjeta 2: Almuerzo
+
         Panel_Almuerzo = new JPanel();
-        configurarTarjeta(Panel_Almuerzo, "Almuerzo", "Descripción del almuerzo", "Horario: 12:00 - 15:00",
-                "resources/images.jpg");
+        configurarTarjeta(Panel_Almuerzo, "Almuerzo", "Descripción del almuerzo", "Horario: 12:00 - 15:00", "resources/images.jpg", 18);
         gbc.gridx = 2;
         gbc.weightx = 0.4; // Más espacio para los paneles principales
+       
         this.add(Panel_Almuerzo, gbc);
+       //Panel_Almuerzo.setVisible(false);
 
         // **Panel derecho (similar al izquierdo)**
         JPanel panelDerecho = new JPanel(new BorderLayout());
@@ -61,7 +95,7 @@ public class panel_menu_UI extends JPanel {
         this.add(panelDerecho, gbc);
     }
 
-    void configurarTarjeta(JPanel panel, String titulo, String descripcion, String Horario, String imagenRuta) {
+    void configurarTarjeta(JPanel panel, String titulo, String descripcion, String Horario, String imagenRuta, double precio) {
 
         // Estética
         panel.setPreferredSize(new Dimension(250, 400));
@@ -94,6 +128,8 @@ public class panel_menu_UI extends JPanel {
         fila1.add(tituLabel2);
 
         // Fila2
+
+
         JPanel fila2 = new JPanel();
 
         // CAMBIO 1: Usar BorderLayout para que el label pueda ocupar todo
@@ -112,9 +148,25 @@ public class panel_menu_UI extends JPanel {
         // CAMBIO 2: Escalar la imagen manualmente
         Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(300, 150, Image.SCALE_SMOOTH);
         JLabel labelImg = new JLabel(new ImageIcon(imagenEscalada));
+        labelImg.setLayout(new BorderLayout());
+
+        JButton hola = new JButton("Cambiar");
+        Estilo_Boton_Sistema.aplicarEstiloPrincipal(hola);
+        hola.setFont(new Font("Arial", Font.BOLD,11));
+        
+
+    
+        JPanel contenedor2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        contenedor2.setOpaque(false);
+        contenedor2.add(hola);
+        labelImg.add(contenedor2);
+
+
+        labelImg.add(contenedor2, BorderLayout.SOUTH);
 
         // Agregar al centro
         fila2.add(labelImg, BorderLayout.CENTER);
+        
 
         // Fila3
 
@@ -133,8 +185,9 @@ descArea.setLineWrap(true);
 descArea.setWrapStyleWord(true);
 descArea.setEditable(false);
 descArea.setOpaque(false);
-descArea.setFont(new Font("Arial", Font.PLAIN, 12));
+descArea.setFont(new Font("Arial", Font.PLAIN, 13));
 fila3.add(descArea, BorderLayout.CENTER);
+
 
 // --- Contenedor para la parte Inferior (Sur) ---
 
@@ -166,26 +219,46 @@ contenedorInferior.setOpaque(false);
     }
 
 
-    // 3. Sub-panel DERECHA (Botón Ordenar)
     JPanel panelBotonDerecha = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
     panelBotonDerecha.setOpaque(false);
+
+    JPanel contenedor = new JPanel(new BorderLayout());
+    contenedor.setOpaque(false);
+
+    JLabel Precio = new JLabel("Precio:"+" 16$", SwingConstants.CENTER);
+    Precio.setFont(new Font("Arial", Font.BOLD, 15));
+    
     
     JButton boton = new JButton("Ordenar");
-    boton.setBackground(new Color(87, 35, 100));
-    boton.setForeground(Color.WHITE);
-    boton.setPreferredSize(new Dimension(100, 35));
-    boton.setFont(new Font("Arial", Font.BOLD, 16));
-    panelBotonDerecha.add(boton);
+    Estilo_Boton_Sistema.aplicarEstiloPrincipal(boton);
+    
+    contenedor.add(boton, BorderLayout.SOUTH);
+    contenedor.add(Precio, BorderLayout.CENTER);
+    panelBotonDerecha.add(contenedor);
 
-// Unir todo en el contenedor inferior
-contenedorInferior.add(panelIzquierda, BorderLayout.WEST);
-contenedorInferior.add(panelBotonDerecha, BorderLayout.EAST);
+    
 
-// Agregar el contenedor inferior al SUR de la fila 3
-fila3.add(contenedorInferior, BorderLayout.SOUTH);
+    contenedorInferior.add(panelIzquierda, BorderLayout.WEST);
+    contenedorInferior.add(panelBotonDerecha, BorderLayout.EAST);
 
-// Finalmente agregar fila3 al panel principal de la tarjeta
-panel.add(fila3);
+
+    fila3.add(contenedorInferior, BorderLayout.SOUTH);
+
+
+    panel.add(fila3);
 
     }
+
+    void configurarTarjeta(JPanel panel){
+
+        panel.setPreferredSize(new Dimension(135, 125));
+        panel.setBackground(new Color(228,228,255));
+        
+        Boton_JPanel AddBotton1 = new Boton_JPanel("resources/AñadirMenú.png", 135,125);
+        panel.add(AddBotton1.getBoton(), BorderLayout.CENTER);
+       
+      
+
+    }
+
 }
