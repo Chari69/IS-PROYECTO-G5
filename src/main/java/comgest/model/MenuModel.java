@@ -13,22 +13,53 @@ import java.util.List;
 public class MenuModel {
     private List<MenuItem> menu_items;
     private String database_path = "src\\main\\java\\comgest\\data\\DB_menu.json";
+    private Gson gson;
 
     public MenuModel() {
         this.menu_items = new ArrayList<>();
+        this.gson = new Gson();
         cargarMenuItems();
     }
 
     public void agregarMenuItem(String name, String descripcion, String imgPath, double precio) {
-        Gson gson = new Gson();
         menu_items.add(new MenuItem(name, descripcion, precio, imgPath));
+        guardarMenuItems();
+    }
 
-        try (FileWriter writer = new FileWriter(database_path)) {
-            gson.toJson(menu_items, writer);
-            System.out.println("Menu actualizado.");
-        } catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
+    public boolean actualizarMenuItem(String id, String name, String descripcion, String imgPath, double precio) {
+        String idNormalizado = normalizarId(id);
+        if (idNormalizado.isEmpty()) {
+            return false;
         }
+
+        MenuItem item = buscarPorId(idNormalizado);
+        if (item == null) {
+            return false;
+        }
+
+        item.setName(name);
+        item.setDescripcion(descripcion);
+        item.setImgPath(imgPath);
+        item.setPrecio(precio);
+        guardarMenuItems();
+        return true;
+    }
+
+    public boolean eliminarMenuItem(String id) {
+        String idNormalizado = normalizarId(id);
+        if (idNormalizado.isEmpty()) {
+            return false;
+        }
+
+        for (int i = 0; i < menu_items.size(); i++) {
+            if (idNormalizado.equals(menu_items.get(i).getId())) {
+                menu_items.remove(i);
+                guardarMenuItems();
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public List<MenuItem> getMenuItems() {
@@ -49,5 +80,27 @@ public class MenuModel {
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
         }
+    }
+
+    private void guardarMenuItems() {
+        try (FileWriter writer = new FileWriter(database_path)) {
+            gson.toJson(menu_items, writer);
+            System.out.println("Menu actualizado.");
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    private MenuItem buscarPorId(String id) {
+        for (MenuItem item : menu_items) {
+            if (id.equals(item.getId())) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    private String normalizarId(String id) {
+        return id == null ? "" : id.trim();
     }
 }

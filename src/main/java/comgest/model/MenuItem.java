@@ -17,6 +17,23 @@ public class MenuItem {
         this.id = UUID.randomUUID().toString();
     }
 
+    // setters
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
+
     // getters
     public String getName() {
         return name;
@@ -32,5 +49,9 @@ public class MenuItem {
 
     public double getPrecio() {
         return precio;
+    }
+
+    public String getId() {
+        return id;
     }
 }
