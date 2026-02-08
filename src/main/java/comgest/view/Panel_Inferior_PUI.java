@@ -1,37 +1,38 @@
-package comgest.view.components;
+package comgest.view;
 
 import javax.swing.*;
+
+import comgest.view.components.Boton_JPanel;
 
 //import javax.swing.border.Border;
 import java.awt.*;
 
-public class Panel_Inferior_PUI {
+public class Panel_Inferior_PUI extends JPanel{
 
-    JPanel Panel_inf;
+    Boolean LoginActive = true;
     Boton_Menu boton_menu;
     Boton_Menu boton_Micuenta;
 
     // Constructor
     public Panel_Inferior_PUI() {
 
+       
         boton_menu = new Boton_Menu("resources/image1.png", "Menú");
         boton_Micuenta = new Boton_Menu("resources/myaccount.png", "Mi Cuenta");
-        Panel_inf = new JPanel();
+     
         Modificar_Panel_inf();
-        Panel_inf.add(boton_menu);
-        Panel_inf.add(boton_Micuenta);
+        this.add(boton_menu);
+        this.add(boton_Micuenta);
+
+        //Visibilidad de loginActive
+        this.setVisible(LoginActive);
 
     }
 
     public void Modificar_Panel_inf() {
 
-        Panel_inf.setBackground(new Color(228, 228, 255));
-        Panel_inf.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
-    }
-
-    // Getters
-    public JPanel getPanel_inf() {
-        return Panel_inf;
+        this.setBackground(new Color(228, 228, 255));
+        this.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
     }
 
     // Clase del boton del menu
@@ -46,15 +47,19 @@ public class Panel_Inferior_PUI {
             this.setOpaque(false);
             this.setLayout(new BorderLayout());
             this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+            //Botones JPanel
             boton = new Boton_JPanel(ruta);
             Inferior = new JLabel(nombre);
 
             Modificar_Superior();
             Modificar_Inferior();
 
+            
             this.add(boton.getBoton(), BorderLayout.CENTER); // Parte clickeable (más grande)
             this.add(Inferior, BorderLayout.SOUTH); // Texto abajo
 
+            
         }
 
         void Modificar_Superior() {

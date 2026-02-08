@@ -2,15 +2,12 @@ package comgest.view;
 
 import javax.swing.*;
 
-
 import comgest.view.components.BotonSimple;
 import comgest.view.components.FrameStyle;
 import comgest.view.components.Panel_Inferior_PUI;
 
 import java.awt.*;
 import java.awt.event.*;
-
-
 
 public class CuentaUSGUI {
     public static void main(String[] args) {
@@ -22,10 +19,10 @@ public class CuentaUSGUI {
 
     public static void crearVentana() {
 
-        boolean Admin= true; // ROL DE MIENTRAS PARA CAMBIAR
-        //Frame
+        boolean Admin = true; // ROL DE MIENTRAS PARA CAMBIAR
+        // Frame
         JFrame frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
-        
+
         // Panel Principal
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout(10, 10));
@@ -49,11 +46,9 @@ public class CuentaUSGUI {
         // Agregar el panel imagen al panel principal
         panel.add(panelim, BorderLayout.NORTH);
 
-
         // Panel Para Botones
 
-
-        //Botones para todos los roles
+        // Botones para todos los roles
 
         JPanel botones = new JPanel();
         botones.setSize(800, 600);
@@ -72,14 +67,14 @@ public class CuentaUSGUI {
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(logout, gdc);
 
-        //Accion del boton logout
-         logout.addMouseListener(new MouseAdapter() {
+        // Accion del boton logout
+        logout.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 JOptionPane.showMessageDialog(null, "Saliendo...");
             }
         });
-       
+
         // Boton Ver Saldo
         BotonSimple saldo = new BotonSimple("Ver Saldo");
         gdc.gridx = 0;
@@ -89,60 +84,59 @@ public class CuentaUSGUI {
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(saldo, gdc);
 
-        //Accion del boton ver saldo
-         saldo.addMouseListener(new MouseAdapter() {
+        // Accion del boton ver saldo
+        saldo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 JOptionPane.showMessageDialog(null, "Saldo Actual:0$");
             }
         });
 
-        //Botones para admin
-        if(Admin)
-        {
+        // Botones para admin
+        if (Admin) {
 
-            BotonSimple AdministrarMenu= new BotonSimple("Administrar Menù");
-        gdc.gridx = 0;
-        gdc.gridy = 2;
-        gdc.weightx = 0.0;
-        gdc.weighty = 0.0;
-        gdc.anchor = GridBagConstraints.CENTER;
-        botones.add(AdministrarMenu, gdc);
+            BotonSimple AdministrarMenu = new BotonSimple("Administrar Menù");
+            gdc.gridx = 0;
+            gdc.gridy = 2;
+            gdc.weightx = 0.0;
+            gdc.weighty = 0.0;
+            gdc.anchor = GridBagConstraints.CENTER;
+            botones.add(AdministrarMenu, gdc);
 
-        //Accion del boton ver saldo
-         AdministrarMenu.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(null, "Cargando Menu...");
-            }
-        });
+            // Accion del boton ver saldo
+            AdministrarMenu.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    JOptionPane.showMessageDialog(null, "Cargando Menu...");
+                }
+            });
 
-        BotonSimple CCB= new BotonSimple("CCB");
-        gdc.gridx = 0;
-        gdc.gridy = 3;
-        gdc.weightx = 0.0;
-        gdc.weighty = 0.0;
-        gdc.anchor = GridBagConstraints.CENTER;
-        botones.add(CCB, gdc);
+            BotonSimple CCB = new BotonSimple("CCB");
+            gdc.gridx = 0;
+            gdc.gridy = 3;
+            gdc.weightx = 0.0;
+            gdc.weighty = 0.0;
+            gdc.anchor = GridBagConstraints.CENTER;
+            botones.add(CCB, gdc);
 
-        //Accion del boton ver saldo
-         CCB.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(null, "Cargando...");
-            }
-        });
+            // Accion del boton ver saldo
+            CCB.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    JOptionPane.showMessageDialog(null, "Cargando...");
+                }
+            });
 
         }
 
-        //PANEL DE LA FOTO DE PERFIL (ESTA CARGADA UNA FOTO GENERICA)
+        // PANEL DE LA FOTO DE PERFIL (ESTA CARGADA UNA FOTO GENERICA)
 
         JPanel perfil = new JPanel();
         // perfil.setSize(300,200);
         perfil.setLayout(new GridBagLayout());
         GridBagConstraints gpc = new GridBagConstraints(); // CREO MI OBJETO PARA CONTROLAR
         perfil.setOpaque(false);
-        
+
         // imagen de perfil (AQUI DEBERIA ESTAR LA FUNCION PARA BUSCAR LA IMAGEN)
         ImageIcon PerfilIcon = new ImageIcon(LoginGUI.class.getResource("resources/perfilgenerico.png"));
         // PARA REDIMENSIONAR
@@ -150,10 +144,9 @@ public class CuentaUSGUI {
         ImageIcon Redimen = new ImageIcon(perfilEsca);
         // CREAMOS EL JLABEL YA CON LA IMAGEN
         JLabel perfilLabel = new JLabel(Redimen);
-        perfilLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); //BORDE PARA MARCAR LA IMAGEN
-        
-        
-        //TEXTO CON ACCION PARA CAMBIAR LA FOTO
+        perfilLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); // BORDE PARA MARCAR LA IMAGEN
+
+        // TEXTO CON ACCION PARA CAMBIAR LA FOTO
 
         JLabel lblchangephoto = new JLabel("Cambiar");
         lblchangephoto.setLayout(new GridBagLayout());
@@ -165,11 +158,13 @@ public class CuentaUSGUI {
             public void mouseClicked(MouseEvent e) {
                 JOptionPane.showMessageDialog(null, "BUSCA LA FOTO");
             }
-             @Override
+
+            @Override
             public void mouseEntered(MouseEvent e) {
                 // Efecto visual: Poner negrita o subrayar al pasar el mouse
                 lblchangephoto.setText("<html><u>Cambiar</u></html>");
             }
+
             @Override
             public void mouseExited(MouseEvent e) {
                 // Quitar el subrayado al salir
@@ -177,30 +172,29 @@ public class CuentaUSGUI {
             }
         });
 
-     //AÑADO EL JLABEL PARA CAMBIAR LA FOTO AL PANEL DEL PERFIL
+        // AÑADO EL JLABEL PARA CAMBIAR LA FOTO AL PANEL DEL PERFIL
         gpc.gridx = 0;
         gpc.gridy = 0;
         gpc.weightx = 0.0;
         gpc.weighty = 0.0;
         gpc.anchor = GridBagConstraints.CENTER;
         gpc.insets = new Insets(0, 85, 15, 0);
-        perfil.add(lblchangephoto,gpc);
+        perfil.add(lblchangephoto, gpc);
 
-
-      //AÑADIMOS LA IMAGEN AL PANEL DE PERFL
+        // AÑADIMOS LA IMAGEN AL PANEL DE PERFL
         gpc.gridx = 0;
         gpc.gridy = 0;
         gpc.weightx = 0.0;
         gpc.weighty = 0.0;
         gpc.anchor = GridBagConstraints.CENTER;
         gpc.insets = new Insets(10, 100, 100, 10);
-        gpc.gridheight = 4; // COMO LA IMAGEN ES TAN GRANDE UTILIZAMOS 4 FILAS ES PARA QUE LOS DATOS DE LA DERECHA NO SE BAJEN.
+        gpc.gridheight = 4; // COMO LA IMAGEN ES TAN GRANDE UTILIZAMOS 4 FILAS ES PARA QUE LOS DATOS DE LA
+                            // DERECHA NO SE BAJEN.
         perfil.add(perfilLabel, gpc);
 
+        // Datos del usuario
 
-        //Datos del usuario
-
-        //DATO NOMBRE
+        // DATO NOMBRE
         JLabel lblNombre = new JLabel("Juan Pérez");
         lblNombre.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblNombre.setForeground(Color.BLACK);
@@ -211,10 +205,10 @@ public class CuentaUSGUI {
         gpc.insets = new Insets(50, 0, 0, 0); // MUEVO EL TOP PARA QUE EMPUJE AL DE ABAJO Y QUEDEN EN EL MEDIO
         gpc.anchor = GridBagConstraints.NORTHWEST;
         gpc.gridheight = 1; // LUEGO PARA LOS CAMPOS DE NOMBRE Y REGISTER LO VOLVEMOS A LA NORMALIDAD
-        //AÑADIMOS EL DATO DEL NOMBRE AL PANEL PERFIL
-        perfil.add(lblNombre,gpc);
+        // AÑADIMOS EL DATO DEL NOMBRE AL PANEL PERFIL
+        perfil.add(lblNombre, gpc);
 
-        //DATO CORREO
+        // DATO CORREO
         JLabel lblcorreo = new JLabel("juanpepito@gmail.com"); // CORREO CAMBIAR PARA QUE APAREZCA
         lblcorreo.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblcorreo.setForeground(Color.BLACK);
@@ -224,12 +218,12 @@ public class CuentaUSGUI {
         gpc.weighty = 0.0;
         gpc.insets = new Insets(0, 0, 0, 0);
         gpc.anchor = GridBagConstraints.NORTHWEST;
-        //AÑADIMOS EL DATO DEL CORREO AL PANEL PERFIL
-        perfil.add(lblcorreo,gpc);
+        // AÑADIMOS EL DATO DEL CORREO AL PANEL PERFIL
+        perfil.add(lblcorreo, gpc);
 
-        //DATO cedula
+        // DATO cedula
         int cedula = 12343123; // CEDULA CAMBIAR PARA QUE APAREZCA
-        JLabel lblced = new JLabel("CI:"+ cedula);
+        JLabel lblced = new JLabel("CI:" + cedula);
         lblced.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblced.setForeground(Color.BLACK);
         gpc.gridx = 1;
@@ -238,15 +232,14 @@ public class CuentaUSGUI {
         gpc.weighty = 0.0;
         gpc.insets = new Insets(0, 0, 0, 0);
         gpc.anchor = GridBagConstraints.NORTHWEST;
-        //AÑADIMOS EL DATO DE cedula  AL PANEL PERFIL
-        perfil.add(lblced,gpc);
+        // AÑADIMOS EL DATO DE cedula AL PANEL PERFIL
+        perfil.add(lblced, gpc);
 
-        //DATO ROL
-        String rolsito=" ";
-        if(Admin){
+        // DATO ROL
+        String rolsito = " ";
+        if (Admin) {
             rolsito = "Admininistrador";
-        }
-        else {
+        } else {
             rolsito = "Usuario";
         }
         JLabel lblrol = new JLabel(rolsito);
@@ -258,19 +251,17 @@ public class CuentaUSGUI {
         gpc.weighty = 0.0;
         gpc.insets = new Insets(0, 0, 0, 0);
         gpc.anchor = GridBagConstraints.NORTHWEST;
-        //AÑADIMOS EL DATO DEL ROL AL PANEL PERFIL
-        perfil.add(lblrol,gpc);
+        // AÑADIMOS EL DATO DEL ROL AL PANEL PERFIL
+        perfil.add(lblrol, gpc);
 
-
-       //AÑADIMOS EL PANEL INFERIOR
+        // AÑADIMOS EL PANEL INFERIOR
         Panel_Inferior_PUI PanelAbajo = new Panel_Inferior_PUI();
-        panel.add(PanelAbajo.getPanel_inf(),BorderLayout.SOUTH);
+        panel.add(PanelAbajo.getPanel_inf(), BorderLayout.SOUTH);
 
-
-        //AÑADIMOS EL PANEL DE PERFIL Y DE BOTONES AL PANEL PRINCIPAL
+        // AÑADIMOS EL PANEL DE PERFIL Y DE BOTONES AL PANEL PRINCIPAL
         panel.add(perfil, BorderLayout.WEST);
         panel.add(botones, BorderLayout.EAST);
-        //AÑADIMOS EL PANEL PRINCIPAL AL FRAME
+        // AÑADIMOS EL PANEL PRINCIPAL AL FRAME
         frame.add(panel, BorderLayout.CENTER);
         frame.setVisible(true);
     }

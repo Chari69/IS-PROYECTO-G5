@@ -1,4 +1,4 @@
-package comgest;
+/*/package comgest;
 
 import comgest.model.ControladorDB;
 import comgest.model.ControladorMenuDB;
@@ -61,4 +61,4 @@ public class Main {
             System.out.println("-----------");
         }
     }
-}
+}/*/ 
