@@ -3,7 +3,10 @@ package comgest.view;
 import javax.swing.*;
 import comgest.view.components.BotonPlayHolder;
 import comgest.view.components.BotonSimple;
+import comgest.view.components.FrameStyle;
+
 import java.awt.event.*;
+
 import java.awt.*;
 
 public class RegisterGUI {
@@ -14,17 +17,11 @@ public class RegisterGUI {
         });
     }
 
-    // Frame
+    
     public static void crearVentana() {
-        JFrame frame = new JFrame("SGCU");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
-        frame.setLocationRelativeTo(null);
-        frame.setIconImage(new ImageIcon(LoginGUI.class.getResource("resources/logocompng.png")).getImage());
-        frame.setLayout(new BorderLayout(10, 5));
-        frame.setResizable(false);
-        frame.getContentPane().setBackground(new Color(228, 228, 255));
-
+        //Frame
+        JFrame frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
+      
         // Panel Principal
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout(10, 10));
@@ -70,10 +67,18 @@ public class RegisterGUI {
         gdc.weighty = 0;
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(NombreUsuario, gdc);
+        // Caja para cedula
+        BotonPlayHolder Cedula = new BotonPlayHolder("Cédula Ej 13322122");
+        gdc.gridx = 0;
+        gdc.gridy = 1;
+        gdc.weightx = 1.0;
+        gdc.weighty = 0;
+        gdc.anchor = GridBagConstraints.CENTER;
+        botones.add(Cedula, gdc);
         // Caja para correo
         BotonPlayHolder Correo = new BotonPlayHolder("Correo electrónico");
         gdc.gridx = 0;
-        gdc.gridy = 1;
+        gdc.gridy = 2;
         gdc.weightx = 1.0;
         gdc.weighty = 0;
         gdc.anchor = GridBagConstraints.CENTER;
@@ -81,7 +86,7 @@ public class RegisterGUI {
         // Caja para contraseña 1
         BotonPlayHolder contraseña1 = new BotonPlayHolder("Contraseña");
         gdc.gridx = 0;
-        gdc.gridy = 2;
+        gdc.gridy = 3;
         gdc.weightx = 1.0;
         gdc.weighty = 0;
         gdc.anchor = GridBagConstraints.CENTER;
@@ -89,13 +94,13 @@ public class RegisterGUI {
         // Caja para contraseña Confirmar
         BotonPlayHolder contraseñaconf = new BotonPlayHolder("Confirmar Contraseña");
         gdc.gridx = 0;
-        gdc.gridy = 3;
+        gdc.gridy = 4;
         gdc.weightx = 1.0;
         gdc.weighty = 0;
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(contraseñaconf, gdc);
 
-        // caja invisible para que se lleve el focus(bien xd)
+        // caja invisible para que se lleve el focus
 
         JTextField invis = new JTextField("Hi");
         invis.setBackground(new Color(0, 0, 0, 0));
@@ -155,7 +160,7 @@ public class RegisterGUI {
 
         // Agregar el Panel de ir al login al panel de botones.
         gdc.gridx = 0;
-        gdc.gridy = 6; // MAS ABAJO
+        gdc.gridy = 7; // MAS ABAJO
         gdc.weightx = 0.0;
         gdc.weighty = 0.0;
         gdc.anchor = GridBagConstraints.CENTER;
@@ -166,7 +171,7 @@ public class RegisterGUI {
         // boton de confirmar registro
         BotonSimple bttmreg = new BotonSimple("Registrarse");
         gdc.gridx = 0;
-        gdc.gridy = 5;
+        gdc.gridy = 6;
         gdc.weightx = 0;
         gdc.weighty = 0;
         gdc.anchor = GridBagConstraints.CENTER;
@@ -187,7 +192,7 @@ public class RegisterGUI {
         checkTerminos.setFont(new Font("Segoe UI", Font.BOLD, 12));
         checkTerminos.setFocusable(false);
         gdc.gridx = 0;
-        gdc.gridy = 4;
+        gdc.gridy = 5;
         gdc.weightx = 0;
         gdc.weighty = 0;
         gdc.anchor = GridBagConstraints.CENTER;

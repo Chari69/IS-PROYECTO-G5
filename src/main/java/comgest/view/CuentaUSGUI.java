@@ -4,6 +4,7 @@ import javax.swing.*;
 
 
 import comgest.view.components.BotonSimple;
+import comgest.view.components.FrameStyle;
 import comgest.view.components.Panel_Inferior_PUI;
 
 import java.awt.*;
@@ -21,17 +22,10 @@ public class CuentaUSGUI {
 
     public static void crearVentana() {
 
-        boolean Admin= false; // ROL DE MIENTRAS CAMBIARRRR
-        JFrame frame = new JFrame("SGCU");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
-        frame.setLocationRelativeTo(null);
-        frame.setIconImage(new ImageIcon(LoginGUI.class.getResource("resources/logocompng.png")).getImage());
-        // frame.setLayout(new GridBagLayout());
-        frame.setLayout(new BorderLayout(10, 5));
-        frame.setResizable(false);
-        frame.getContentPane().setBackground(new Color(228, 228, 255));
-
+        boolean Admin= true; // ROL DE MIENTRAS PARA CAMBIAR
+        //Frame
+        JFrame frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
+        
         // Panel Principal
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout(10, 10));
@@ -200,7 +194,7 @@ public class CuentaUSGUI {
         gpc.weighty = 0.0;
         gpc.anchor = GridBagConstraints.CENTER;
         gpc.insets = new Insets(10, 100, 100, 10);
-        gpc.gridheight = 3; // COMO LA IMAGEN ES TAN GRANDE UTILIZAMOS 3 FILAS
+        gpc.gridheight = 4; // COMO LA IMAGEN ES TAN GRANDE UTILIZAMOS 4 FILAS ES PARA QUE LOS DATOS DE LA DERECHA NO SE BAJEN.
         perfil.add(perfilLabel, gpc);
 
 
@@ -221,7 +215,7 @@ public class CuentaUSGUI {
         perfil.add(lblNombre,gpc);
 
         //DATO CORREO
-        JLabel lblcorreo = new JLabel("juanpepito@gmail.com");
+        JLabel lblcorreo = new JLabel("juanpepito@gmail.com"); // CORREO CAMBIAR PARA QUE APAREZCA
         lblcorreo.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblcorreo.setForeground(Color.BLACK);
         gpc.gridx = 1;
@@ -232,6 +226,20 @@ public class CuentaUSGUI {
         gpc.anchor = GridBagConstraints.NORTHWEST;
         //AÑADIMOS EL DATO DEL CORREO AL PANEL PERFIL
         perfil.add(lblcorreo,gpc);
+
+        //DATO cedula
+        int cedula = 12343123; // CEDULA CAMBIAR PARA QUE APAREZCA
+        JLabel lblced = new JLabel("CI:"+ cedula);
+        lblced.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lblced.setForeground(Color.BLACK);
+        gpc.gridx = 1;
+        gpc.gridy = 2;
+        gpc.weightx = 0.0;
+        gpc.weighty = 0.0;
+        gpc.insets = new Insets(0, 0, 0, 0);
+        gpc.anchor = GridBagConstraints.NORTHWEST;
+        //AÑADIMOS EL DATO DE cedula  AL PANEL PERFIL
+        perfil.add(lblced,gpc);
 
         //DATO ROL
         String rolsito=" ";
@@ -245,7 +253,7 @@ public class CuentaUSGUI {
         lblrol.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblrol.setForeground(Color.BLACK);
         gpc.gridx = 1;
-        gpc.gridy = 2;
+        gpc.gridy = 3;
         gpc.weightx = 0.0;
         gpc.weighty = 0.0;
         gpc.insets = new Insets(0, 0, 0, 0);

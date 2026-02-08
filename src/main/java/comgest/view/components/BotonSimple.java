@@ -7,7 +7,7 @@ import java.awt.*;
 public class BotonSimple extends JButton {
 
     public BotonSimple(String texto) {
-        super(texto); // Llama al constructor original de JButton
+        super(texto); // Llama al constructor de JButton
         configurarEstilo();
     }
 
