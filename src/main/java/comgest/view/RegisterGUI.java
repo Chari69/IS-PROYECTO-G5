@@ -1,10 +1,14 @@
 package comgest.view;
+
 import comgest.model.ControladorDB;
 
 import javax.swing.*;
 import comgest.view.components.BotonPlayHolder;
 import comgest.view.components.BotonSimple;
+import comgest.view.components.FrameStyle;
+
 import java.awt.event.*;
+
 import java.awt.*;
 
 public class RegisterGUI {
@@ -15,16 +19,9 @@ public class RegisterGUI {
         });
     }
 
-    // Frame
     public static void crearVentana() {
-        JFrame frame = new JFrame("SGCU");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
-        frame.setLocationRelativeTo(null);
-        frame.setIconImage(new ImageIcon(LoginGUI.class.getResource("resources/logocompng.png")).getImage());
-        frame.setLayout(new BorderLayout(10, 5));
-        frame.setResizable(false);
-        frame.getContentPane().setBackground(new Color(200, 185, 200));
+        // Frame
+        JFrame frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
 
         // Panel Principal
         JPanel panel = new JPanel();
@@ -71,11 +68,18 @@ public class RegisterGUI {
         gdc.weighty = 0;
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(NombreUsuario, gdc);
-
+        // Caja para cedula
+        BotonPlayHolder Cedula = new BotonPlayHolder("Cédula Ej 13322122");
+        gdc.gridx = 0;
+        gdc.gridy = 1;
+        gdc.weightx = 1.0;
+        gdc.weighty = 0;
+        gdc.anchor = GridBagConstraints.CENTER;
+        botones.add(Cedula, gdc);
         // Caja para correo
         BotonPlayHolder Correo = new BotonPlayHolder("Correo electrónico");
         gdc.gridx = 0;
-        gdc.gridy = 1;
+        gdc.gridy = 2;
         gdc.weightx = 1.0;
         gdc.weighty = 0;
         gdc.anchor = GridBagConstraints.CENTER;
@@ -83,7 +87,7 @@ public class RegisterGUI {
         // Caja para contraseña 1
         BotonPlayHolder contraseña1 = new BotonPlayHolder("Contraseña");
         gdc.gridx = 0;
-        gdc.gridy = 2;
+        gdc.gridy = 3;
         gdc.weightx = 1.0;
         gdc.weighty = 0;
         gdc.anchor = GridBagConstraints.CENTER;
@@ -91,13 +95,13 @@ public class RegisterGUI {
         // Caja para contraseña Confirmar
         BotonPlayHolder contraseñaconf = new BotonPlayHolder("Confirmar Contraseña");
         gdc.gridx = 0;
-        gdc.gridy = 3;
+        gdc.gridy = 4;
         gdc.weightx = 1.0;
         gdc.weighty = 0;
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(contraseñaconf, gdc);
 
-        // caja invisible para que se lleve el focus(bien xd)
+        // caja invisible para que se lleve el focus
 
         JTextField invis = new JTextField("Hi");
         invis.setBackground(new Color(0, 0, 0, 0));
@@ -157,7 +161,7 @@ public class RegisterGUI {
 
         // Agregar el Panel de ir al login al panel de botones.
         gdc.gridx = 0;
-        gdc.gridy = 6; // MAS ABAJO
+        gdc.gridy = 7; // MAS ABAJO
         gdc.weightx = 0.0;
         gdc.weighty = 0.0;
         gdc.anchor = GridBagConstraints.CENTER;
@@ -168,14 +172,14 @@ public class RegisterGUI {
         // boton de confirmar registro
         BotonSimple bttmreg = new BotonSimple("Registrarse");
         gdc.gridx = 0;
-        gdc.gridy = 5;
+        gdc.gridy = 6;
         gdc.weightx = 0;
         gdc.weighty = 0;
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(bttmreg, gdc);
 
         // Accion del boton de confirmar
-        accionBotonRegistro(bttmreg,NombreUsuario,contraseña1,contraseñaconf,Correo);
+        accionBotonRegistro(bttmreg, NombreUsuario, contraseña1, contraseñaconf, Correo);
 
         // CheckBox de terminos y condiciones, lo agrego al panel de botones
 
@@ -184,7 +188,7 @@ public class RegisterGUI {
         checkTerminos.setFont(new Font("Segoe UI", Font.BOLD, 12));
         checkTerminos.setFocusable(false);
         gdc.gridx = 0;
-        gdc.gridy = 4;
+        gdc.gridy = 5;
         gdc.weightx = 0;
         gdc.weighty = 0;
         gdc.anchor = GridBagConstraints.CENTER;
@@ -198,23 +202,40 @@ public class RegisterGUI {
 
     }
 
-    //¡¡¡¡¡¡¡¡¡¡¡ESTA FUNCION ES PRIVADA Y ESTA APARTADA PORQUE ACCEDE DIRECTAMENTE A LA BASE DE DATOS POR FAVOR NO TOCAR!!!!!!!!!!!!!
+    // ¡¡¡¡¡¡¡¡¡¡¡ESTA FUNCION ES PRIVADA Y ESTA APARTADA PORQUE ACCEDE DIRECTAMENTE
+    // A LA BASE DE DATOS POR FAVOR NO TOCAR!!!!!!!!!!!!!
 
-    private static void accionBotonRegistro(BotonSimple bttmreg, BotonPlayHolder NombreUsuario, BotonPlayHolder contraseña1, BotonPlayHolder contraseñaconf, BotonPlayHolder Correo){
+    private static void accionBotonRegistro(BotonSimple bttmreg, BotonPlayHolder NombreUsuario,
+            BotonPlayHolder contraseña1, BotonPlayHolder contraseñaconf, BotonPlayHolder Correo) {
         bttmreg.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(!contraseña1.getTexto().equals(contraseñaconf.getTexto())){ JOptionPane.showMessageDialog(null, "las contraseñas no coinciden"); return;}
-                if(contraseña1.isEmpty()){ JOptionPane.showMessageDialog(null, "el campo contraseña es obligatorio");return;}
-                if(NombreUsuario.isEmpty()){JOptionPane.showMessageDialog(null, "el campo Nombre de usuario es obligatorio");return;}
-                if(Correo.isEmpty()){JOptionPane.showMessageDialog(null, "el campo Correo es obligatorio");return;}
-                
-                //------------------CONEXION CON LA BASE DE DATOS-----------------//
+                if (!contraseña1.getTexto().equals(contraseñaconf.getTexto())) {
+                    JOptionPane.showMessageDialog(null, "las contraseñas no coinciden");
+                    return;
+                }
+                if (contraseña1.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "el campo contraseña es obligatorio");
+                    return;
+                }
+                if (NombreUsuario.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "el campo Nombre de usuario es obligatorio");
+                    return;
+                }
+                if (Correo.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "el campo Correo es obligatorio");
+                    return;
+                }
+
+                // ------------------CONEXION CON LA BASE DE DATOS-----------------//
                 ControladorDB controladorDB = new ControladorDB();
-                if(controladorDB.verificarCorreoExistente(Correo.getTexto())){JOptionPane.showMessageDialog(null, "ya hay una cuenta asociada a este correo");return;}
+                if (controladorDB.verificarCorreoExistente(Correo.getTexto())) {
+                    JOptionPane.showMessageDialog(null, "ya hay una cuenta asociada a este correo");
+                    return;
+                }
                 JOptionPane.showMessageDialog(null, "Registrado exitosamente");
 
-                controladorDB.RegistrarUsuario(NombreUsuario.getTexto(), contraseña1.getTexto(), Correo.getTexto(),0);
+                controladorDB.RegistrarUsuario(NombreUsuario.getTexto(), contraseña1.getTexto(), Correo.getTexto(), 0);
                 controladorDB = null;
             }
         });

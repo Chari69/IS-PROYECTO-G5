@@ -6,6 +6,8 @@ import javax.swing.*;
 
 import comgest.view.components.BotonPlayHolder;
 import comgest.view.components.BotonSimple;
+import comgest.view.components.FrameStyle;
+
 import java.awt.event.*;
 import java.awt.*;
 
@@ -17,16 +19,10 @@ public class LoginGUI {
         });
     }
 
-    // Frame
+   
     public static void crearVentana() {
-        JFrame frame = new JFrame("SGCU");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
-        frame.setLocationRelativeTo(null);
-        frame.setIconImage(new ImageIcon(LoginGUI.class.getResource("resources/logocompng.png")).getImage());
-        frame.setLayout(new GridBagLayout());
-        frame.setResizable(false);
-        frame.getContentPane().setBackground(new Color(200, 185, 200));
+        //Frame
+        JFrame frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
 
         // Panel Principal
         JPanel panel = new JPanel();
@@ -67,17 +63,18 @@ public class LoginGUI {
         gdc.weightx = 0.0;
         gdc.weighty = 1.0;
         gdc.anchor = GridBagConstraints.NORTH;
-        frame.add(invis, gdc);
+        // frame.add(invis, gdc);
+        frame.add(invis,BorderLayout.NORTH);
 
         // cajatexto NOMBRE USUARIO
-        BotonPlayHolder usuarname = new BotonPlayHolder("Usuario");
+        BotonPlayHolder cedulita = new BotonPlayHolder("Cédula Ej 13322122");
 
         gdc.gridx = 0;
         gdc.gridy = 0; // FILA 0 MAS ARRIBA
         gdc.weightx = 1.0;
         gdc.weighty = 0.1;
         gdc.anchor = GridBagConstraints.SOUTH;
-        ctextos.add(usuarname, gdc);
+        ctextos.add(cedulita, gdc);
 
         // caja texto CONTRASEÑA
         BotonPlayHolder contraseña = new BotonPlayHolder("Contraseña");
@@ -227,7 +224,7 @@ public class LoginGUI {
         panel.add(registrogo, gpdc);
 
         // AÑADIR TODO A LA VENTANA
-        frame.add(panel);
+        frame.add(panel,BorderLayout.CENTER);
         frame.setVisible(true);
     }
 }
