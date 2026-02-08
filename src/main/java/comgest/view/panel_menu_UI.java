@@ -6,6 +6,7 @@ import comgest.view.Utils.JTextArea_Personalizado;
 import comgest.view.Utils.JTextPane_Personalizado;
 import comgest.view.components.BotonSimple;
 import comgest.view.components.Boton_JPanel;
+import comgest.view.components.*;
 
 //import javax.swing.border.Border;
 import java.awt.*;

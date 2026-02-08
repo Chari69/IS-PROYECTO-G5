@@ -19,8 +19,7 @@ public class Panel_Inferior_PUI extends JPanel {
         this.add(boton_menu);
         this.add(boton_Micuenta);
 
-        // Visibilidad de loginActive
-        this.setVisible(LoginActive);
+
 
     }
 

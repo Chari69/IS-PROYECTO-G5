@@ -1,6 +1,5 @@
 package comgest;
 
-import comgest.controller.RegisterController;
 import comgest.view.*;
 import comgest.view.components.FrameStyle;
 import comgest.view.panel_menu_UI;
@@ -18,7 +17,7 @@ public class mainn {
 
         JFrame vp = FrameStyle.crearFramePrincipal("COMGEST-UCV");
         JPanel ControlaMenuUI = panel_menu_UI.CrearVentana(vp);
-        ControlaMenuUI.setVisible(false);
+        ControlaMenuUI.setVisible(true);
         vp.setVisible(true);
 
     }
