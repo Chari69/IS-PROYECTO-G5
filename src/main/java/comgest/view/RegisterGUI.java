@@ -1,6 +1,6 @@
 package comgest.view;
 
-import comgest.model.ControladorDB;
+import comgest.controller.RegisterController;
 
 import javax.swing.*;
 import comgest.view.components.BotonPlayHolder;
@@ -12,16 +12,31 @@ import java.awt.event.*;
 import java.awt.*;
 
 public class RegisterGUI {
+    private JFrame frame;
+    private BotonPlayHolder NombreUsuario;
+    private BotonPlayHolder Cedula;
+    private BotonPlayHolder Correo;
+    private BotonPlayHolder contraseña1;
+    private BotonPlayHolder contraseñaconf;
+    private BotonSimple bttmreg;
+
     public static void main(String[] args) {
 
         SwingUtilities.invokeLater(() -> {
-            crearVentana();
+            RegisterGUI view = new RegisterGUI();
+            RegisterController controller = new RegisterController(view);
+            view.asignarControlador(controller);
+            view.mostrar();
         });
     }
 
-    public static void crearVentana() {
+    public RegisterGUI() {
+        crearVentana();
+    }
+
+    public void crearVentana() {
         // Frame
-        JFrame frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
+        frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
 
         // Panel Principal
         JPanel panel = new JPanel();
@@ -61,7 +76,7 @@ public class RegisterGUI {
         gdc.insets = new Insets(10, 10, 10, 10);
 
         // Caja para Nombre de Usuario
-        BotonPlayHolder NombreUsuario = new BotonPlayHolder("Nombre De Usuario");
+        NombreUsuario = new BotonPlayHolder("Nombre De Usuario");
         gdc.gridx = 0;
         gdc.gridy = 0;
         gdc.weightx = 1.0;
@@ -69,7 +84,7 @@ public class RegisterGUI {
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(NombreUsuario, gdc);
         // Caja para cedula
-        BotonPlayHolder Cedula = new BotonPlayHolder("Cédula Ej 13322122");
+        Cedula = new BotonPlayHolder("Cédula Ej 13322122");
         gdc.gridx = 0;
         gdc.gridy = 1;
         gdc.weightx = 1.0;
@@ -77,7 +92,7 @@ public class RegisterGUI {
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(Cedula, gdc);
         // Caja para correo
-        BotonPlayHolder Correo = new BotonPlayHolder("Correo electrónico");
+        Correo = new BotonPlayHolder("Correo electrónico");
         gdc.gridx = 0;
         gdc.gridy = 2;
         gdc.weightx = 1.0;
@@ -85,7 +100,7 @@ public class RegisterGUI {
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(Correo, gdc);
         // Caja para contraseña 1
-        BotonPlayHolder contraseña1 = new BotonPlayHolder("Contraseña");
+        contraseña1 = new BotonPlayHolder("Contraseña");
         gdc.gridx = 0;
         gdc.gridy = 3;
         gdc.weightx = 1.0;
@@ -93,7 +108,7 @@ public class RegisterGUI {
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(contraseña1, gdc);
         // Caja para contraseña Confirmar
-        BotonPlayHolder contraseñaconf = new BotonPlayHolder("Confirmar Contraseña");
+        contraseñaconf = new BotonPlayHolder("Confirmar Contraseña");
         gdc.gridx = 0;
         gdc.gridy = 4;
         gdc.weightx = 1.0;
@@ -170,16 +185,13 @@ public class RegisterGUI {
         // Agregar boton de confirmar register al panel de botones
 
         // boton de confirmar registro
-        BotonSimple bttmreg = new BotonSimple("Registrarse");
+        bttmreg = new BotonSimple("Registrarse");
         gdc.gridx = 0;
         gdc.gridy = 6;
         gdc.weightx = 0;
         gdc.weighty = 0;
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(bttmreg, gdc);
-
-        // Accion del boton de confirmar
-        accionBotonRegistro(bttmreg, NombreUsuario, contraseña1, contraseñaconf, Correo);
 
         // CheckBox de terminos y condiciones, lo agrego al panel de botones
 
@@ -198,46 +210,39 @@ public class RegisterGUI {
         panel.add(botones, BorderLayout.CENTER);
         // Agregar el panel principal al frame
         frame.add(panel, BorderLayout.CENTER);
-        frame.setVisible(true);
-
+        frame.setVisible(false);
     }
 
-    // ¡¡¡¡¡¡¡¡¡¡¡ESTA FUNCION ES PRIVADA Y ESTA APARTADA PORQUE ACCEDE DIRECTAMENTE
-    // A LA BASE DE DATOS POR FAVOR NO TOCAR!!!!!!!!!!!!!
+    public void asignarControlador(RegisterController registerController) {
+        bttmreg.setActionCommand(RegisterController.ACTION_REGISTRAR);
+        bttmreg.addActionListener(registerController);
+    }
 
-    private static void accionBotonRegistro(BotonSimple bttmreg, BotonPlayHolder NombreUsuario,
-            BotonPlayHolder contraseña1, BotonPlayHolder contraseñaconf, BotonPlayHolder Correo) {
-        bttmreg.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (!contraseña1.getTexto().equals(contraseñaconf.getTexto())) {
-                    JOptionPane.showMessageDialog(null, "las contraseñas no coinciden");
-                    return;
-                }
-                if (contraseña1.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "el campo contraseña es obligatorio");
-                    return;
-                }
-                if (NombreUsuario.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "el campo Nombre de usuario es obligatorio");
-                    return;
-                }
-                if (Correo.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "el campo Correo es obligatorio");
-                    return;
-                }
+    public void mostrar() {
+        frame.setVisible(true);
+    }
 
-                // ------------------CONEXION CON LA BASE DE DATOS-----------------//
-                ControladorDB controladorDB = new ControladorDB();
-                if (controladorDB.verificarCorreoExistente(Correo.getTexto())) {
-                    JOptionPane.showMessageDialog(null, "ya hay una cuenta asociada a este correo");
-                    return;
-                }
-                JOptionPane.showMessageDialog(null, "Registrado exitosamente");
+    public String getNombreUsuario() {
+        return NombreUsuario.getTexto();
+    }
 
-                controladorDB.RegistrarUsuario(NombreUsuario.getTexto(), contraseña1.getTexto(), Correo.getTexto(), 0);
-                controladorDB = null;
-            }
-        });
+    public String getCedula() {
+        return Cedula.getTexto();
+    }
+
+    public String getCorreo() {
+        return Correo.getTexto();
+    }
+
+    public String getPassword() {
+        return contraseña1.getTexto();
+    }
+
+    public String getPasswordConfirm() {
+        return contraseñaconf.getTexto();
+    }
+
+    public void showMessage(String message) {
+        JOptionPane.showMessageDialog(frame, message);
     }
 }

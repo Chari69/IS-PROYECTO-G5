@@ -9,32 +9,40 @@ import java.util.List;
 import org.mindrot.jbcrypt.BCrypt;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import au.com.bytecode.opencsv.CSVReader;
 
-//LIBRERIAS USADAS: BCRYPT para hashear contraseñas y Gson para json
+//LIBRERIAS USADAS: BCRYPT para hashear contraseñas, OpenCSV para leer la DB de secretaria y Gson para json
 
-public class ControladorDB {
+public class UserModel {
     private List<Usuario> lista_usuarios;
     private String database_path = "src\\main\\java\\comgest\\data";
 
-    public ControladorDB() {
+    public UserModel() {
         this.lista_usuarios = new ArrayList<>();
         cargarUsuarios();
     }
 
-    public void RegistrarUsuario(String name, String password, String email, float saldo) {
+    public boolean RegistrarUsuario(String name, String password, String email, String cedula, float saldo) {
+        String role = obtenerRolPorCedula(cedula);
+        if (role == null) {
+            return false;
+        }
         String password_hasheada = BCrypt.hashpw(password, BCrypt.gensalt());
 
         Gson gson = new Gson();
-        lista_usuarios.add(new Usuario(name, password_hasheada, email, saldo));
+        lista_usuarios.add(new Usuario(name, password_hasheada, email, role, saldo));
 
         try (FileWriter writer = new FileWriter(database_path + "/DB_usuarios.json")) {
             gson.toJson(lista_usuarios, writer);
             System.out.println("Lista actualizada exitosamente.");
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
+            return false;
         }
+        return true;
     }
 
+    // borrarla eventualmente
     public boolean InicioDeSesion(String email, String password_candidata) {
         for (Usuario u : lista_usuarios) {
             if (u.getEmail().equals(email)) {
@@ -44,6 +52,17 @@ public class ControladorDB {
             }
         }
         return false;
+    }
+
+    public Usuario autenticar(String email, String password_candidata) {
+        for (Usuario u : lista_usuarios) {
+            if (u.getEmail().equals(email)) {
+                if (BCrypt.checkpw(password_candidata, u.getPassword())) {
+                    return u;
+                }
+            }
+        }
+        return null;
     }
 
     public void cargarUsuarios() {
@@ -71,5 +90,35 @@ public class ControladorDB {
             }
         }
         return false;
+    }
+
+    private String obtenerRolPorCedula(String cedula) {
+        if (cedula == null) {
+            return null;
+        }
+
+        String cedulaBuscada = cedula.trim();
+        if (cedulaBuscada.isEmpty()) {
+            return null;
+        }
+
+        String ruta = database_path + "/UCVSecDB.csv";
+        // Lee la DB externa de secretaria (cedula, rol, imagen) y devuelve el rol.
+        try (CSVReader reader = new CSVReader(new FileReader(ruta))) {
+            String[] parts;
+            while ((parts = reader.readNext()) != null) {
+                // Cada fila debe tener al menos cedula y rol.
+                if (parts.length < 2) {
+                    continue;
+                }
+                String cedulaActual = parts[0].trim();
+                if (cedulaBuscada.equals(cedulaActual)) {
+                    return parts[1].trim();
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error al leer UCVSecDB.csv: " + e.getMessage());
+        }
+        return null;
     }
 }

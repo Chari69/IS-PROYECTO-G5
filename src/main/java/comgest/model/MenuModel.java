@@ -10,11 +10,11 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControladorMenuDB {
+public class MenuModel {
     private List<MenuItem> menu_items;
     private String database_path = "src\\main\\java\\comgest\\data\\DB_menu.json";
 
-    public ControladorMenuDB() {
+    public MenuModel() {
         this.menu_items = new ArrayList<>();
         cargarMenuItems();
     }

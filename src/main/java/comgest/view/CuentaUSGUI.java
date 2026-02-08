@@ -256,7 +256,7 @@ public class CuentaUSGUI {
 
         // AÑADIMOS EL PANEL INFERIOR
         Panel_Inferior_PUI PanelAbajo = new Panel_Inferior_PUI();
-        panel.add(PanelAbajo.getPanel_inf(), BorderLayout.SOUTH);
+        panel.add(PanelAbajo, BorderLayout.SOUTH);
 
         // AÑADIMOS EL PANEL DE PERFIL Y DE BOTONES AL PANEL PRINCIPAL
         panel.add(perfil, BorderLayout.WEST);

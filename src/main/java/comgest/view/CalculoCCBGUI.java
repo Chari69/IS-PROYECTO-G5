@@ -1,4 +1,5 @@
 package comgest.view;
+
 import javax.swing.*;
 import comgest.view.components.BotonPlayHolder;
 import comgest.view.components.BotonSimple;
@@ -10,18 +11,16 @@ import java.awt.*;
 
 public class CalculoCCBGUI {
     public static void main(String[] args) {
-      SwingUtilities.invokeLater(() -> {
+        SwingUtilities.invokeLater(() -> {
             crearVentana();
-});
-}
+        });
+    }
 
+    public static void crearVentana() {
 
-public static void crearVentana() {
-
-
-//Frame
+        // Frame
         JFrame frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
-      
+
         // Panel Principal
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout(10, 10));
@@ -100,11 +99,7 @@ public static void crearVentana() {
         invis.setOpaque(false);
         panel.add(invis, BorderLayout.CENTER);
 
-
-
-        
         // Agregar boton de confirmar calculo al panel de botones
-
 
         BotonSimple bttmreg = new BotonSimple("Guardar y Calcular");
         bttmreg.setPreferredSize(new Dimension(250, 50));
@@ -130,13 +125,12 @@ public static void crearVentana() {
         CBB_Actual.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         CBB_Actual.setPreferredSize(new Dimension(200, 30));
         CBB_Actual.setBackground(new Color(255, 255, 255));
-        CBB_Actual.setForeground(new Color(100,100,100));
+        CBB_Actual.setForeground(new Color(100, 100, 100));
         CBB_Actual.setFont(new Font("Segoe UI", Font.BOLD, 14));
         CBB_Actual.setMaximumSize(new Dimension(250, 50)); // Para evitar que me lo cambian despues
         CBB_Actual.setMinimumSize(new Dimension(250, 50));
         CBB_Actual.setHorizontalAlignment(SwingConstants.CENTER);// TEXTO CENTRADO
         CBB_Actual.setVerticalAlignment(SwingConstants.CENTER); // TEXTO CENTRADO
-
 
         gdc.gridx = 0;
         gdc.gridy = 4;
@@ -145,10 +139,9 @@ public static void crearVentana() {
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(CBB_Actual, gdc);
 
-        //AÑADIMOS EL PANEL INFERIOR
+        // AÑADIMOS EL PANEL INFERIOR
         Panel_Inferior_PUI PanelAbajo = new Panel_Inferior_PUI();
-        frame.add(PanelAbajo.getPanel_inf(),BorderLayout.SOUTH);
-
+        frame.add(PanelAbajo, BorderLayout.SOUTH);
 
         // Agregar el panel botones al principal
         panel.add(botones, BorderLayout.CENTER);
@@ -158,15 +151,3 @@ public static void crearVentana() {
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

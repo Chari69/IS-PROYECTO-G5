@@ -1,13 +1,11 @@
-package comgest.view;
+package comgest.view.components;
 
 import javax.swing.*;
-
-import comgest.view.components.Boton_JPanel;
 
 //import javax.swing.border.Border;
 import java.awt.*;
 
-public class Panel_Inferior_PUI extends JPanel{
+public class Panel_Inferior_PUI extends JPanel {
 
     Boolean LoginActive = true;
     Boton_Menu boton_menu;
@@ -16,15 +14,14 @@ public class Panel_Inferior_PUI extends JPanel{
     // Constructor
     public Panel_Inferior_PUI() {
 
-       
         boton_menu = new Boton_Menu("resources/image1.png", "Menú");
         boton_Micuenta = new Boton_Menu("resources/myaccount.png", "Mi Cuenta");
-     
+
         Modificar_Panel_inf();
         this.add(boton_menu);
         this.add(boton_Micuenta);
 
-        //Visibilidad de loginActive
+        // Visibilidad de loginActive
         this.setVisible(LoginActive);
 
     }
@@ -48,18 +45,16 @@ public class Panel_Inferior_PUI extends JPanel{
             this.setLayout(new BorderLayout());
             this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-            //Botones JPanel
+            // Botones JPanel
             boton = new Boton_JPanel(ruta);
             Inferior = new JLabel(nombre);
 
             Modificar_Superior();
             Modificar_Inferior();
 
-            
             this.add(boton.getBoton(), BorderLayout.CENTER); // Parte clickeable (más grande)
             this.add(Inferior, BorderLayout.SOUTH); // Texto abajo
 
-            
         }
 
         void Modificar_Superior() {

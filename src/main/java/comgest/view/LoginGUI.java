@@ -1,5 +1,6 @@
 package comgest.view;
-import comgest.model.ControladorDB;
+
+import comgest.model.UserModel;
 import comgest.model.Usuario;
 
 import javax.swing.*;
@@ -19,9 +20,8 @@ public class LoginGUI {
         });
     }
 
-   
     public static void crearVentana() {
-        //Frame
+        // Frame
         JFrame frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
 
         // Panel Principal
@@ -64,7 +64,7 @@ public class LoginGUI {
         gdc.weighty = 1.0;
         gdc.anchor = GridBagConstraints.NORTH;
         // frame.add(invis, gdc);
-        frame.add(invis,BorderLayout.NORTH);
+        frame.add(invis, BorderLayout.NORTH);
 
         // cajatexto NOMBRE USUARIO
         BotonPlayHolder cedulita = new BotonPlayHolder("Cédula Ej 13322122");
@@ -100,18 +100,15 @@ public class LoginGUI {
             @Override
             public void mouseClicked(MouseEvent e) {
 
+                // ------------------CONEXION CON LA BASE DE DATOS-----------------//
 
-                //------------------CONEXION CON LA BASE DE DATOS-----------------//
-
-                
-                ControladorDB controladorDB = new ControladorDB();
-                if(controladorDB.InicioDeSesion(usuarname.getTexto(), contraseña.getTexto())){
+                UserModel controladorDB = new UserModel();
+                if (controladorDB.InicioDeSesion(cedulita.getTexto(), contraseña.getTexto())) {
                     JOptionPane.showMessageDialog(null, "Bienvenido");
-                }
-                else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Usuario o contraseña invalidos");
                 }
-                controladorDB =null;
+                controladorDB = null;
             }
         });
 
@@ -224,7 +221,7 @@ public class LoginGUI {
         panel.add(registrogo, gpdc);
 
         // AÑADIR TODO A LA VENTANA
-        frame.add(panel,BorderLayout.CENTER);
+        frame.add(panel, BorderLayout.CENTER);
         frame.setVisible(true);
     }
 }
