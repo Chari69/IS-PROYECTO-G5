@@ -30,7 +30,7 @@ public class UserModel {
         String password_hasheada = BCrypt.hashpw(password, BCrypt.gensalt());
 
         Gson gson = new Gson();
-        lista_usuarios.add(new Usuario(name, password_hasheada, email, role, saldo));
+        lista_usuarios.add(new Usuario(name, password_hasheada, email, cedula, role, saldo));
 
         try (FileWriter writer = new FileWriter(database_path + "/DB_usuarios.json")) {
             gson.toJson(lista_usuarios, writer);
@@ -42,21 +42,9 @@ public class UserModel {
         return true;
     }
 
-    // borrarla eventualmente
-    public boolean InicioDeSesion(String email, String password_candidata) {
+    public Usuario autenticar(String cedula, String password_candidata) {
         for (Usuario u : lista_usuarios) {
-            if (u.getEmail().equals(email)) {
-                if (BCrypt.checkpw(password_candidata, u.getPassword())) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public Usuario autenticar(String email, String password_candidata) {
-        for (Usuario u : lista_usuarios) {
-            if (u.getEmail().equals(email)) {
+            if (u.getCedula().equals(cedula)) {
                 if (BCrypt.checkpw(password_candidata, u.getPassword())) {
                     return u;
                 }
