@@ -47,6 +47,8 @@ public class LoginController implements ActionListener {
             return;
         }
 
+        userModel.cargarUsuarios();
+
         Usuario usuario = userModel.autenticar(cedula, password);
         if (usuario == null) {
             view.showMessage("Usuario o contraseña invalidos");
