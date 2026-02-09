@@ -2,28 +2,40 @@ package comgest.view;
 
 import javax.swing.*;
 
+import comgest.controller.CuentaUSController;
+import comgest.model.UserSession;
+import comgest.model.Usuario;
 import comgest.view.components.BotonSimple;
-import comgest.view.components.FrameStyle;
 import comgest.view.components.Panel_Inferior_PUI;
 
 import java.awt.*;
 import java.awt.event.*;
 
 public class CuentaUSGUI {
-    public static void main(String[] args) {
+    private JFrame frame;
+    private JLabel lblNombre;
+    private JLabel lblcorreo;
+    private JLabel lblced;
+    private JLabel lblrol;
+    private BotonSimple logout;
+    private BotonSimple saldo;
+    private BotonSimple administrarMenu;
+    private BotonSimple ccb;
 
+    public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            crearVentana();
+            CuentaUSGUI view = new CuentaUSGUI();
+            view.crearVentana();
         });
     }
 
-    public static JPanel crearVentana() {
+    public CuentaUSGUI() {
+        crearVentana();
+    }
 
-        boolean Admin = true; // ROL DE MIENTRAS PARA CAMBIAR
+    public JPanel crearVentana() {
         // Frame
         // JFrame frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
-
-
 
         // Panel Principal
         JPanel panel = new JPanel();
@@ -61,7 +73,7 @@ public class CuentaUSGUI {
         botones.setBorder(BorderFactory.createEmptyBorder(0, 0, 100, 0)); // PARA SUBIRLOS A LA ALTURA DEL PERFIL
 
         // Boton logout
-        BotonSimple logout = new BotonSimple("Logout");
+        logout = new BotonSimple("Logout");
         gdc.gridx = 0;
         gdc.gridy = 0;
         gdc.weightx = 0.0;
@@ -69,67 +81,31 @@ public class CuentaUSGUI {
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(logout, gdc);
 
-        // Accion del boton logout
-        logout.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(null, "Saliendo...");
-            }
-        });
-
         // Boton Ver Saldo
-        BotonSimple saldo = new BotonSimple("Ver Saldo");
+        saldo = new BotonSimple("Ver Saldo");
         gdc.gridx = 0;
         gdc.gridy = 1;
         gdc.weightx = 0.0;
         gdc.weighty = 0.0;
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(saldo, gdc);
+        administrarMenu = new BotonSimple("Administrar Menù");
+        gdc.gridx = 0;
+        gdc.gridy = 2;
+        gdc.weightx = 0.0;
+        gdc.weighty = 0.0;
+        gdc.anchor = GridBagConstraints.CENTER;
+        botones.add(administrarMenu, gdc);
 
-        // Accion del boton ver saldo
-        saldo.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(null, "Saldo Actual:0$");
-            }
-        });
+        ccb = new BotonSimple("CCB");
+        gdc.gridx = 0;
+        gdc.gridy = 3;
+        gdc.weightx = 0.0;
+        gdc.weighty = 0.0;
+        gdc.anchor = GridBagConstraints.CENTER;
+        botones.add(ccb, gdc);
 
-        // Botones para admin
-        if (Admin) {
-
-            BotonSimple AdministrarMenu = new BotonSimple("Administrar Menù");
-            gdc.gridx = 0;
-            gdc.gridy = 2;
-            gdc.weightx = 0.0;
-            gdc.weighty = 0.0;
-            gdc.anchor = GridBagConstraints.CENTER;
-            botones.add(AdministrarMenu, gdc);
-
-            // Accion del boton ver saldo
-            AdministrarMenu.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    JOptionPane.showMessageDialog(null, "Cargando Menu...");
-                }
-            });
-
-            BotonSimple CCB = new BotonSimple("CCB");
-            gdc.gridx = 0;
-            gdc.gridy = 3;
-            gdc.weightx = 0.0;
-            gdc.weighty = 0.0;
-            gdc.anchor = GridBagConstraints.CENTER;
-            botones.add(CCB, gdc);
-
-            // Accion del boton ver saldo
-            CCB.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    JOptionPane.showMessageDialog(null, "Cargando...");
-                }
-            });
-
-        }
+        setAdminVisible(false);
 
         // PANEL DE LA FOTO DE PERFIL (ESTA CARGADA UNA FOTO GENERICA)
 
@@ -197,7 +173,7 @@ public class CuentaUSGUI {
         // Datos del usuario
 
         // DATO NOMBRE
-        JLabel lblNombre = new JLabel("Juan Pérez");
+        lblNombre = new JLabel("Juan Pérez");
         lblNombre.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblNombre.setForeground(Color.BLACK);
         gpc.gridx = 1;
@@ -211,7 +187,7 @@ public class CuentaUSGUI {
         perfil.add(lblNombre, gpc);
 
         // DATO CORREO
-        JLabel lblcorreo = new JLabel("juanpepito@gmail.com"); // CORREO CAMBIAR PARA QUE APAREZCA
+        lblcorreo = new JLabel("juanpepito@gmail.com"); // CORREO CAMBIAR PARA QUE APAREZCA
         lblcorreo.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblcorreo.setForeground(Color.BLACK);
         gpc.gridx = 1;
@@ -225,7 +201,7 @@ public class CuentaUSGUI {
 
         // DATO cedula
         int cedula = 12343123; // CEDULA CAMBIAR PARA QUE APAREZCA
-        JLabel lblced = new JLabel("CI:" + cedula);
+        lblced = new JLabel("CI: " + cedula);
         lblced.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblced.setForeground(Color.BLACK);
         gpc.gridx = 1;
@@ -238,13 +214,8 @@ public class CuentaUSGUI {
         perfil.add(lblced, gpc);
 
         // DATO ROL
-        String rolsito = " ";
-        if (Admin) {
-            rolsito = "Admininistrador";
-        } else {
-            rolsito = "Usuario";
-        }
-        JLabel lblrol = new JLabel(rolsito);
+        String rolsito = "Usuario";
+        lblrol = new JLabel(rolsito);
         lblrol.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblrol.setForeground(Color.BLACK);
         gpc.gridx = 1;
@@ -267,6 +238,74 @@ public class CuentaUSGUI {
         // frame.add(panel, BorderLayout.CENTER);
         // frame.setVisible(true);
         return panel;
+    }
+
+    public void asignarControlador(CuentaUSController controller) {
+        logout.setActionCommand(CuentaUSController.ACTION_LOGOUT);
+        logout.addActionListener(controller);
+
+        saldo.setActionCommand(CuentaUSController.ACTION_VER_SALDO);
+        saldo.addActionListener(controller);
+
+        if (administrarMenu != null) {
+            administrarMenu.setActionCommand(CuentaUSController.ACTION_ADMIN_MENU);
+            administrarMenu.addActionListener(controller);
+        }
+
+        if (ccb != null) {
+            ccb.setActionCommand(CuentaUSController.ACTION_CCB);
+            ccb.addActionListener(controller);
+        }
+    }
+
+    public void cargarDatos(UserSession session) {
+        if (session == null || !session.isActive()) {
+            setNombre("Sin sesion");
+            setCorreo("");
+            setCedula("");
+            setRol("");
+            setAdminVisible(false);
+            return;
+        }
+
+        Usuario usuario = session.getUsuario();
+        setNombre(usuario.getName());
+        setCorreo(usuario.getEmail());
+        setCedula(usuario.getCedula());
+        setRol(usuario.getRole());
+    }
+
+    public void setAdminVisible(boolean visible) {
+        if (administrarMenu != null) {
+            administrarMenu.setVisible(visible);
+        }
+        if (ccb != null) {
+            ccb.setVisible(visible);
+        }
+    }
+
+    public void setNombre(String nombre) {
+        lblNombre.setText(nombre == null ? "" : nombre);
+    }
+
+    public void setCorreo(String correo) {
+        lblcorreo.setText(correo == null ? "" : correo);
+    }
+
+    public void setCedula(String cedula) {
+        if (cedula == null || cedula.isEmpty()) {
+            lblced.setText("");
+        } else {
+            lblced.setText("CI:" + cedula);
+        }
+    }
+
+    public void setRol(String rol) {
+        lblrol.setText(rol == null ? "" : rol);
+    }
+
+    public void showMessage(String message) {
+        JOptionPane.showMessageDialog(frame, message);
     }
 
 }

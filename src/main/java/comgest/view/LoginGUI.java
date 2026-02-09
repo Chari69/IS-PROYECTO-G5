@@ -1,30 +1,37 @@
 package comgest.view;
 
 import comgest.controller.ControladorView;
-import comgest.model.UserModel;
-import comgest.model.Usuario;
+import comgest.controller.LoginController;
 
 import javax.swing.*;
 
 import comgest.view.components.BotonPlayHolder;
 import comgest.view.components.BotonSimple;
-import comgest.view.components.FrameStyle;
 
 import java.awt.event.*;
 import java.awt.*;
 
 public class LoginGUI {
-    public static void main(String[] args) {
+    private JFrame frame;
+    private BotonPlayHolder cedulita;
+    private BotonPlayHolder contrasena;
+    private BotonSimple bttmlogin;
 
+    public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            crearVentana();
+            LoginGUI view = new LoginGUI();
+            LoginController controller = new LoginController(view);
+            view.asignarControlador(controller);
         });
     }
 
-    public static JPanel crearVentana() {
+    public LoginGUI() {
+        crearVentana();
+    }
+
+    public JPanel crearVentana() {
         // Frame
-    //    JFrame frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
-    
+        // JFrame frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
 
         // Panel Principal
         JPanel panel = new JPanel();
@@ -69,7 +76,7 @@ public class LoginGUI {
         panel.add(invis, gdc);
 
         // cajatexto NOMBRE USUARIO
-        BotonPlayHolder cedulita = new BotonPlayHolder("Cédula Ej 13322122");
+        cedulita = new BotonPlayHolder("Cédula Ej 13322122");
 
         gdc.gridx = 0;
         gdc.gridy = 0; // FILA 0 MAS ARRIBA
@@ -79,40 +86,22 @@ public class LoginGUI {
         ctextos.add(cedulita, gdc);
 
         // caja texto CONTRASEÑA
-        BotonPlayHolder contraseña = new BotonPlayHolder("Contraseña");
+        contrasena = new BotonPlayHolder("Contraseña");
         gdc.gridx = 0;
         gdc.gridy = 1; // FILA 1 MAS ABAJO
         gdc.weightx = 1.0;
         gdc.weighty = 0.1;
         gdc.anchor = GridBagConstraints.SOUTH;
-        ctextos.add(contraseña, gdc);
+        ctextos.add(contrasena, gdc);
 
         // boton de confirmar login
-        BotonSimple bttmlogin = new BotonSimple("Loguearse");
+        bttmlogin = new BotonSimple("Loguearse");
         gdc.gridx = 0;
         gdc.gridy = 2; // FILA 1 MAS ABAJO
         gdc.weightx = 1.0;
         gdc.weighty = 0.1;
         gdc.anchor = GridBagConstraints.SOUTH;
         ctextos.add(bttmlogin, gdc);
-
-        // Accion del boton de confirmar
-
-        bttmlogin.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                ControladorView.mostrarMenu();
-                // ------------------CONEXION CON LA BASE DE DATOS-----------------//
-
-                /*UserModel controladorDB = new UserModel();
-                if (controladorDB.InicioDeSesion(cedulita.getTexto(), contraseña.getTexto())) {
-                    JOptionPane.showMessageDialog(null, "Bienvenido");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Usuario o contraseña invalidos");
-                }
-                controladorDB = null;*/
-            }
-        });
 
         // Añadir
 
@@ -183,7 +172,7 @@ public class LoginGUI {
         lblreg.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(null, "Redirigiendo a registro...");
+                ControladorView.mostrarRegister();
             }
 
             @Override
@@ -226,5 +215,22 @@ public class LoginGUI {
         // frame.add(panel, BorderLayout.CENTER);
         // frame.setVisible(true);
         return panel;
+    }
+
+    public void asignarControlador(LoginController loginController) {
+        bttmlogin.setActionCommand(LoginController.ACTION_LOGIN);
+        bttmlogin.addActionListener(loginController);
+    }
+
+    public String getCedula() {
+        return cedulita.getTexto();
+    }
+
+    public String getPassword() {
+        return contrasena.getTexto();
+    }
+
+    public void showMessage(String message) {
+        JOptionPane.showMessageDialog(frame, message);
     }
 }
