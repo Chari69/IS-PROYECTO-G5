@@ -6,7 +6,6 @@ import comgest.controller.RegisterController;
 import javax.swing.*;
 import comgest.view.components.BotonPlayHolder;
 import comgest.view.components.BotonSimple;
-import comgest.view.components.FrameStyle;
 
 import java.awt.event.*;
 
@@ -27,7 +26,7 @@ public class RegisterGUI {
             RegisterGUI view = new RegisterGUI();
             RegisterController controller = new RegisterController(view);
             view.asignarControlador(controller);
-           
+
         });
     }
 
@@ -38,7 +37,6 @@ public class RegisterGUI {
     public JPanel crearVentana() {
         // // Frame
         // frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
-
 
         // Panel Principal
         JPanel panel = new JPanel();
@@ -69,7 +67,7 @@ public class RegisterGUI {
         fant.setOpaque(false);
         fant.setPreferredSize(new Dimension(160, 200)); // MISMO TAMAÑO QUE LA IMAGEN
         // frame.add(fant, BorderLayout.EAST);
-        panel.add(fant,BorderLayout.EAST);
+        panel.add(fant, BorderLayout.EAST);
 
         // Agregar Panel Para Campos de texto
         JPanel botones = new JPanel();
@@ -221,8 +219,6 @@ public class RegisterGUI {
         bttmreg.setActionCommand(RegisterController.ACTION_REGISTRAR);
         bttmreg.addActionListener(registerController);
     }
-
-  
 
     public String getNombreUsuario() {
         return NombreUsuario.getTexto();

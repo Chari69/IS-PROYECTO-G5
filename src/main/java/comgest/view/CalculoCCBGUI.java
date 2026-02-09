@@ -4,10 +4,8 @@ import javax.swing.*;
 import comgest.controller.CalculoCCBController;
 import comgest.view.components.BotonPlayHolder;
 import comgest.view.components.BotonSimple;
-import comgest.view.components.FrameStyle;
 import comgest.view.components.PanelInferiorPUI;
 
-import java.awt.event.*;
 import java.awt.*;
 
 public class CalculoCCBGUI {
