@@ -2,7 +2,7 @@ package comgest.view;
 
 import javax.swing.*;
 
-import comgest.controller.ControladorView;
+import comgest.controller.CuentaUSController;
 import comgest.view.components.BotonSimple;
 import comgest.view.components.Panel_Inferior_PUI;
 
@@ -256,21 +256,12 @@ public class CuentaUSGUI {
         }
     }
 
-    public void cargarDatos(UserSession session) {
-        if (session == null || !session.isActive()) {
-            setNombre("Sin sesion");
-            setCorreo("");
-            setCedula("");
-            setRol("");
-            setAdminVisible(false);
-            return;
-        }
-
-        Usuario usuario = session.getUsuario();
-        setNombre(usuario.getName());
-        setCorreo(usuario.getEmail());
-        setCedula(usuario.getCedula());
-        setRol(usuario.getRole());
+    public void cargarDatos(String nombre, String correo, String cedula, String rol, boolean isAdmin) {
+        setNombre(nombre);
+        setCorreo(correo);
+        setCedula(cedula);
+        setRol(rol);
+        setAdminVisible(isAdmin);
     }
 
     public void setAdminVisible(boolean visible) {
@@ -294,7 +285,7 @@ public class CuentaUSGUI {
         if (cedula == null || cedula.isEmpty()) {
             lblced.setText("");
         } else {
-            lblced.setText("CI:" + cedula);
+            lblced.setText("CI: " + cedula);
         }
     }
 

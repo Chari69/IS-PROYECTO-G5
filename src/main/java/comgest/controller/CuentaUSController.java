@@ -50,10 +50,16 @@ public class CuentaUSController implements ActionListener {
     public void cargarPerfil() {
         UserSession session = getSessionOrRedirect();
         if (session == null) {
+            view.cargarDatos("Sin sesión", "", "", "", false);
             return;
         }
-        view.cargarDatos(session);
-        view.setAdminVisible(isAdminRole(session.getRole()));
+        String nombre = session.getName();
+        String correo = session.getEmail();
+        String cedula = session.getCedula();
+        String rol = session.getRole();
+        boolean isAdmin = isAdminRole(rol);
+
+        view.cargarDatos(nombre, correo, cedula, rol, isAdmin);
     }
 
     private UserSession getSessionOrRedirect() {
