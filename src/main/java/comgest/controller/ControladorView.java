@@ -35,7 +35,7 @@ public class ControladorView {
         pantalla.add(contenedor);
         
         // Mostrar panel inicial
-        cardLayout.show(contenedor, "REGISTER");
+        cardLayout.show(contenedor, "LOGIN");
 
         pantalla.setVisible(true);
     }

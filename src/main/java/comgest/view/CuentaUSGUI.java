@@ -20,7 +20,7 @@ public class CuentaUSGUI {
 
     public static JPanel crearVentana() {
 
-        boolean Admin = false; // ROL DE MIENTRAS PARA CAMBIAR
+        boolean Admin = true; // ROL DE MIENTRAS PARA CAMBIAR
         // Frame
         // JFrame frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
 

@@ -183,7 +183,7 @@ public class LoginGUI {
         lblreg.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(null, "Redirigiendo a registro...");
+                ControladorView.mostrarRegister();
             }
 
             @Override
