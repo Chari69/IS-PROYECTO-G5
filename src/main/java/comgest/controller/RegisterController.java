@@ -66,6 +66,9 @@ public class RegisterController implements ActionListener {
         if (userModel.verificarCorreoExistente(emailVal)) {
             return "ya hay una cuenta asociada a este correo";
         }
+        if(userModel.verificarCedulaExistente(cedula)){
+            return "ya hay una cuenta asociada a esta cedula";
+        }
 
         boolean registrado = userModel.RegistrarUsuario(
                 nombreVal,

@@ -79,6 +79,15 @@ public class UserModel {
         }
         return false;
     }
+    public boolean verificarCedulaExistente(String cedula) {
+        for (Usuario u : lista_usuarios) {
+            if (u.getCedula().equalsIgnoreCase(cedula)) {
+                return true; // La cedula ya está registrado
+            }
+        }
+        return false;
+    }
+    
 
     private String obtenerRolPorCedula(String cedula) {
         if (cedula == null) {
