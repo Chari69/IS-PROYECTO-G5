@@ -2,14 +2,19 @@ package comgest.view;
 
 import javax.swing.*;
 
+import java.awt.event.MouseAdapter;
+
+import comgest.controller.ControladorView;
 import comgest.view.Utils.JTextArea_Personalizado;
 import comgest.view.Utils.JTextPane_Personalizado;
-import comgest.view.components.BotonSimple;
-import comgest.view.components.Boton_JPanel;
 import comgest.view.components.*;
+
+import java.awt.event.MouseEvent;
+
 
 //import javax.swing.border.Border;
 import java.awt.*;
+
 
 public class panel_menu_UI extends JPanel {
 
@@ -46,27 +51,49 @@ public class panel_menu_UI extends JPanel {
         gbc.weightx = 0.1; 
         this.add(panelIzquierdo, gbc);
 
+       
+       
         //TARJETAS
 
         gbc.fill = GridBagConstraints.NONE;
         gbc.gridx = 1;
         gbc.weightx = 0.4;
         Panel_Agregar = new JPanel();
+        Boton_JPanel AddBotton1 = new Boton_JPanel("resources/AñadirMenú.png", 135,125);
+        Panel_Agregar.add(AddBotton1.getBoton(), BorderLayout.CENTER);
+        AddBotton1.getBoton().addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent e) {
+            ControladorView.mostrarMenu();
+           
+        }
+     });
+
         configurarTarjeta(Panel_Agregar);
         this.add(Panel_Agregar, gbc);
-
-        //VISIBILIDAD DEL BOTON AGREGAR1
+         //VISIBILIDAD DEL BOTON AGREGAR1
         Panel_Agregar.setVisible(false);
+
+       
 
         gbc.gridx = 2;
         Panel_Agregar2 = new JPanel();
+         Boton_JPanel AddBotton2 = new Boton_JPanel("resources/AñadirMenú.png", 135,125);
+        Panel_Agregar2.add(AddBotton2.getBoton(), BorderLayout.CENTER);
+        AddBotton2.getBoton().addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent e) {
+            ControladorView.mostrarMenu();
+           
+        }
+     });
         configurarTarjeta(Panel_Agregar2);
         this.add(Panel_Agregar2, gbc);
          //VISIBILIDAD DEL BOTON AGREGAR2
-        Panel_Agregar2.setVisible(true);
+        Panel_Agregar2.setVisible(false);
 
 
-        gbc.fill = GridBagConstraints.BOTH;
+         gbc.fill = GridBagConstraints.BOTH;
        // Tarjeta 1: Desayuno
         gbc.gridx = 1;
         gbc.weightx = 0.4;
@@ -86,7 +113,7 @@ public class panel_menu_UI extends JPanel {
         this.add(Panel_Almuerzo, gbc);
 
         //VISIBILIDAD DEL PANEL ALMUERZO
-        Panel_Almuerzo.setVisible(false);
+        Panel_Almuerzo.setVisible(true);
 
         //panel derecho
         JPanel panelDerecho = new JPanel(new BorderLayout());
@@ -99,7 +126,7 @@ public class panel_menu_UI extends JPanel {
     }
 
     
-    public static JPanel CrearVentana(){
+    public static JPanel crearVentana(){
         
         JPanel vp = new JPanel(new BorderLayout());
 
@@ -182,10 +209,18 @@ public class panel_menu_UI extends JPanel {
         labelImg.setLayout(new BorderLayout());
 
 
+
         //BOTON CAMBIAR IMAGEN
         BotonSimple hola = new BotonSimple("Cambiar");
         hola.setPreferredSize(new Dimension(60,30));
         hola.setFont(new Font("Segoe UI", Font.BOLD, 13));
+
+        hola.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("hola");
+            }
+        });
 
         JPanel contenedor2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         contenedor2.setOpaque(false);
@@ -223,8 +258,23 @@ public class panel_menu_UI extends JPanel {
     panelIzquierda.setOpaque(false);
     
     // Configuración de botones admin (Basura y Editar)
+ 
     Boton_JPanel Basura = new Boton_JPanel("resources/papelera.jpg");
+     Basura.getBoton().addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent e) {
+            System.out.println("Clic Basura");
+           
+        }
+    });
     Boton_JPanel Editable = new Boton_JPanel("resources/lapiz.png");
+     Editable.getBoton().addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent e) {
+            System.out.println("Clic Editable");
+           
+        }
+    });
     
     
 
@@ -247,6 +297,12 @@ public class panel_menu_UI extends JPanel {
     BotonSimple boton = new BotonSimple("Ordenar");
     boton.setPreferredSize(new Dimension(40,30));
     boton.setFont(new Font("Segoe UI", Font.BOLD, 15));
+    boton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("ordenar");
+            }
+        });
     
     
     contenedor.add(boton, BorderLayout.SOUTH);
@@ -271,11 +327,7 @@ public class panel_menu_UI extends JPanel {
         panel.setPreferredSize(new Dimension(135, 125));
         panel.setBackground(new Color(228,228,255));
         
-        Boton_JPanel AddBotton1 = new Boton_JPanel("resources/AñadirMenú.png", 135,125);
-        panel.add(AddBotton1.getBoton(), BorderLayout.CENTER);
-       
-      
-
+    
     }
 
 }

@@ -2,6 +2,7 @@ package comgest.view;
 
 import javax.swing.*;
 
+import comgest.controller.ControladorView;
 import comgest.view.components.BotonSimple;
 import comgest.view.components.FrameStyle;
 import comgest.view.components.Panel_Inferior_PUI;
@@ -19,7 +20,7 @@ public class CuentaUSGUI {
 
     public static JPanel crearVentana() {
 
-        boolean Admin = true; // ROL DE MIENTRAS PARA CAMBIAR
+        boolean Admin = false; // ROL DE MIENTRAS PARA CAMBIAR
         // Frame
         // JFrame frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
 
@@ -73,7 +74,7 @@ public class CuentaUSGUI {
         logout.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(null, "Saliendo...");
+                ControladorView.mostrarLogin();
             }
         });
 
@@ -125,7 +126,7 @@ public class CuentaUSGUI {
             CCB.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    JOptionPane.showMessageDialog(null, "Cargando...");
+                    ControladorView.mostrarCbb();
                 }
             });
 

@@ -14,8 +14,9 @@ public class ControladorView {
     public static void main(String[] args) {
         JFrame pantalla = FrameStyle.crearFramePrincipal("COMGEST-UCV");
 
+
         JPanel pantallaLogin = LoginGUI.crearVentana();
-        JPanel pantallaMenu = panel_menu_UI.CrearVentana();
+        JPanel pantallaMenu = panel_menu_UI.crearVentana();
         JPanel pantallaCalculoCbb = CalculoCCBGUI.crearVentana();
         JPanel pantallaCuenta = CuentaUSGUI.crearVentana();
 
