@@ -13,32 +13,30 @@ public class Panel_Inferior_PUI extends JPanel {
     Boton_Menu boton_Micuenta;
 
     // Constructor
-   public Panel_Inferior_PUI() {
-    boton_menu = new Boton_Menu("resources/image1.png", "Menú");
-    boton_Micuenta = new Boton_Menu("resources/myaccount.png", "Mi Cuenta");
-    
-    Modificar_Panel_inf();
+    public Panel_Inferior_PUI() {
+        boton_menu = new Boton_Menu("resources/image1.png", "Menú");
+        boton_Micuenta = new Boton_Menu("resources/myaccount.png", "Mi Cuenta");
 
-   
-    boton_Micuenta.getboton().getBoton().addMouseListener(new java.awt.event.MouseAdapter() {
-        @Override
-        public void mouseClicked(java.awt.event.MouseEvent e) {
-            ControladorView.mostrarCuenta();
-           
-        }
-    });
-    boton_menu.getboton().getBoton().addMouseListener(new java.awt.event.MouseAdapter() {
-        @Override
-        public void mouseClicked(java.awt.event.MouseEvent e) {
-            ControladorView.mostrarMenu();
-           
-        }
-    });
+        Modificar_Panel_inf();
 
+        boton_Micuenta.getboton().getBoton().addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                ControladorView.mostrarCuenta();
 
-    this.add(boton_menu);
-    this.add(boton_Micuenta);
-}
+            }
+        });
+        boton_menu.getboton().getBoton().addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                ControladorView.mostrarMenu();
+
+            }
+        });
+
+        this.add(boton_menu);
+        this.add(boton_Micuenta);
+    }
 
     public void Modificar_Panel_inf() {
 
@@ -83,7 +81,8 @@ public class Panel_Inferior_PUI extends JPanel {
             Inferior.setBackground(new Color(228, 228, 255));
 
         }
-        Boton_JPanel getboton(){
+
+        Boton_JPanel getboton() {
             return boton;
         }
 
