@@ -16,6 +16,8 @@ public class ControladorView {
     private static RegisterController registerController;
     private static CuentaUSGUI cuentaView;
     private static CuentaUSController cuentaController;
+    private static MenuGUI menuView;
+    private static MenuController menuController;
 
     public static void main(String[] args) {
         JFrame pantalla = FrameStyle.crearFramePrincipal("COMGEST-UCV");
@@ -25,8 +27,13 @@ public class ControladorView {
         loginController = new LoginController(loginView);
         loginView.asignarControlador(loginController);
 
-        JPanel pantallaMenu = panel_menu_UI.crearVentana();
+        menuView = new MenuGUI();
+        JPanel pantallaMenu = menuView.crearVentana();
+        menuController = new MenuController(menuView);
+        menuView.asignarControlador(menuController);
+
         JPanel pantallaCalculoCbb = CalculoCCBGUI.crearVentana();
+
         cuentaView = new CuentaUSGUI();
         JPanel pantallaCuenta = cuentaView.crearVentana();
         cuentaController = new CuentaUSController(cuentaView);
@@ -46,29 +53,28 @@ public class ControladorView {
         pantalla.add(contenedor);
 
         // Mostrar panel inicial
-        cardLayout.show(contenedor, "LOGIN");
+        mostrarLogin();
 
         pantalla.setVisible(true);
     }
 
     public static void mostrarMenu() {
+        if (menuController != null) {
+            menuController.cargarMenu();
+        }
         cardLayout.show(contenedor, "MENU");
-
     }
 
     public static void mostrarRegister() {
         cardLayout.show(contenedor, "REGISTER");
-
     }
 
     public static void mostrarLogin() {
         cardLayout.show(contenedor, "LOGIN");
-
     }
 
     public static void mostrarCbb() {
         cardLayout.show(contenedor, "CBB");
-
     }
 
     public static void mostrarCuenta() {
