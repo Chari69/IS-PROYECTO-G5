@@ -2,6 +2,8 @@ package comgest.view.components;
 
 import javax.swing.*;
 
+import comgest.controller.ControladorView;
+
 //import javax.swing.border.Border;
 import java.awt.*;
 
@@ -11,17 +13,32 @@ public class Panel_Inferior_PUI extends JPanel {
     Boton_Menu boton_Micuenta;
 
     // Constructor
-    public Panel_Inferior_PUI() {
+   public Panel_Inferior_PUI() {
+    boton_menu = new Boton_Menu("resources/image1.png", "Menú");
+    boton_Micuenta = new Boton_Menu("resources/myaccount.png", "Mi Cuenta");
+    
+    Modificar_Panel_inf();
 
-        boton_menu = new Boton_Menu("resources/image1.png", "Menú");
-        boton_Micuenta = new Boton_Menu("resources/myaccount.png", "Mi Cuenta");
-        Modificar_Panel_inf();
-        this.add(boton_menu);
-        this.add(boton_Micuenta);
+   
+    boton_Micuenta.getboton().getBoton().addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent e) {
+            ControladorView.mostrarCuenta();
+           
+        }
+    });
+    boton_menu.getboton().getBoton().addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent e) {
+            ControladorView.mostrarMenu();
+           
+        }
+    });
 
 
-
-    }
+    this.add(boton_menu);
+    this.add(boton_Micuenta);
+}
 
     public void Modificar_Panel_inf() {
 
@@ -65,6 +82,9 @@ public class Panel_Inferior_PUI extends JPanel {
             Inferior.setOpaque(true);
             Inferior.setBackground(new Color(228, 228, 255));
 
+        }
+        Boton_JPanel getboton(){
+            return boton;
         }
 
     }

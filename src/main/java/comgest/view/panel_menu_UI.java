@@ -46,8 +46,6 @@ public class panel_menu_UI extends JPanel {
         gbc.weightx = 0.1; 
         this.add(panelIzquierdo, gbc);
 
-       
-       
         //TARJETAS
 
         gbc.fill = GridBagConstraints.NONE;
@@ -68,7 +66,7 @@ public class panel_menu_UI extends JPanel {
         Panel_Agregar2.setVisible(true);
 
 
-         gbc.fill = GridBagConstraints.BOTH;
+        gbc.fill = GridBagConstraints.BOTH;
        // Tarjeta 1: Desayuno
         gbc.gridx = 1;
         gbc.weightx = 0.4;
@@ -101,7 +99,7 @@ public class panel_menu_UI extends JPanel {
     }
 
     
-    public static JPanel CrearVentana(JFrame Leonardo){
+    public static JPanel CrearVentana(){
         
         JPanel vp = new JPanel(new BorderLayout());
 
@@ -111,7 +109,6 @@ public class panel_menu_UI extends JPanel {
         vp.add(panel_menu, BorderLayout.CENTER);
         vp.revalidate();
         vp.repaint();
-        Leonardo.add(vp);
 
         return vp;
         
@@ -226,7 +223,6 @@ public class panel_menu_UI extends JPanel {
     panelIzquierda.setOpaque(false);
     
     // Configuración de botones admin (Basura y Editar)
- 
     Boton_JPanel Basura = new Boton_JPanel("resources/papelera.jpg");
     Boton_JPanel Editable = new Boton_JPanel("resources/lapiz.png");
     

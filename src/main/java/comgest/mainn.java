@@ -1,4 +1,4 @@
-package comgest;
+/*package comgest;
 
 import comgest.view.*;
 import comgest.view.components.FrameStyle;
@@ -21,4 +21,4 @@ public class mainn {
         vp.setVisible(true);
 
     }
-}
+}*/

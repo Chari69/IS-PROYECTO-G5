@@ -76,7 +76,7 @@ public class RegisterController implements ActionListener {
         if (!registrado) {
             return "La cédula no está autorizada";
         }
-
+        ControladorView.mostrarMenu();
         return "Registrado exitosamente";
     }
 

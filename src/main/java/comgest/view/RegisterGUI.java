@@ -1,5 +1,6 @@
 package comgest.view;
 
+import comgest.controller.ControladorView;
 import comgest.controller.RegisterController;
 
 import javax.swing.*;
@@ -145,7 +146,7 @@ public class RegisterGUI {
         lbllog.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(null, "Redirigiendo a login...");
+                ControladorView.mostrarLogin();
             }
 
             @Override
