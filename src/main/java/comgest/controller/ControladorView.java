@@ -18,6 +18,8 @@ public class ControladorView {
     private static CuentaUSController cuentaController;
     private static MenuGUI menuView;
     private static MenuController menuController;
+    private static CalculoCCBGUI calculoCCBView;
+    private static CalculoCCBController calculoCCBController;
 
     public static void main(String[] args) {
         JFrame pantalla = FrameStyle.crearFramePrincipal("COMGEST-UCV");
@@ -32,7 +34,10 @@ public class ControladorView {
         menuController = new MenuController(menuView);
         menuView.asignarControlador(menuController);
 
-        JPanel pantallaCalculoCbb = CalculoCCBGUI.crearVentana();
+        calculoCCBView = new CalculoCCBGUI();
+        JPanel pantallaCalculoCbb = calculoCCBView.crearVentana();
+        calculoCCBController = new CalculoCCBController(calculoCCBView);
+        calculoCCBView.asignarControlador(calculoCCBController);
 
         cuentaView = new CuentaUSGUI();
         JPanel pantallaCuenta = cuentaView.crearVentana();
@@ -74,6 +79,9 @@ public class ControladorView {
     }
 
     public static void mostrarCbb() {
+        if (calculoCCBController != null) {
+            calculoCCBController.cargarCCBActual();
+        }
         cardLayout.show(contenedor, "CBB");
     }
 

@@ -253,7 +253,7 @@ public class MenuController implements ActionListener {
         double descuentoporcentaje = obtenerDescuentoPorRol(role);
 
         // Aplicar descuento
-        double precioFinal = precio * (1 - (descuentoporcentaje / 100));
+        double precioFinal = precio * (descuentoporcentaje / 100);
 
         System.out.println("DEBUG Precio: CCB=" + ccbValor +
                 ", Rol=" + role + ", Descuento=" + descuentoporcentaje + "%, Final=" + precioFinal);
@@ -269,13 +269,13 @@ public class MenuController implements ActionListener {
 
         switch (normalized) {
             case "profesor":
-                return 90; // 30% de descuento para profesor
+                return 90;
             case "empleado":
                 return 110;
             case "estudiante":
                 return 30;
             default:
-                return 0; // Sin descuento por defecto
+                return 100; // Sin descuento por defecto
         }
     }
 
@@ -306,7 +306,7 @@ public class MenuController implements ActionListener {
         if (role == null)
             return false;
         String normalized = role.trim().toLowerCase();
-        return normalized.equals("admin") || normalized.equals("administrador");
+        return normalized.equals("administrador");
     }
 
     // === MÉTODOS HELPER PARA REDUCIR DUPLICACIÓN ===

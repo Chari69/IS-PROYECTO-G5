@@ -1,6 +1,7 @@
 package comgest.view;
 
 import javax.swing.*;
+import comgest.controller.CalculoCCBController;
 import comgest.view.components.BotonPlayHolder;
 import comgest.view.components.BotonSimple;
 import comgest.view.components.FrameStyle;
@@ -10,13 +11,21 @@ import java.awt.event.*;
 import java.awt.*;
 
 public class CalculoCCBGUI {
+    // Componentes de entrada
+    private BotonPlayHolder campoCosFijos;
+    private BotonPlayHolder campoCosteosVariables;
+    private BotonPlayHolder campoBandejas;
+    private BotonPlayHolder campoMerma;
+    private JLabel labelCCBResultado;
+    private BotonSimple botonGuardarCalcular;
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            crearVentana();
+            new CalculoCCBGUI().crearVentana();
         });
     }
 
-    public static JPanel crearVentana() {
+    public JPanel crearVentana() {
 
         // // Frame
         // JFrame frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
@@ -59,37 +68,37 @@ public class CalculoCCBGUI {
         gdc.insets = new Insets(10, 10, 10, 10);
 
         // Caja CF
-        BotonPlayHolder cf = new BotonPlayHolder("Costos fijos totales (Bs)");
+        campoCosFijos = new BotonPlayHolder("Costos fijos totales (Bs)");
         gdc.gridx = 0;
         gdc.gridy = 0;
         gdc.weightx = 1.0;
         gdc.weighty = 0;
         gdc.anchor = GridBagConstraints.CENTER;
-        botones.add(cf, gdc);
+        botones.add(campoCosFijos, gdc);
         // Caja CV
-        BotonPlayHolder cv = new BotonPlayHolder("Costos variables (Bs)");
+        campoCosteosVariables = new BotonPlayHolder("Costos variables (Bs)");
         gdc.gridx = 0;
         gdc.gridy = 1;
         gdc.weightx = 1.0;
         gdc.weighty = 0;
         gdc.anchor = GridBagConstraints.CENTER;
-        botones.add(cv, gdc);
+        botones.add(campoCosteosVariables, gdc);
         // Caja Bandejas
-        BotonPlayHolder bande = new BotonPlayHolder("Cantidad de bandejas");
+        campoBandejas = new BotonPlayHolder("Cantidad de bandejas");
         gdc.gridx = 0;
         gdc.gridy = 2;
         gdc.weightx = 1.0;
         gdc.weighty = 0;
         gdc.anchor = GridBagConstraints.CENTER;
-        botones.add(bande, gdc);
+        botones.add(campoBandejas, gdc);
         // Caja merma
-        BotonPlayHolder merma = new BotonPlayHolder("Porcentaje de merma (%)");
+        campoMerma = new BotonPlayHolder("Porcentaje de merma (%)");
         gdc.gridx = 0;
         gdc.gridy = 3;
         gdc.weightx = 1.0;
         gdc.weighty = 0;
         gdc.anchor = GridBagConstraints.CENTER;
-        botones.add(merma, gdc);
+        botones.add(campoMerma, gdc);
 
         // caja invisible para que se lleve el focus
 
@@ -101,43 +110,35 @@ public class CalculoCCBGUI {
 
         // Agregar boton de confirmar calculo al panel de botones
 
-        BotonSimple bttmreg = new BotonSimple("Guardar y Calcular");
-        bttmreg.setPreferredSize(new Dimension(250, 50));
+        botonGuardarCalcular = new BotonSimple("Guardar y Calcular");
+        botonGuardarCalcular.setPreferredSize(new Dimension(250, 50));
+        botonGuardarCalcular.setActionCommand(CalculoCCBController.ACTION_CALCULAR);
         gdc.gridx = 0;
         gdc.gridy = 5;
         gdc.weightx = 0;
         gdc.weighty = 0;
         gdc.anchor = GridBagConstraints.CENTER;
-        botones.add(bttmreg, gdc);
-
-        // Accion del boton de confirmar
-        bttmreg.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(null, "Calculando...");
-            }
-        });
+        botones.add(botonGuardarCalcular, gdc);
 
         // CBB texto
-        int CBB = 4; // AQUI DEBERIA ESTAR EL RESULTADO DEL CBB
-        JLabel CBB_Actual = new JLabel("CBB_Actual: " + CBB + " Bs"); // AQUI VA LA VARIABLE
-        CBB_Actual.setOpaque(true);
-        CBB_Actual.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        CBB_Actual.setPreferredSize(new Dimension(200, 30));
-        CBB_Actual.setBackground(new Color(255, 255, 255));
-        CBB_Actual.setForeground(new Color(100, 100, 100));
-        CBB_Actual.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        CBB_Actual.setMaximumSize(new Dimension(250, 50)); // Para evitar que me lo cambian despues
-        CBB_Actual.setMinimumSize(new Dimension(250, 50));
-        CBB_Actual.setHorizontalAlignment(SwingConstants.CENTER);// TEXTO CENTRADO
-        CBB_Actual.setVerticalAlignment(SwingConstants.CENTER); // TEXTO CENTRADO
+        labelCCBResultado = new JLabel("CCB Actual: 0.00 Bs"); // AQUI VA LA VARIABLE
+        labelCCBResultado.setOpaque(true);
+        labelCCBResultado.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        labelCCBResultado.setPreferredSize(new Dimension(200, 30));
+        labelCCBResultado.setBackground(new Color(255, 255, 255));
+        labelCCBResultado.setForeground(new Color(100, 100, 100));
+        labelCCBResultado.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        labelCCBResultado.setMaximumSize(new Dimension(250, 50)); // Para evitar que me lo cambian despues
+        labelCCBResultado.setMinimumSize(new Dimension(250, 50));
+        labelCCBResultado.setHorizontalAlignment(SwingConstants.CENTER);// TEXTO CENTRADO
+        labelCCBResultado.setVerticalAlignment(SwingConstants.CENTER); // TEXTO CENTRADO
 
         gdc.gridx = 0;
         gdc.gridy = 4;
         gdc.weightx = 0;
         gdc.weighty = 0;
         gdc.anchor = GridBagConstraints.CENTER;
-        botones.add(CBB_Actual, gdc);
+        botones.add(labelCCBResultado, gdc);
 
         // AÑADIMOS EL PANEL INFERIOR
         PanelInferiorPUI PanelAbajo = new PanelInferiorPUI();
@@ -150,5 +151,40 @@ public class CalculoCCBGUI {
         // frame.setVisible(true);
         return panel;
 
+    }
+
+    // Métodos para obtener los valores de los campos de entrada
+    public double getCostosFijos() {
+        return campoCosFijos.getValue();
+    }
+
+    public double getCostosVariables() {
+        return campoCosteosVariables.getValue();
+    }
+
+    public double getNumeroBandejas() {
+        return campoBandejas.getValue();
+    }
+
+    public double getPorcentajeMerma() {
+        return campoMerma.getValue();
+    }
+
+    // Método para actualizar el resultado del CCB en la vista
+    public void actualizarCCBResultado(double ccbValor) {
+        labelCCBResultado.setText(String.format("CCB Actual: %.2f Bs", ccbValor));
+    }
+
+    // Método para asignar el controlador a los botones
+    public void asignarControlador(CalculoCCBController controlador) {
+        if (controlador == null) {
+            throw new IllegalArgumentException("El controlador no puede ser null");
+        }
+        botonGuardarCalcular.addActionListener(controlador);
+    }
+
+    // Método para mostrar mensajes al usuario
+    public void showMessage(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje);
     }
 }

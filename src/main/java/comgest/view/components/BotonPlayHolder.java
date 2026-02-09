@@ -91,7 +91,21 @@ public class BotonPlayHolder extends JPanel {
         }
         return contenido;
     }
+
     public boolean isEmpty() {
         return getTexto().isEmpty();
+    }
+
+    // Método para obtener el valor como número double
+    public double getValue() {
+        String valor = getTexto();
+        if (valor.isEmpty()) {
+            return 0.0;
+        }
+        try {
+            return Double.parseDouble(valor);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("El valor '" + valor + "' no es un número válido");
+        }
     }
 }
