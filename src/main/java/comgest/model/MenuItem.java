@@ -6,12 +6,14 @@ public class MenuItem {
     private String name;
     private String descripcion;
     private String imgPath;
+    private String horario;
     private String id;
 
-    public MenuItem(String name, String descripcion, String imgPath) {
+    public MenuItem(String name, String descripcion, String imgPath, String horario) {
         this.name = name;
         this.descripcion = descripcion;
         this.imgPath = imgPath;
+        this.horario = horario;
         this.id = UUID.randomUUID().toString();
     }
 
@@ -26,6 +28,10 @@ public class MenuItem {
 
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
+    }
+
+    public void setHorario(String horario) {
+        this.horario = horario;
     }
 
     // getters
@@ -43,5 +49,9 @@ public class MenuItem {
 
     public String getId() {
         return id;
+    }
+
+    public String getHorario() {
+        return horario;
     }
 }

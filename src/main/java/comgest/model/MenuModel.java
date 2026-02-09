@@ -21,12 +21,12 @@ public class MenuModel {
         cargarMenuItems();
     }
 
-    public void agregarMenuItem(String name, String descripcion, String imgPath) {
-        menu_items.add(new MenuItem(name, descripcion, imgPath));
+    public void agregarMenuItem(String name, String descripcion, String imgPath, String horario) {
+        menu_items.add(new MenuItem(name, descripcion, imgPath, horario));
         guardarMenuItems();
     }
 
-    public boolean actualizarMenuItem(String id, String name, String descripcion, String imgPath) {
+    public boolean actualizarMenuItem(String id, String name, String descripcion, String imgPath, String horario) {
         String idNormalizado = normalizarId(id);
         if (idNormalizado.isEmpty()) {
             return false;
@@ -40,6 +40,7 @@ public class MenuModel {
         item.setName(name);
         item.setDescripcion(descripcion);
         item.setImgPath(imgPath);
+        item.setHorario(horario);
         guardarMenuItems();
         return true;
     }
@@ -90,7 +91,7 @@ public class MenuModel {
         }
     }
 
-    private MenuItem buscarPorId(String id) {
+    public MenuItem buscarPorId(String id) {
         for (MenuItem item : menu_items) {
             if (id.equals(item.getId())) {
                 return item;
