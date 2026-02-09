@@ -1,7 +1,7 @@
 {
-  "costosFijos": 34324.0,
-  "costosVariables": 342.0,
-  "numeroBandejas": 334.0,
-  "porcentajeMerma": 12.0,
-  "CCBValor": 116.24526946107787
+  "costosFijos": 1.0,
+  "costosVariables": 1.0,
+  "numeroBandejas": 1.0,
+  "porcentajeMerma": 0.0,
+  "CCBValor": 2.0
 }
