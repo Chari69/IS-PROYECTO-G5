@@ -50,4 +50,8 @@ public final class UserSession {
     public String getRole() {
         return usuario.getRole();
     }
+
+    public String getCedula() {
+        return usuario.getCedula();
+    }
 }
