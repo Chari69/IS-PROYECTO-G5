@@ -4,7 +4,7 @@ import javax.swing.*;
 import comgest.view.components.BotonPlayHolder;
 import comgest.view.components.BotonSimple;
 import comgest.view.components.FrameStyle;
-import comgest.view.components.Panel_Inferior_PUI;
+import comgest.view.components.PanelInferiorPUI;
 
 import java.awt.event.*;
 import java.awt.*;
@@ -140,7 +140,7 @@ public class CalculoCCBGUI {
         botones.add(CBB_Actual, gdc);
 
         // AÑADIMOS EL PANEL INFERIOR
-        Panel_Inferior_PUI PanelAbajo = new Panel_Inferior_PUI();
+        PanelInferiorPUI PanelAbajo = new PanelInferiorPUI();
         panel.add(PanelAbajo, BorderLayout.SOUTH);
 
         // Agregar el panel botones al principal

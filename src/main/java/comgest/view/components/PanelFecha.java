@@ -6,17 +6,17 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Panel_Fecha {
- 
+public class PanelFecha {
+
     JPanel Espacio;
     JLabel Text;
     BotonSimple boton = new BotonSimple("DD/MM/AA");
 
-    public Panel_Fecha(){
+    public PanelFecha() {
         Espacio = new JPanel();
         Espacio.setLayout(new BorderLayout());
-        
-        //Texto
+
+        // Texto
         Text = new JLabel("Panel Administrativo");
         Text.setFont(new Font("Serif", Font.BOLD, 16));
 
@@ -24,7 +24,7 @@ public class Panel_Fecha {
         Espacio.add(boton, BorderLayout.SOUTH);
     }
 
-    public JPanel get_Espacio(){
+    public JPanel get_Espacio() {
         return Espacio;
     }
 

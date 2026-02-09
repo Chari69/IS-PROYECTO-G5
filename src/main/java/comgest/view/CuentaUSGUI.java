@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import comgest.controller.CuentaUSController;
 import comgest.view.components.BotonSimple;
-import comgest.view.components.Panel_Inferior_PUI;
+import comgest.view.components.PanelInferiorPUI;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -226,7 +226,7 @@ public class CuentaUSGUI {
         perfil.add(lblrol, gpc);
 
         // AÑADIMOS EL PANEL INFERIOR
-        Panel_Inferior_PUI PanelAbajo = new Panel_Inferior_PUI();
+        PanelInferiorPUI PanelAbajo = new PanelInferiorPUI();
         panel.add(PanelAbajo, BorderLayout.SOUTH);
 
         // AÑADIMOS EL PANEL DE PERFIL Y DE BOTONES AL PANEL PRINCIPAL

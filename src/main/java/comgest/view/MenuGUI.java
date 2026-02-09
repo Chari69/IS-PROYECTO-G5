@@ -95,7 +95,7 @@ public class MenuGUI extends JPanel {
         Panel_Agregar.setBackground(new Color(230, 245, 230));
         Panel_Agregar.setBorder(BorderFactory.createLineBorder(new Color(76, 175, 80), 2, true));
 
-        Boton_JPanel AddBotton1 = new Boton_JPanel("resources/AñadirMenú.png", 135, 125);
+        BotonJPanel AddBotton1 = new BotonJPanel("resources/AñadirMenú.png", 135, 125);
         btnAgregar1 = AddBotton1.getBoton();
         Panel_Agregar.add(AddBotton1.getBoton(), BorderLayout.CENTER);
 
@@ -116,7 +116,7 @@ public class MenuGUI extends JPanel {
         Panel_Agregar2.setBackground(new Color(230, 245, 230));
         Panel_Agregar2.setBorder(BorderFactory.createLineBorder(new Color(76, 175, 80), 2, true));
 
-        Boton_JPanel AddBotton2 = new Boton_JPanel("resources/AñadirMenú.png", 135, 125);
+        BotonJPanel AddBotton2 = new BotonJPanel("resources/AñadirMenú.png", 135, 125);
         btnAgregar2 = AddBotton2.getBoton();
         Panel_Agregar2.add(AddBotton2.getBoton(), BorderLayout.CENTER);
 
@@ -164,7 +164,7 @@ public class MenuGUI extends JPanel {
     public JPanel crearVentana() {
         JPanel vp = new JPanel(new BorderLayout());
 
-        Panel_Inferior_PUI panel = new Panel_Inferior_PUI();
+        PanelInferiorPUI panel = new PanelInferiorPUI();
         vp.add(panel, BorderLayout.SOUTH);
         vp.add(this, BorderLayout.CENTER);
         vp.revalidate();
@@ -299,8 +299,8 @@ public class MenuGUI extends JPanel {
         JPanel panelIzquierda = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
         panelIzquierda.setOpaque(false);
 
-        Boton_JPanel btnBasura = new Boton_JPanel("resources/papelera.jpg");
-        Boton_JPanel btnEditar = new Boton_JPanel("resources/lapiz.png");
+        BotonJPanel btnBasura = new BotonJPanel("resources/papelera.jpg");
+        BotonJPanel btnEditar = new BotonJPanel("resources/lapiz.png");
 
         btnBasura.getBoton().setBackground(Color.WHITE);
         btnEditar.getBoton().setBackground(Color.WHITE);

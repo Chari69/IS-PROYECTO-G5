@@ -7,13 +7,13 @@ import comgest.controller.ControladorView;
 //import javax.swing.border.Border;
 import java.awt.*;
 
-public class Panel_Inferior_PUI extends JPanel {
+public class PanelInferiorPUI extends JPanel {
 
     Boton_Menu boton_menu;
     Boton_Menu boton_Micuenta;
 
     // Constructor
-    public Panel_Inferior_PUI() {
+    public PanelInferiorPUI() {
         boton_menu = new Boton_Menu("resources/image1.png", "Menú");
         boton_Micuenta = new Boton_Menu("resources/myaccount.png", "Mi Cuenta");
 
@@ -47,7 +47,7 @@ public class Panel_Inferior_PUI extends JPanel {
     // Clase del boton del menu
     public class Boton_Menu extends JPanel {
 
-        Boton_JPanel boton;
+        BotonJPanel boton;
         JLabel Inferior;
 
         // Constructor
@@ -58,7 +58,7 @@ public class Panel_Inferior_PUI extends JPanel {
             this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
             // Botones JPanel
-            boton = new Boton_JPanel(ruta);
+            boton = new BotonJPanel(ruta);
             Inferior = new JLabel(nombre);
 
             Modificar_Superior();
@@ -82,7 +82,7 @@ public class Panel_Inferior_PUI extends JPanel {
 
         }
 
-        Boton_JPanel getboton() {
+        BotonJPanel getboton() {
             return boton;
         }
 

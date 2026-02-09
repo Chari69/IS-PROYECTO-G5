@@ -5,37 +5,38 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Boton_JPanel{
+public class BotonJPanel {
 
     JPanel Boton;
     JLabel label;
-    Color colorNormal = new Color(228, 228, 255); 
+    Color colorNormal = new Color(228, 228, 255);
     Color colorHover = new Color(220, 220, 220);
     int x;
     int y;
 
-    public Boton_JPanel(String Imagen_ruta) {
+    public BotonJPanel(String Imagen_ruta) {
         Boton = new JPanel();
         this.x = 25;
         this.y = 25;
 
         Boton.setLayout(new BorderLayout());
-        Boton.setPreferredSize(new Dimension(35, 35)); 
+        Boton.setPreferredSize(new Dimension(35, 35));
         Boton.setBackground(colorNormal);
-        Boton.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        Boton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         CambiarIcono(Imagen_ruta);
-        AnimarBoton(); 
+        AnimarBoton();
     }
-      public Boton_JPanel(String Imagen_ruta, int x, int y) {
+
+    public BotonJPanel(String Imagen_ruta, int x, int y) {
         Boton = new JPanel();
-        this.x = (int)(x * 0.7);
-        this.y = (int)(y * 0.7);
+        this.x = (int) (x * 0.7);
+        this.y = (int) (y * 0.7);
         Boton.setLayout(new BorderLayout());
-        Boton.setPreferredSize(new Dimension(x, y)); 
+        Boton.setPreferredSize(new Dimension(x, y));
         Boton.setBackground(colorNormal);
-        
+
         CambiarIcono(Imagen_ruta);
-        AnimarBoton(); 
+        AnimarBoton();
     }
 
     void AnimarBoton() {
@@ -74,12 +75,12 @@ public class Boton_JPanel{
         return Boton;
     }
 
-    public void CambiarIcono(String ruta){
+    public void CambiarIcono(String ruta) {
 
-        ImageIcon icon = new ImageIcon(Boton_JPanel.class.getResource("../"+ruta));
-        Image imgEscalada = icon.getImage().getScaledInstance(x+10, y, Image.SCALE_SMOOTH);
+        ImageIcon icon = new ImageIcon(BotonJPanel.class.getResource("../" + ruta));
+        Image imgEscalada = icon.getImage().getScaledInstance(x + 10, y, Image.SCALE_SMOOTH);
         label = new JLabel(new ImageIcon(imgEscalada));
-        label.setOpaque(false); 
+        label.setOpaque(false);
         Boton.add(label, BorderLayout.CENTER);
 
     }
