@@ -21,12 +21,12 @@ public class MenuModel {
         cargarMenuItems();
     }
 
-    public void agregarMenuItem(String name, String descripcion, String imgPath, double precio) {
-        menu_items.add(new MenuItem(name, descripcion, precio, imgPath));
+    public void agregarMenuItem(String name, String descripcion, String imgPath) {
+        menu_items.add(new MenuItem(name, descripcion, imgPath));
         guardarMenuItems();
     }
 
-    public boolean actualizarMenuItem(String id, String name, String descripcion, String imgPath, double precio) {
+    public boolean actualizarMenuItem(String id, String name, String descripcion, String imgPath) {
         String idNormalizado = normalizarId(id);
         if (idNormalizado.isEmpty()) {
             return false;
@@ -40,7 +40,6 @@ public class MenuModel {
         item.setName(name);
         item.setDescripcion(descripcion);
         item.setImgPath(imgPath);
-        item.setPrecio(precio);
         guardarMenuItems();
         return true;
     }

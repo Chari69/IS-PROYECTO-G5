@@ -5,14 +5,12 @@ import java.util.UUID;
 public class MenuItem {
     private String name;
     private String descripcion;
-    private double precio;
     private String imgPath;
     private String id;
 
-    public MenuItem(String name, String descripcion, double precio, String imgPath) {
+    public MenuItem(String name, String descripcion, String imgPath) {
         this.name = name;
         this.descripcion = descripcion;
-        this.precio = precio;
         this.imgPath = imgPath;
         this.id = UUID.randomUUID().toString();
     }
@@ -24,10 +22,6 @@ public class MenuItem {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public void setPrecio(double precio) {
-        this.precio = precio;
     }
 
     public void setImgPath(String imgPath) {
@@ -45,10 +39,6 @@ public class MenuItem {
 
     public String getImgPath() {
         return imgPath;
-    }
-
-    public double getPrecio() {
-        return precio;
     }
 
     public String getId() {
