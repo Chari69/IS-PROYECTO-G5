@@ -1,5 +1,7 @@
 package comgest.controller;
 
+import comgest.utils.*;
+
 import comgest.model.UserModel;
 import comgest.model.UserSession;
 import comgest.model.Usuario;
@@ -35,7 +37,7 @@ public class LoginController implements ActionListener {
             return;
         }
 
-        String cedula = normalizar(view.getCedula());
+        String cedula = Utils.normalizar(view.getCedula());
         String password = view.getPassword();
 
         if (cedula.isEmpty()) {
@@ -58,9 +60,5 @@ public class LoginController implements ActionListener {
         UserSession.startSession(usuario);
         view.showMessage("Bienvenido");
         ControladorView.mostrarMenu();
-    }
-
-    private String normalizar(String value) {
-        return value == null ? "" : value.trim();
     }
 }

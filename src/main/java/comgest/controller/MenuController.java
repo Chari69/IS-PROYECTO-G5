@@ -1,5 +1,7 @@
 package comgest.controller;
 
+import comgest.utils.*;
+
 import comgest.model.MenuModel;
 import comgest.model.UserSession;
 import comgest.model.CCBModel;
@@ -79,7 +81,7 @@ public class MenuController implements ActionListener {
 
     public void cargarMenu() {
         UserSession session = UserSession.getInstance();
-        boolean isAdmin = session != null && session.isActive() && isAdminRole(session.getRole());
+        boolean isAdmin = session != null && session.isActive() && Utils.isAdminRole(session.getRole());
 
         // Cargar items del menú desde MenuModel
         var items = menuModel.getMenuItems();
@@ -90,7 +92,7 @@ public class MenuController implements ActionListener {
         view.setAdminVisible(isAdmin);
 
         // Obtener el precio del CCB (con descuento por rol si hay sesion activa)
-        double ccbValor = ccbModel.obtenerCCB().getCCBValor();
+        double ccbValor = ccbModel.recargarCCB().getCCBValor();
         double precioMostrar = (session != null && session.isActive())
                 ? calcularPrecioConDescuento(ccbValor, session)
                 : ccbValor;
@@ -284,7 +286,7 @@ public class MenuController implements ActionListener {
         if (session == null)
             return false;
 
-        if (!isAdminRole(session.getRole())) {
+        if (!Utils.isAdminRole(session.getRole())) {
             view.showMessage("Acceso denegado. Solo administradores.");
             return false;
         }
@@ -300,13 +302,6 @@ public class MenuController implements ActionListener {
             return null;
         }
         return session;
-    }
-
-    private boolean isAdminRole(String role) {
-        if (role == null)
-            return false;
-        String normalized = role.trim().toLowerCase();
-        return normalized.equals("administrador");
     }
 
     // === MÉTODOS HELPER PARA REDUCIR DUPLICACIÓN ===

@@ -17,6 +17,7 @@ public class CCB {
 
     public void calcularCCB() {
         CCBValor = ((costosFijos + costosVariables) / numeroBandejas) * (1 + (porcentajeMerma / 100));
+        CCBValor = Math.round(CCBValor * 100.0) / 100.0;
     }
 
     public void setCostosFijos(double costosFijos) {

@@ -1,10 +1,12 @@
 package comgest.controller;
 
+import comgest.utils.*;
+
 import comgest.model.UserSession;
 import comgest.view.CuentaUSGUI;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.ActionListener;;
 
 public class CuentaUSController implements ActionListener {
     public static final String ACTION_LOGOUT = "LOGOUT";
@@ -57,7 +59,7 @@ public class CuentaUSController implements ActionListener {
         String correo = session.getEmail();
         String cedula = session.getCedula();
         String rol = session.getRole();
-        boolean isAdmin = isAdminRole(rol);
+        boolean isAdmin = Utils.isAdminRole(rol);
 
         view.cargarDatos(nombre, correo, cedula, rol, isAdmin);
     }
@@ -70,13 +72,5 @@ public class CuentaUSController implements ActionListener {
             return null;
         }
         return session;
-    }
-
-    private boolean isAdminRole(String role) {
-        if (role == null) {
-            return false;
-        }
-        String normalized = role.trim().toLowerCase();
-        return normalized.equals("admin") || normalized.equals("administrador");
     }
 }

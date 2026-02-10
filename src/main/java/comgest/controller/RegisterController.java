@@ -1,5 +1,7 @@
 package comgest.controller;
 
+import comgest.utils.*;
+
 import comgest.model.UserModel;
 import comgest.view.RegisterGUI;
 
@@ -44,9 +46,9 @@ public class RegisterController implements ActionListener {
 
     public String registrar(String nombre, String cedula, String email, String password,
             String passwordConfirm) {
-        String nombreVal = normalizar(nombre);
-        String cedulaVal = normalizar(cedula);
-        String emailVal = normalizar(email);
+        String nombreVal = Utils.normalizar(nombre);
+        String cedulaVal = Utils.normalizar(cedula);
+        String emailVal = Utils.normalizar(email);
 
         if (password == null || password.isEmpty()) {
             return "el campo contraseña es obligatorio";
@@ -66,25 +68,15 @@ public class RegisterController implements ActionListener {
         if (userModel.verificarCorreoExistente(emailVal)) {
             return "ya hay una cuenta asociada a este correo";
         }
-        if(userModel.verificarCedulaExistente(cedula)){
+        if (userModel.verificarCedulaExistente(cedula)) {
             return "ya hay una cuenta asociada a esta cedula";
         }
 
-        boolean registrado = userModel.RegistrarUsuario(
-                nombreVal,
-                password,
-                emailVal,
-                cedulaVal,
-                0);
+        boolean registrado = userModel.RegistrarUsuario(nombreVal, password, emailVal, cedulaVal, 0);
         if (!registrado) {
             return "La cédula no está autorizada";
         }
         ControladorView.mostrarLogin();
         return "Registrado exitosamente";
     }
-
-    private String normalizar(String value) {
-        return value == null ? "" : value.trim();
-    }
-
 }
