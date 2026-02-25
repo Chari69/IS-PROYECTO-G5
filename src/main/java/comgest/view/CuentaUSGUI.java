@@ -15,6 +15,7 @@ public class CuentaUSGUI {
     private JLabel lblcorreo;
     private JLabel lblced;
     private JLabel lblrol;
+    private JLabel lblsald;
     private BotonSimple logout;
     private BotonSimple saldo;
     private BotonSimple administrarMenu;
@@ -70,26 +71,9 @@ public class CuentaUSGUI {
         botones.setOpaque(false);
         botones.setBorder(BorderFactory.createEmptyBorder(0, 0, 100, 0)); // PARA SUBIRLOS A LA ALTURA DEL PERFIL
 
-        // Boton logout
-        logout = new BotonSimple("Logout");
-        gdc.gridx = 0;
-        gdc.gridy = 0;
-        gdc.weightx = 0.0;
-        gdc.weighty = 0.0;
-        gdc.anchor = GridBagConstraints.CENTER;
-        botones.add(logout, gdc);
-
-        // Boton Ver Saldo
-        saldo = new BotonSimple("Ver Saldo");
-        gdc.gridx = 0;
-        gdc.gridy = 1;
-        gdc.weightx = 0.0;
-        gdc.weighty = 0.0;
-        gdc.anchor = GridBagConstraints.CENTER;
-        botones.add(saldo, gdc);
         administrarMenu = new BotonSimple("Administrar Menù");
         gdc.gridx = 0;
-        gdc.gridy = 2;
+        gdc.gridy = 1;
         gdc.weightx = 0.0;
         gdc.weighty = 0.0;
         gdc.anchor = GridBagConstraints.CENTER;
@@ -102,6 +86,15 @@ public class CuentaUSGUI {
         gdc.weighty = 0.0;
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(ccb, gdc);
+
+          // Boton Ver Saldo
+        saldo = new BotonSimple("Recargar Saldo");
+        gdc.gridx = 0;
+        gdc.gridy = 2;
+        gdc.weightx = 0.0;
+        gdc.weighty = 0.0;
+        gdc.anchor = GridBagConstraints.CENTER;
+        botones.add(saldo,gdc);
 
         setAdminVisible(false);
 
@@ -164,7 +157,7 @@ public class CuentaUSGUI {
         gpc.weighty = 0.0;
         gpc.anchor = GridBagConstraints.CENTER;
         gpc.insets = new Insets(10, 100, 100, 10);
-        gpc.gridheight = 4; // COMO LA IMAGEN ES TAN GRANDE UTILIZAMOS 4 FILAS ES PARA QUE LOS DATOS DE LA
+        gpc.gridheight = 5; // COMO LA IMAGEN ES TAN GRANDE UTILIZAMOS 5 FILAS ES PARA QUE LOS DATOS DE LA
                             // DERECHA NO SE BAJEN.
         perfil.add(perfilLabel, gpc);
 
@@ -178,7 +171,7 @@ public class CuentaUSGUI {
         gpc.gridy = 0;
         gpc.weightx = 0.0;
         gpc.weighty = 0.0;
-        gpc.insets = new Insets(50, 0, 0, 0); // MUEVO EL TOP PARA QUE EMPUJE AL DE ABAJO Y QUEDEN EN EL MEDIO
+        gpc.insets = new Insets(40, 0, 0, 0); // MUEVO EL TOP PARA QUE EMPUJE AL DE ABAJO Y QUEDEN EN EL MEDIO
         gpc.anchor = GridBagConstraints.NORTHWEST;
         gpc.gridheight = 1; // LUEGO PARA LOS CAMPOS DE NOMBRE Y REGISTER LO VOLVEMOS A LA NORMALIDAD
         // AÑADIMOS EL DATO DEL NOMBRE AL PANEL PERFIL
@@ -225,9 +218,45 @@ public class CuentaUSGUI {
         // AÑADIMOS EL DATO DEL ROL AL PANEL PERFIL
         perfil.add(lblrol, gpc);
 
-        // AÑADIMOS EL PANEL INFERIOR
+        //DATO SALDO
+       int saldo = 123; // SALDO X
+        lblsald = new JLabel("Saldo: " + saldo);
+        lblsald.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lblsald.setForeground(Color.BLACK);
+        gpc.gridx = 1;
+        gpc.gridy = 4;
+        gpc.weightx = 0.0;
+        gpc.weighty = 0.0;
+        gpc.insets = new Insets(0, 0, 0, 0);
+        gpc.anchor = GridBagConstraints.NORTHWEST;
+        // AÑADIMOS EL DATO DE saldo AL PANEL PERFIL
+        perfil.add(lblsald, gpc);
+
+        // //PANEL INFERIOR PARA PODER AREGAR EL PANEL DEL BOTON DE logout  Y DE PANEL INFERIOR,
+
+        JPanel panelSurContenedor = new JPanel(new BorderLayout());
+        panelSurContenedor.setOpaque(false);
+
+        //Esta es la fila que contendrá ambos botones
+        JPanel filaBotones = new JPanel(new BorderLayout());
+        filaBotones.setOpaque(false);
+        //Añadimos un pequeño margen para que los botones no toquen los bordes
+        filaBotones.setBorder(BorderFactory.createEmptyBorder(0, 10, 5, 10)); 
+
+        //Botón Logout Izquierda
+        logout = new BotonSimple("Logout");
+        logout.setPreferredSize(new Dimension(150, 50));
+        filaBotones.add(logout, BorderLayout.WEST);
+
+        //Panel Inferior PUI
         PanelInferiorPUI PanelAbajo = new PanelInferiorPUI();
-        panel.add(PanelAbajo, BorderLayout.SOUTH);
+
+        //Montamos todo en el contenedor sur
+        panelSurContenedor.add(filaBotones, BorderLayout.NORTH); // Los botones arriba
+        panelSurContenedor.add(PanelAbajo, BorderLayout.SOUTH);  // La barra abajo
+
+        //Agregamos el contenedor al panel principal
+        panel.add(panelSurContenedor, BorderLayout.SOUTH);
 
         // AÑADIMOS EL PANEL DE PERFIL Y DE BOTONES AL PANEL PRINCIPAL
         panel.add(perfil, BorderLayout.WEST);
@@ -256,12 +285,13 @@ public class CuentaUSGUI {
         }
     }
 
-    public void cargarDatos(String nombre, String correo, String cedula, String rol, boolean isAdmin) {
+    public void cargarDatos(String nombre, String correo, String cedula, String rol, boolean isAdmin, String Saldo) {
         setNombre(nombre);
         setCorreo(correo);
         setCedula(cedula);
         setRol(rol);
         setAdminVisible(isAdmin);
+        setSaldo(Saldo);
     }
 
     public void setAdminVisible(boolean visible) {
@@ -270,6 +300,15 @@ public class CuentaUSGUI {
         }
         if (ccb != null) {
             ccb.setVisible(visible);
+        }
+    }
+
+
+    public void setSaldo(String Saldo) {
+        if (Saldo == null || Saldo.isEmpty()) {
+            lblsald.setText("");
+        } else {
+            lblsald.setText("Saldo: " + Saldo);
         }
     }
 
