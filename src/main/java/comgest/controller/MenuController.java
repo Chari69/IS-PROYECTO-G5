@@ -5,6 +5,7 @@ import comgest.utils.*;
 import comgest.model.MenuModel;
 import comgest.model.UserSession;
 import comgest.model.CCBModel;
+import comgest.model.CCB;
 import comgest.view.MenuGUI;
 import comgest.view.MenuFormDialog;
 
@@ -91,11 +92,14 @@ public class MenuController implements ActionListener {
         view.mostrarPanelesSegunItems(cantidadItems);
         view.setAdminVisible(isAdmin);
 
-        // Obtener el precio del CCB (con descuento por rol si hay sesion activa)
-        double ccbValor = ccbModel.recargarCCB().getCCBValor();
+        // Obtener el CCB actual
+        CCB ccbActual = ccbModel.recargarCCB();
+
+        // El modelo CCB calculará el precio con descuento si hay sesión activa, sino
+        // pasará null (100%)
         double precioMostrar = (session != null && session.isActive())
-                ? calcularPrecioConDescuento(ccbValor, session)
-                : ccbValor;
+                ? ccbActual.calcularPrecioConDescuento(session.getRole())
+                : ccbActual.getCCBValor();
 
         if (items != null && items.size() >= 1) {
             // Actualizar desayuno (primer item)
@@ -244,41 +248,6 @@ public class MenuController implements ActionListener {
             return valorPorDefecto;
         }
         return horario.trim();
-    }
-
-    private double calcularPrecioConDescuento(double ccbValor, UserSession session) {
-        // El precio base es el CCB
-        double precio = ccbValor;
-
-        // Obtener el rol y aplicar descuento
-        String role = session.getRole();
-        double descuentoporcentaje = obtenerDescuentoPorRol(role);
-
-        // Aplicar descuento
-        double precioFinal = precio * (descuentoporcentaje / 100);
-
-        System.out.println("DEBUG Precio: CCB=" + ccbValor +
-                ", Rol=" + role + ", Descuento=" + descuentoporcentaje + "%, Final=" + precioFinal);
-
-        return precioFinal;
-    }
-
-    private double obtenerDescuentoPorRol(String role) {
-        if (role == null)
-            return 0;
-
-        String normalized = role.trim().toLowerCase();
-
-        switch (normalized) {
-            case "profesor":
-                return 90;
-            case "empleado":
-                return 110;
-            case "estudiante":
-                return 30;
-            default:
-                return 100; // Sin descuento por defecto
-        }
     }
 
     private boolean verificarAdmin() {

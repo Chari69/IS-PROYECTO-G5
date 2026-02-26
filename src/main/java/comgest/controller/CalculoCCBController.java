@@ -40,12 +40,6 @@ public class CalculoCCBController implements ActionListener {
             double numeroBandejas = view.getNumeroBandejas();
             double porcentajeMerma = view.getPorcentajeMerma();
 
-            // Validaciones
-            if (!validarInputs(costosFijos, costosVariables, numeroBandejas, porcentajeMerma)) {
-                view.showMessage("Por favor, ingresa valores válidos en todos los campos");
-                return;
-            }
-
             // Actualizar modelo
             ccbModel.actualizarCCB(costosFijos, costosVariables, numeroBandejas, porcentajeMerma);
 
@@ -65,25 +59,7 @@ public class CalculoCCBController implements ActionListener {
         }
     }
 
-    private boolean validarInputs(double costosFijos, double costosVariables,
-            double numeroBandejas, double porcentajeMerma) {
-        // Costos pueden ser cero o positivos
-        if (costosFijos < 0 || costosVariables < 0) {
-            return false;
-        }
 
-        // Número de bandejas debe ser positivo
-        if (numeroBandejas <= 0) {
-            return false;
-        }
-
-        // Porcentaje de merma debe estar entre 0 y 100
-        if (porcentajeMerma < 0 || porcentajeMerma > 100) {
-            return false;
-        }
-
-        return true;
-    }
 
     public void cargarCCBActual() {
         try {
