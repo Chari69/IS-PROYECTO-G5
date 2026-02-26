@@ -50,4 +50,12 @@ public class Usuario {
     public String getCedula() {
         return cedula;
     }
+
+    public void addSaldo(float saldo) {
+        this.saldo += saldo;
+    }
+
+    public void subSaldo(float saldo) {
+        this.saldo -= saldo;
+    }
 }

@@ -79,6 +79,7 @@ public class UserModel {
         }
         return false;
     }
+
     public boolean verificarCedulaExistente(String cedula) {
         for (Usuario u : lista_usuarios) {
             if (u.getCedula().equalsIgnoreCase(cedula)) {
@@ -87,7 +88,6 @@ public class UserModel {
         }
         return false;
     }
-    
 
     private String obtenerRolPorCedula(String cedula) {
         if (cedula == null) {
@@ -117,5 +117,35 @@ public class UserModel {
             System.out.println("Error al leer UCVSecDB.csv: " + e.getMessage());
         }
         return null;
+    }
+
+    public boolean actualizarUsuario(Usuario usuarioActualizado) {
+        if (usuarioActualizado == null)
+            return false;
+
+        cargarUsuarios();
+
+        boolean encontrado = false;
+        for (int i = 0; i < lista_usuarios.size(); i++) {
+            Usuario u = lista_usuarios.get(i);
+            if (u.getId().equals(usuarioActualizado.getId())) {
+                lista_usuarios.set(i, usuarioActualizado);
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (!encontrado)
+            return false;
+
+        Gson gson = new Gson();
+        try (FileWriter writer = new FileWriter(database_path + "/DB_usuarios.json")) {
+            gson.toJson(lista_usuarios, writer);
+            System.out.println("Usuario actualizado exitosamente y guardado en JSON.");
+            return true;
+        } catch (IOException e) {
+            System.out.println("Error al actualizar usuario: " + e.getMessage());
+            return false;
+        }
     }
 }
