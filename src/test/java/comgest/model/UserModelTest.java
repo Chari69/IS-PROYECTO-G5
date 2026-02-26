@@ -88,6 +88,47 @@ public class UserModelTest {
         assertFalse(model.verificarCedulaExistente("000"));
     }
 
+    @Test
+    public void actualizarUsuarioConExitoModificaSaldoYRetornaTrue() throws Exception {
+        List<Usuario> usuarios = new ArrayList<>();
+        String hashed = BCrypt.hashpw("secret", BCrypt.gensalt());
+        Usuario u = new Usuario("user", hashed, "jose@ucv.ve", "123", "Estudiante", 10.0f);
+        usuarios.add(u);
+        writeText(new File(dataDir, "DB_usuarios.json"), new Gson().toJson(usuarios));
+
+        UserModel model = createModelWithTempData();
+
+        u.addSaldo(50.0f);
+
+        boolean result = model.actualizarUsuario(u);
+        assertTrue("La actualizacion debio ser completada con exito", result);
+
+        // Forzar una recarga simulando una nueva instancia
+        UserModel anotherModelInstance = createModelWithTempData();
+        Usuario verificado = anotherModelInstance.autenticar("123", "secret");
+
+        // El id deberia seguir existiendo y haber sido guardado el saldo
+        assertNotNull(verificado);
+        assertEquals(60.0f, verificado.getSaldo(), 0.0f);
+    }
+
+    @Test
+    public void actualizarUsuarioInexistenteRetornaFalse() throws Exception {
+        UserModel model = createModelWithTempData();
+
+        Usuario fantasma = new Usuario("Fantasma", "pwd", "fan@ucv.ve", "000", "Estudiante", 0);
+        fantasma.addSaldo(100.0f);
+
+        boolean result = model.actualizarUsuario(fantasma);
+        assertFalse(result);
+    }
+
+    @Test
+    public void actualizarUsuarioNuloRetornaFalse() throws Exception {
+        UserModel model = createModelWithTempData();
+        assertFalse(model.actualizarUsuario(null));
+    }
+
     // Metodos Auxiliares
     private UserModel createModelWithTempData() throws Exception {
         UserModel model = new UserModel();
