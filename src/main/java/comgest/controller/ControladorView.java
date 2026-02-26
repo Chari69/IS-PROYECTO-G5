@@ -48,7 +48,7 @@ public class ControladorView {
         JPanel pantallaRegister = registerView.crearVentana();
         registerController = new RegisterController(registerView);
         registerView.asignarControlador(registerController);
-
+        contenedor.setOpaque(false);
         contenedor.add(pantallaLogin, "LOGIN");
         contenedor.add(pantallaMenu, "MENU");
         contenedor.add(pantallaRegister, "REGISTER");
