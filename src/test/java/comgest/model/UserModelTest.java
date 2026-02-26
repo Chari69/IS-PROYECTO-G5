@@ -72,6 +72,22 @@ public class UserModelTest {
         assertTrue(model.verificarCedulaExistente("777"));
     }
 
+    @Test
+    public void autenticarUsuarioNoExistenteDevuelveNull() throws Exception {
+        UserModel model = createModelWithTempData();
+        // sin usuarios en la base de datos temporales
+        Usuario u = model.autenticar("doesnotexist", "pwd");
+        assertNull(u);
+    }
+
+    @Test
+    public void verificarCorreoYCedulaNoExistentesSonFalse() throws Exception {
+        UserModel model = createModelWithTempData();
+        // lista vacia tras carga
+        assertFalse(model.verificarCorreoExistente("no@ucv.ve"));
+        assertFalse(model.verificarCedulaExistente("000"));
+    }
+
     // Metodos Auxiliares
     private UserModel createModelWithTempData() throws Exception {
         UserModel model = new UserModel();
@@ -91,4 +107,5 @@ public class UserModelTest {
             writer.write(content);
         }
     }
+
 }
