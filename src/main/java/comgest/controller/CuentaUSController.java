@@ -33,11 +33,7 @@ public class CuentaUSController implements ActionListener {
             return;
         }
         if (ACTION_VER_SALDO.equals(command)) {
-            UserSession session = getSessionOrRedirect();
-            if (session == null) {
-                return;
-            }
-            view.showMessage("Saldo Actual: " + session.getSaldo() + "$");
+            ControladorView.mostrarRecargaSaldo();
             return;
         }
         if (ACTION_ADMIN_MENU.equals(command)) {
@@ -52,7 +48,7 @@ public class CuentaUSController implements ActionListener {
     public void cargarPerfil() {
         UserSession session = getSessionOrRedirect();
         if (session == null) {
-            view.cargarDatos("Sin sesión", "", "", "", false,"");
+            view.cargarDatos("Sin sesión", "", "", "", false, "");
             return;
         }
         String nombre = session.getName();
@@ -63,7 +59,7 @@ public class CuentaUSController implements ActionListener {
         float saldito = session.getSaldo();
         String saldo = String.format("%.2f", saldito);
 
-        view.cargarDatos(nombre, correo, cedula, rol, isAdmin,saldo);
+        view.cargarDatos(nombre, correo, cedula, rol, isAdmin, saldo);
     }
 
     private UserSession getSessionOrRedirect() {

@@ -20,6 +20,8 @@ public class ControladorView {
     private static MenuController menuController;
     private static CalculoCCBGUI calculoCCBView;
     private static CalculoCCBController calculoCCBController;
+    private static Recargar_SaldoMenuUI recargaSaldoView;
+    private static RecargarSaldoController recargaSaldoController;
 
     public static void main(String[] args) {
         JFrame pantalla = FrameStyle.crearFramePrincipal("COMGEST-UCV");
@@ -48,12 +50,19 @@ public class ControladorView {
         JPanel pantallaRegister = registerView.crearVentana();
         registerController = new RegisterController(registerView);
         registerView.asignarControlador(registerController);
+
+        recargaSaldoView = new Recargar_SaldoMenuUI();
+        JPanel pantallaRecargaSaldo = recargaSaldoView.crearVentana();
+        recargaSaldoController = new RecargarSaldoController(recargaSaldoView);
+        recargaSaldoView.asignarControlador(recargaSaldoController);
+
         contenedor.setOpaque(false);
         contenedor.add(pantallaLogin, "LOGIN");
         contenedor.add(pantallaMenu, "MENU");
         contenedor.add(pantallaRegister, "REGISTER");
         contenedor.add(pantallaCalculoCbb, "CBB");
         contenedor.add(pantallaCuenta, "CUENTA");
+        contenedor.add(pantallaRecargaSaldo, "RECARGA_SALDO");
 
         pantalla.add(contenedor);
 
@@ -91,5 +100,9 @@ public class ControladorView {
             cuentaController.cargarPerfil();
         }
         cardLayout.show(contenedor, "CUENTA");
+    }
+
+    public static void mostrarRecargaSaldo() {
+        cardLayout.show(contenedor, "RECARGA_SALDO");
     }
 }
