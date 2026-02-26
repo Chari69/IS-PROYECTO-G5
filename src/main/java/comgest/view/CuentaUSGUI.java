@@ -80,7 +80,7 @@ public class CuentaUSGUI {
         botones.add(logout, gdc);
 
         // Boton Ver Saldo
-        saldo = new BotonSimple("Ver Saldo");
+        saldo = new BotonSimple("Recargar Saldo");
         gdc.gridx = 0;
         gdc.gridy = 1;
         gdc.weightx = 0.0;

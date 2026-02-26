@@ -1,6 +1,6 @@
 package comgest;
-
 import comgest.controller.ControladorView;
+
 
 public class Main {
 

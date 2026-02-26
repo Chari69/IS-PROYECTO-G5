@@ -46,20 +46,20 @@ public class BotonJPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                Boton.setBackground(colorHover); // Efecto al pasar el mouse
+                Boton.setBackground(colorHover); 
                 Boton.repaint();
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                Boton.setBackground(colorNormal); // Volver al estado original
+                Boton.setBackground(colorNormal);
                 Boton.repaint();
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
                 Boton.setOpaque(true);
-                Boton.setBackground(colorHover.brighter()); // Oscurecer un poco más al hacer clic
+                Boton.setBackground(colorHover.brighter()); 
                 Boton.repaint();
             }
 

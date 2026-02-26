@@ -19,7 +19,7 @@ public class MenuGUI extends JPanel {
     private JPanel Panel_Almuerzo;
     private JPanel Panel_Agregar;
     private JPanel Panel_Agregar2;
-
+    
     // Botones de acción
     private JPanel btnAgregar1;
     private JPanel btnAgregar2;
