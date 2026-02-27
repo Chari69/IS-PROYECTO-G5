@@ -335,20 +335,48 @@ public class MenuGUI extends JPanel {
             precioAlmuerzo = labelPrecio;
         }
 
-        BotonSimple btnOrdenar = new BotonSimple("Ordenar");
-        btnOrdenar.setPreferredSize(new Dimension(40, 30));
-        btnOrdenar.setFont(new Font("Segoe UI", Font.BOLD, 15));
+    
+       
 
-        if (esDesayuno) {
-            btnOrdenarDesayuno = btnOrdenar;
-        } else {
-            btnOrdenarAlmuerzo = btnOrdenar;
-        }
+BotonSimple btnReservar = new BotonSimple("Reservar");
+btnReservar.setPreferredSize(new Dimension(80, 30));
+btnReservar.setFont(new Font("Segoe UI", Font.BOLD, 15));
 
-        contenedor.add(labelPrecio, BorderLayout.CENTER);
-        contenedor.add(btnOrdenar, BorderLayout.SOUTH);
+if (esDesayuno) {
+    btnOrdenarDesayuno = btnReservar;
+} else {
+    btnOrdenarAlmuerzo = btnReservar;
+}
+
+contenedor.add(labelPrecio, BorderLayout.CENTER);
+
+JPanel botonesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 6, 0));
+botonesPanel.setOpaque(false);
+botonesPanel.add(btnReservar);
+contenedor.add(botonesPanel, BorderLayout.SOUTH);
+
+// Acción para abrir la ventana de reservar con los datos visibles del ítem
+btnReservar.addMouseListener(new java.awt.event.MouseAdapter() {
+    @Override
+    public void mouseClicked(java.awt.event.MouseEvent e) {
+        String titulo = esDesayuno && tituloDesayuno != null ? tituloDesayuno.getText()
+                : (tituloAlmuerzo != null ? tituloAlmuerzo.getText() : "");
+                titulo = titulo.replaceAll("<[^>]*>", "").trim();
+
+        String descripcion = esDesayuno && descripcionDesayuno != null ? descripcionDesayuno.getText()
+                : (descripcionAlmuerzo != null ? descripcionAlmuerzo.getText() : "");
+                double precio = 0;
+            JLabel labelPrecioActual = esDesayuno ? precioDesayuno : precioAlmuerzo;
+            String textoCompleto = labelPrecioActual.getText();
+            String soloNumero = textoCompleto.replace("Precio: $", "").trim();
+            precio = Double.parseDouble(soloNumero);
+       
+        Icon icon = esDesayuno ? (imgLabelDesayuno != null ? imgLabelDesayuno.getIcon() : null)
+                : (imgLabelAlmuerzo != null ? imgLabelAlmuerzo.getIcon() : null);
+        ReservarGUI.mostrarReserva(SwingUtilities.getWindowAncestor(MenuGUI.this), titulo, descripcion, precio, icon);
+    }
+});
         panelDerecha.add(contenedor);
-
         return panelDerecha;
     }
 

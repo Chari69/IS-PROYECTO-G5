@@ -61,7 +61,7 @@ public class ControladorView {
         mostrarLogin();
 
         pantalla.setVisible(true);
-        pantalla.setExtendedState(JFrame.MAXIMIZED_BOTH);
+   
     }
 
     public static void mostrarMenu() {
