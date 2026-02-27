@@ -23,14 +23,17 @@ public class UserModel {
     }
 
     public boolean RegistrarUsuario(String name, String password, String email, String cedula, float saldo) {
-        String role = obtenerRolPorCedula(cedula);
-        if (role == null) {
+        String[] datosSecretaria = obtenerDatosSecretaria(cedula);
+        if (datosSecretaria == null) {
             return false;
         }
+        String role = datosSecretaria[0];
+        String pfpPath = datosSecretaria[1];
+
         String password_hasheada = BCrypt.hashpw(password, BCrypt.gensalt());
 
         Gson gson = new Gson();
-        lista_usuarios.add(new Usuario(name, password_hasheada, email, cedula, role, saldo));
+        lista_usuarios.add(new Usuario(name, password_hasheada, email, cedula, role, saldo, pfpPath));
 
         try (FileWriter writer = new FileWriter(database_path + "/DB_usuarios.json")) {
             gson.toJson(lista_usuarios, writer);
@@ -89,7 +92,7 @@ public class UserModel {
         return false;
     }
 
-    private String obtenerRolPorCedula(String cedula) {
+    private String[] obtenerDatosSecretaria(String cedula) {
         if (cedula == null) {
             return null;
         }
@@ -110,7 +113,9 @@ public class UserModel {
                 }
                 String cedulaActual = parts[0].trim();
                 if (cedulaBuscada.equals(cedulaActual)) {
-                    return parts[1].trim();
+                    String rol = parts[1].trim();
+                    String imagen = parts.length > 2 ? parts[2].trim() : "";
+                    return new String[] { rol, imagen };
                 }
             }
         } catch (IOException e) {

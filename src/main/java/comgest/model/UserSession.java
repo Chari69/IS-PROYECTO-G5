@@ -54,4 +54,8 @@ public final class UserSession {
     public String getCedula() {
         return usuario.getCedula();
     }
+
+    public String getPfpPath() {
+        return usuario.getPfpPath();
+    }
 }
