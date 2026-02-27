@@ -62,7 +62,7 @@ public class UserModelTest {
     public void cargarUsuariosYCompruebaVerificacionesDeCorreoYCedulaExistentes() throws Exception {
         List<Usuario> usuarios = new ArrayList<>();
         String hashed = BCrypt.hashpw("secret", BCrypt.gensalt());
-        usuarios.add(new Usuario("Marta", hashed, "marta@ucv.ve", "777", "Estudiante", 5.0f));
+        usuarios.add(new Usuario("Marta", hashed, "marta@ucv.ve", "777", "Estudiante", 5.0f, "default.png"));
         writeText(new File(dataDir, "DB_usuarios.json"), new Gson().toJson(usuarios));
 
         UserModel model = createModelWithTempData();
@@ -92,7 +92,7 @@ public class UserModelTest {
     public void actualizarUsuarioConExitoModificaSaldoYRetornaTrue() throws Exception {
         List<Usuario> usuarios = new ArrayList<>();
         String hashed = BCrypt.hashpw("secret", BCrypt.gensalt());
-        Usuario u = new Usuario("user", hashed, "jose@ucv.ve", "123", "Estudiante", 10.0f);
+        Usuario u = new Usuario("user", hashed, "jose@ucv.ve", "123", "Estudiante", 10.0f, "default.png");
         usuarios.add(u);
         writeText(new File(dataDir, "DB_usuarios.json"), new Gson().toJson(usuarios));
 
@@ -116,7 +116,7 @@ public class UserModelTest {
     public void actualizarUsuarioInexistenteRetornaFalse() throws Exception {
         UserModel model = createModelWithTempData();
 
-        Usuario fantasma = new Usuario("Fantasma", "pwd", "fan@ucv.ve", "000", "Estudiante", 0);
+        Usuario fantasma = new Usuario("Fantasma", "pwd", "fan@ucv.ve", "000", "Estudiante", 0, "default.png");
         fantasma.addSaldo(100.0f);
 
         boolean result = model.actualizarUsuario(fantasma);

@@ -48,7 +48,7 @@ public class CuentaUSController implements ActionListener {
     public void cargarPerfil() {
         UserSession session = getSessionOrRedirect();
         if (session == null) {
-            view.cargarDatos("Sin sesión", "", "", "", false, "");
+            view.cargarDatos("Sin sesión", "", "", "", false, "", "");
             return;
         }
         String nombre = session.getName();
@@ -58,8 +58,9 @@ public class CuentaUSController implements ActionListener {
         boolean isAdmin = Utils.isAdminRole(rol);
         float saldito = session.getSaldo();
         String saldo = String.format("%.2f", saldito);
+        String pfpPath = session.getPfpPath();
 
-        view.cargarDatos(nombre, correo, cedula, rol, isAdmin, saldo);
+        view.cargarDatos(nombre, correo, cedula, rol, isAdmin, saldo, pfpPath);
     }
 
     private UserSession getSessionOrRedirect() {

@@ -7,7 +7,6 @@ import comgest.view.components.BotonSimple;
 import comgest.view.components.PanelInferiorPUI;
 
 import java.awt.*;
-import java.awt.event.*;
 
 public class CuentaUSGUI {
     private JFrame frame;
@@ -16,6 +15,7 @@ public class CuentaUSGUI {
     private JLabel lblced;
     private JLabel lblrol;
     private JLabel lblsald;
+    private JLabel perfilLabel;
     private BotonSimple logout;
     private BotonSimple saldo;
     private BotonSimple administrarMenu;
@@ -107,48 +107,13 @@ public class CuentaUSGUI {
         perfil.setOpaque(false);
 
         // imagen de perfil (AQUI DEBERIA ESTAR LA FUNCION PARA BUSCAR LA IMAGEN)
-        ImageIcon PerfilIcon = new ImageIcon(LoginGUI.class.getResource("resources/perfilgenerico.png"));
+        ImageIcon PerfilIcon = new ImageIcon("src/main/java/comgest/view/resources/perfilgenerico.png");
         // PARA REDIMENSIONAR
         Image perfilEsca = PerfilIcon.getImage().getScaledInstance(120, 140, Image.SCALE_SMOOTH);
         ImageIcon Redimen = new ImageIcon(perfilEsca);
         // CREAMOS EL JLABEL YA CON LA IMAGEN
-        JLabel perfilLabel = new JLabel(Redimen);
+        perfilLabel = new JLabel(Redimen);
         perfilLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); // BORDE PARA MARCAR LA IMAGEN
-
-        // TEXTO CON ACCION PARA CAMBIAR LA FOTO
-
-        JLabel lblchangephoto = new JLabel("Cambiar");
-        lblchangephoto.setLayout(new GridBagLayout());
-        lblchangephoto.setForeground(Color.BLUE);
-        lblchangephoto.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-        lblchangephoto.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(null, "BUSCA LA FOTO");
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                // Efecto visual: Poner negrita o subrayar al pasar el mouse
-                lblchangephoto.setText("<html><u>Cambiar</u></html>");
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                // Quitar el subrayado al salir
-                lblchangephoto.setText("Cambiar");
-            }
-        });
-
-        // AÑADO EL JLABEL PARA CAMBIAR LA FOTO AL PANEL DEL PERFIL
-        gpc.gridx = 0;
-        gpc.gridy = 0;
-        gpc.weightx = 0.0;
-        gpc.weighty = 0.0;
-        gpc.anchor = GridBagConstraints.CENTER;
-        gpc.insets = new Insets(0, 85, 15, 0);
-        perfil.add(lblchangephoto, gpc);
 
         // AÑADIMOS LA IMAGEN AL PANEL DE PERFL
         gpc.gridx = 0;
@@ -286,13 +251,15 @@ public class CuentaUSGUI {
         }
     }
 
-    public void cargarDatos(String nombre, String correo, String cedula, String rol, boolean isAdmin, String Saldo) {
+    public void cargarDatos(String nombre, String correo, String cedula, String rol, boolean isAdmin, String Saldo,
+            String pfpPath) {
         setNombre(nombre);
         setCorreo(correo);
         setCedula(cedula);
         setRol(rol);
         setAdminVisible(isAdmin);
         setSaldo(Saldo);
+        setPfp(pfpPath);
     }
 
     public void setAdminVisible(boolean visible) {
@@ -301,6 +268,14 @@ public class CuentaUSGUI {
         }
         if (ccb != null) {
             ccb.setVisible(visible);
+        }
+    }
+
+    public void setPfp(String pfpPath) {
+        if (pfpPath != null && !pfpPath.isEmpty()) {
+            ImageIcon PerfilIcon = new ImageIcon(pfpPath);
+            Image perfilEsca = PerfilIcon.getImage().getScaledInstance(120, 140, Image.SCALE_SMOOTH);
+            perfilLabel.setIcon(new ImageIcon(perfilEsca));
         }
     }
 

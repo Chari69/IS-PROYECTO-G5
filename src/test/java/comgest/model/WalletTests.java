@@ -15,13 +15,13 @@ public class WalletTests {
 
     @Test
     public void usuarioGetSaldoDevuelveMontoInicial() {
-        Usuario u = new Usuario("Test", "pass", "email@ucv.ve", "111", "Role", 42.5f);
+        Usuario u = new Usuario("Test", "pass", "email@ucv.ve", "111", "Role", 42.5f, "default.png");
         assertEquals(42.5f, u.getSaldo(), 0.0f);
     }
 
     @Test
     public void userSessionGetSaldoDespuesDeIniciar() {
-        Usuario u = new Usuario("T", "p", "e@ucv.ve", "222", "R", 100.0f);
+        Usuario u = new Usuario("T", "p", "e@ucv.ve", "222", "R", 100.0f, "default.png");
         UserSession.startSession(u);
         UserSession session = UserSession.getInstance();
         assertNotNull(session);
@@ -31,21 +31,21 @@ public class WalletTests {
 
     @Test
     public void usuarioAddSaldoAumentaElMonto() {
-        Usuario u = new Usuario("Test", "pass", "email@ucv.ve", "111", "Role", 50.0f);
+        Usuario u = new Usuario("Test", "pass", "email@ucv.ve", "111", "Role", 50.0f, "default.png");
         u.addSaldo(25.5f);
         assertEquals(75.5f, u.getSaldo(), 0.0f);
     }
 
     @Test
     public void usuarioSubSaldoDisminuyeElMonto() {
-        Usuario u = new Usuario("Test", "pass", "email@ucv.ve", "111", "Role", 50.0f);
+        Usuario u = new Usuario("Test", "pass", "email@ucv.ve", "111", "Role", 50.0f, "default.png");
         u.subSaldo(20.0f);
         assertEquals(30.0f, u.getSaldo(), 0.0f);
     }
 
     @Test
     public void userSessionReflejaCambiosEnElSaldoDelUsuario() {
-        Usuario u = new Usuario("Test", "pass", "email@ucv.ve", "111", "Role", 100.0f);
+        Usuario u = new Usuario("Test", "pass", "email@ucv.ve", "111", "Role", 100.0f, "default.png");
         UserSession.startSession(u);
         UserSession session = UserSession.getInstance();
 
