@@ -8,6 +8,7 @@ import comgest.model.CCBModel;
 import comgest.model.CCB;
 import comgest.view.MenuGUI;
 import comgest.view.MenuFormDialog;
+import comgest.view.ReservarGUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -119,8 +120,23 @@ public class MenuController implements ActionListener {
     }
 
     private void ordenarComida(String tipoComida) {
-        view.showMessage("hola ");
-        //cambiar por lo que puse en el menugui del boton de reservar
+        boolean esDesayuno = tipoComida.equalsIgnoreCase("Desayuno");
+
+        String titulo = esDesayuno ? view.getTituloDesayuno() : view.getTituloAlmuerzo();
+        titulo = titulo.replaceAll("<[^>]*>", "").trim();
+
+        String descripcion = esDesayuno ? view.getDescripcionDesayuno() : view.getDescripcionAlmuerzo();
+
+        double precio = 0;
+        String textoCompleto = esDesayuno ? view.getPrecioDesayuno() : view.getPrecioAlmuerzo();
+        String soloNumero = textoCompleto.replace("Precio: $", "").trim();
+        if (!soloNumero.isEmpty()) {
+            precio = Double.parseDouble(soloNumero);
+        }
+
+        javax.swing.Icon icon = esDesayuno ? view.getIconDesayuno() : view.getIconAlmuerzo();
+
+        ReservarGUI.mostrarReserva(SwingUtilities.getWindowAncestor(view), titulo, descripcion, precio, icon);
     }
 
     private void agregarMenu() {

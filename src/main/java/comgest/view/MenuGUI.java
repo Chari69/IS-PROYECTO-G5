@@ -19,7 +19,7 @@ public class MenuGUI extends JPanel {
     private JPanel Panel_Almuerzo;
     private JPanel Panel_Agregar;
     private JPanel Panel_Agregar2;
-    
+
     // Botones de acción
     private JPanel btnAgregar1;
     private JPanel btnAgregar2;
@@ -335,47 +335,23 @@ public class MenuGUI extends JPanel {
             precioAlmuerzo = labelPrecio;
         }
 
-    
-       
+        BotonSimple btnReservar = new BotonSimple("Reservar");
+        btnReservar.setPreferredSize(new Dimension(80, 30));
+        btnReservar.setFont(new Font("Segoe UI", Font.BOLD, 15));
 
-BotonSimple btnReservar = new BotonSimple("Reservar");
-btnReservar.setPreferredSize(new Dimension(80, 30));
-btnReservar.setFont(new Font("Segoe UI", Font.BOLD, 15));
+        if (esDesayuno) {
+            btnOrdenarDesayuno = btnReservar;
+        } else {
+            btnOrdenarAlmuerzo = btnReservar;
+        }
 
-if (esDesayuno) {
-    btnOrdenarDesayuno = btnReservar;
-} else {
-    btnOrdenarAlmuerzo = btnReservar;
-}
+        contenedor.add(labelPrecio, BorderLayout.CENTER);
 
-contenedor.add(labelPrecio, BorderLayout.CENTER);
+        JPanel botonesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 6, 0));
+        botonesPanel.setOpaque(false);
+        botonesPanel.add(btnReservar);
+        contenedor.add(botonesPanel, BorderLayout.SOUTH);
 
-JPanel botonesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 6, 0));
-botonesPanel.setOpaque(false);
-botonesPanel.add(btnReservar);
-contenedor.add(botonesPanel, BorderLayout.SOUTH);
-
-// Acción para abrir la ventana de reservar con los datos visibles del ítem
-btnReservar.addMouseListener(new java.awt.event.MouseAdapter() {
-    @Override
-    public void mouseClicked(java.awt.event.MouseEvent e) {
-        String titulo = esDesayuno && tituloDesayuno != null ? tituloDesayuno.getText()
-                : (tituloAlmuerzo != null ? tituloAlmuerzo.getText() : "");
-                titulo = titulo.replaceAll("<[^>]*>", "").trim();
-
-        String descripcion = esDesayuno && descripcionDesayuno != null ? descripcionDesayuno.getText()
-                : (descripcionAlmuerzo != null ? descripcionAlmuerzo.getText() : "");
-                double precio = 0;
-            JLabel labelPrecioActual = esDesayuno ? precioDesayuno : precioAlmuerzo;
-            String textoCompleto = labelPrecioActual.getText();
-            String soloNumero = textoCompleto.replace("Precio: $", "").trim();
-            precio = Double.parseDouble(soloNumero);
-       
-        Icon icon = esDesayuno ? (imgLabelDesayuno != null ? imgLabelDesayuno.getIcon() : null)
-                : (imgLabelAlmuerzo != null ? imgLabelAlmuerzo.getIcon() : null);
-        ReservarGUI.mostrarReserva(SwingUtilities.getWindowAncestor(MenuGUI.this), titulo, descripcion, precio, icon);
-    }
-});
         panelDerecha.add(contenedor);
         return panelDerecha;
     }
@@ -590,6 +566,22 @@ btnReservar.addMouseListener(new java.awt.event.MouseAdapter() {
 
     public String getIdAlmuerzo() {
         return idAlmuerzo;
+    }
+
+    public String getPrecioDesayuno() {
+        return precioDesayuno != null ? precioDesayuno.getText() : "";
+    }
+
+    public String getPrecioAlmuerzo() {
+        return precioAlmuerzo != null ? precioAlmuerzo.getText() : "";
+    }
+
+    public Icon getIconDesayuno() {
+        return imgLabelDesayuno != null ? imgLabelDesayuno.getIcon() : null;
+    }
+
+    public Icon getIconAlmuerzo() {
+        return imgLabelAlmuerzo != null ? imgLabelAlmuerzo.getIcon() : null;
     }
 
     // DIALOGOS
