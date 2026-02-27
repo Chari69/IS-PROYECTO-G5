@@ -1,1 +1,1 @@
-[{"id":"7727c00e-9546-4226-aeff-72c75ac3ffc1","name":"2","password":"$2a$10$BcCE/X7G13XGqQTt.qaHvOcvgACm3Z6iYyXnvLx2NlhbVWMvJBOWq","email":"2","cedula":"12345678","role":"Administrador","saldo":0.0}]
+[{"id":"c709ca2c-a603-4b37-8038-f8040c99543e","name":"EL ADMIN PAPU","password":"$2a$10$VDTCmkNdyQHFvwY1d8KOi.p6Z/Umup63FGTXUBlLJFz1VBnZ6n3G6","email":"admin@ucv.ve","cedula":"12345678","role":"Administrador","saldo":0.0,"pfpPath":"src\\main\\java\\comgest\\data\\img\\pfp\\12345678.png"}]
