@@ -115,7 +115,8 @@ public class MenuController implements ActionListener {
     }
 
     private void ordenarComida(String tipoComida) {
-        view.showMessage("TODO");
+        view.showMessage("hola ");
+        //cambiar por lo que puse en el menugui del boton de reservar
     }
 
     private void agregarMenu() {
