@@ -1,30 +1,35 @@
 package comgest.view;
-
 import javax.swing.*;
 import comgest.view.components.BotonSimple;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class ReservarGUI extends JDialog {
+public class MainValidacion extends JFrame {
 
     private BotonSimple btnConfirmar;
     private BotonSimple btnCerrar;
+    private BotonSimple btnSeleccionar;
+    private BotonSimple btnFinalizar;
     private JLabel lblPreview;
     private ActionListener controlador;
     private double precio;
 
-    public ReservarGUI(Window owner, String titulo, String descripcion, double precio, Icon imagen) {
-        super(owner instanceof Frame ? (Frame) owner : null, "Reservar: " + titulo, ModalityType.APPLICATION_MODAL);
+    public MainValidacion(String titulo, String descripcion, double precio, Icon imagen) {
+        super("Reservar: " + titulo);
         this.precio = precio;
         initComponents(titulo, descripcion, precio, imagen);
     }
 
     private void initComponents(String titulo, String descripcion, double precio, Icon imagen) {
         this.setBackground(new Color(228, 228, 255));
-        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(440, 340);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+
+        // Agregar icono como en FrameStyle
+        ImageIcon icon = new ImageIcon(MainValidacion.class.getResource("/comgest/view/resources/logocompng.png"));
+        this.setIconImage(icon.getImage());
 
         JPanel content = new JPanel(new BorderLayout(10, 10));
         content.setBackground(new Color(228, 228, 255));
@@ -96,12 +101,51 @@ public class ReservarGUI extends JDialog {
         }
     }
 
-    public static void mostrarReserva(Window owner, String titulo, String descripcion, double precio, Icon imagen) {
-        ReservarGUI res = new ReservarGUI(owner, titulo, descripcion, precio, imagen);
-        new comgest.controller.ReservarController(res);
+    public static void mostrarReserva(String titulo, String descripcion, double precio, Icon imagen) {
+        MainValidacion res = new MainValidacion(titulo, descripcion, precio, imagen);
+        new comgest.controller.ValidacionBIOController(res);
         res.setVisible(true);
     }
 
+    public void mostrarSeccionSubida() {
+        Container content = getContentPane();
+        content.removeAll();
+        content.setLayout(new BorderLayout(15, 15));
+        ((JPanel) content).setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        JLabel instructions = new JLabel("SUBE LA IMAGEN PARA RESERVAR", SwingConstants.CENTER);
+        instructions.setFont(new Font("Segoe UI", Font.BOLD, 14));
+
+        btnSeleccionar = new BotonSimple("Subir Fotografía");
+        btnSeleccionar.setPreferredSize(new Dimension(80, 30));
+        btnSeleccionar.setFont(new Font("Segoe UI", Font.BOLD, 15));
+
+        lblPreview = new JLabel("Sin foto seleccionada", SwingConstants.CENTER);
+        lblPreview.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        lblPreview.setPreferredSize(new Dimension(200, 150));
+
+        btnFinalizar = new BotonSimple("VALIDAR");
+        btnFinalizar.setPreferredSize(new Dimension(80, 30));
+        btnFinalizar.setFont(new Font("Segoe UI", Font.BOLD, 15));
+
+        if (controlador != null) {
+            btnSeleccionar.setActionCommand("SELECCIONAR_FOTO");
+            btnSeleccionar.addActionListener(controlador);
+            btnFinalizar.setActionCommand("FINALIZAR");
+            btnFinalizar.addActionListener(controlador);
+        }
+
+        JPanel centroSubida = new JPanel(new BorderLayout(10, 10));
+        centroSubida.add(btnSeleccionar, BorderLayout.NORTH);
+        centroSubida.add(lblPreview, BorderLayout.CENTER);
+
+        content.add(instructions, BorderLayout.NORTH);
+        content.add(centroSubida, BorderLayout.CENTER);
+        content.add(btnFinalizar, BorderLayout.SOUTH);
+
+        content.revalidate();
+        content.repaint();
+    }
 
     public void setPreviewImage(Icon icon) {
         if (lblPreview != null) {
@@ -117,4 +161,14 @@ public class ReservarGUI extends JDialog {
     public double getPrecio() {
         return this.precio;
     }
+
+    public static void main(String[] args) {
+        // Ejemplo para abrir la ventana con datos de prueba
+        SwingUtilities.invokeLater(() -> {
+            mostrarReserva("Ejemplo Título", "Descripción de ejemplo", 10.0, null);
+        });
+    }
 }
+
+    
+

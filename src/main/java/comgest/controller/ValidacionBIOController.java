@@ -1,11 +1,11 @@
 package comgest.controller;
 
 import comgest.utils.*;
-import comgest.view.ReservarGUI;
+import comgest.view.MainValidacion;
+
 import comgest.model.UserSession;
 import comgest.model.UserModel;
 import comgest.model.Usuario;
-import comgest.view.ListCom;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,21 +16,21 @@ import javax.swing.ImageIcon;
 import java.awt.Image;
 import javax.swing.JOptionPane;
 
-public class ReservarController implements ActionListener {
+public class ValidacionBIOController implements ActionListener {
     public static final String ACTION_CONFIRMAR_RESERVA = "CONFIRMAR_RESERVA";
     public static final String ACTION_CERRAR = "CERRAR";
     public static final String ACTION_SELECCIONAR_FOTO = "SELECCIONAR_FOTO";
     public static final String ACTION_FINALIZAR = "FINALIZAR";
 
-    private final ReservarGUI view;
+    private final MainValidacion view;
     private final UserModel userModel;
     private File selectedFile;
 
-    public ReservarController(ReservarGUI view) {
+    public ValidacionBIOController(MainValidacion view) {
         this(view, new UserModel());
     }
 
-    public ReservarController(ReservarGUI view, UserModel userModel) {
+    public ValidacionBIOController(MainValidacion view, UserModel userModel) {
         if (view == null) {
             throw new IllegalArgumentException("view no puede ser null");
         }
@@ -63,11 +63,7 @@ public class ReservarController implements ActionListener {
     }
 
     private void confirmarReserva() {
-
-     UserSession session = UserSession.getInstance();
-     Usuario currentUser = session.getUsuario();
-      ListCom listcomensales = new ListCom();
-       listcomensales.agregarComensal(currentUser.getCedula()  + "-" + currentUser.getRole());
+        view.mostrarSeccionSubida();
     }
 
     private void cerrar() {
@@ -128,3 +124,4 @@ public class ReservarController implements ActionListener {
         }
     }
 }
+
