@@ -20,6 +20,8 @@ public class CuentaUSGUI {
     private BotonSimple saldo;
     private BotonSimple administrarMenu;
     private BotonSimple ccb;
+    private BotonSimple tipoUsuario;
+    
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -35,6 +37,8 @@ public class CuentaUSGUI {
     public JPanel crearVentana() {
         // Frame
         // JFrame frame = FrameStyle.crearFramePrincipal("COMGEST-UCV");
+
+      
 
         // Panel Principal
         JPanel panel = new JPanel();
@@ -95,6 +99,14 @@ public class CuentaUSGUI {
         gdc.weighty = 0.0;
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(saldo, gdc);
+
+        tipoUsuario = new BotonSimple("Agregar Tipo Usuario");
+        gdc.gridx = 0;
+        gdc.gridy = 4;
+        gdc.weightx = 0.0;
+        gdc.weighty = 0.0;
+        gdc.anchor = GridBagConstraints.CENTER;
+        botones.add(tipoUsuario, gdc);
 
         setAdminVisible(false);
 
@@ -212,7 +224,7 @@ public class CuentaUSGUI {
         // Botón Logout Izquierda
         logout = new BotonSimple("Logout");
         logout.setPreferredSize(new Dimension(150, 50));
-        filaBotones.add(logout, BorderLayout.WEST);
+       // filaBotones.add(logout, BorderLayout.WEST);
 
         // Panel Inferior PUI
         PanelInferiorPUI PanelAbajo = new PanelInferiorPUI();
@@ -236,6 +248,7 @@ public class CuentaUSGUI {
     public void asignarControlador(CuentaUSController controller) {
         logout.setActionCommand(CuentaUSController.ACTION_LOGOUT);
         logout.addActionListener(controller);
+        
 
         saldo.setActionCommand(CuentaUSController.ACTION_VER_SALDO);
         saldo.addActionListener(controller);
