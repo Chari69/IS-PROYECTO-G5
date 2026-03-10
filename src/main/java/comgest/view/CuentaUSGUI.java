@@ -20,6 +20,7 @@ public class CuentaUSGUI {
     private BotonSimple saldo;
     private BotonSimple administrarMenu;
     private BotonSimple ccb;
+    private BotonSimple lista;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -69,7 +70,7 @@ public class CuentaUSGUI {
         GridBagConstraints gdc = new GridBagConstraints(); // CREO MI OBJETO PARA CONTROLAR
         gdc.insets = new Insets(10, 10, 10, 100);
         botones.setOpaque(false);
-        botones.setBorder(BorderFactory.createEmptyBorder(0, 0, 100, 0)); // PARA SUBIRLOS A LA ALTURA DEL PERFIL
+        botones.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0)); // PARA SUBIRLOS A LA ALTURA DEL PERFIL
 
         administrarMenu = new BotonSimple("Administrar Menù");
         gdc.gridx = 0;
@@ -95,6 +96,15 @@ public class CuentaUSGUI {
         gdc.weighty = 0.0;
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(saldo, gdc);
+
+        //Boton de ir a la lista
+        lista = new BotonSimple("Lista Comensales");
+        gdc.gridx = 0;
+        gdc.gridy = 4;
+        gdc.weightx = 0.0;
+        gdc.weighty = 0.0;
+        gdc.anchor = GridBagConstraints.CENTER;
+        botones.add(lista, gdc);
 
         setAdminVisible(false);
 
@@ -268,6 +278,9 @@ public class CuentaUSGUI {
         }
         if (ccb != null) {
             ccb.setVisible(visible);
+        }
+        if(lista != null) {
+            lista.setVisible(visible);
         }
     }
 

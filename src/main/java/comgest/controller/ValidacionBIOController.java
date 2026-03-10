@@ -1,8 +1,7 @@
-package comgest.controller;
 
+package comgest.controller;
 import comgest.utils.*;
 import comgest.view.MainValidacion;
-
 import comgest.model.UserSession;
 import comgest.model.UserModel;
 import comgest.model.Usuario;
@@ -20,7 +19,7 @@ public class ValidacionBIOController implements ActionListener {
     public static final String ACTION_CONFIRMAR_RESERVA = "CONFIRMAR_RESERVA";
     public static final String ACTION_CERRAR = "CERRAR";
     public static final String ACTION_SELECCIONAR_FOTO = "SELECCIONAR_FOTO";
-    public static final String ACTION_FINALIZAR = "FINALIZAR";
+    public static final String ACTION_FINALIZAR = "FINALIZAR"; // Este es el botón "VALIDAR" de la subida
 
     private final MainValidacion view;
     private final UserModel userModel;
@@ -31,11 +30,8 @@ public class ValidacionBIOController implements ActionListener {
     }
 
     public ValidacionBIOController(MainValidacion view, UserModel userModel) {
-        if (view == null) {
-            throw new IllegalArgumentException("view no puede ser null");
-        }
-        if (userModel == null) {
-            throw new IllegalArgumentException("userModel no puede ser null");
+        if (view == null || userModel == null) {
+            throw new IllegalArgumentException("Los parámetros no pueden ser null");
         }
         this.view = view;
         this.userModel = userModel;
@@ -47,45 +43,21 @@ public class ValidacionBIOController implements ActionListener {
         String command = e.getActionCommand();
 
         try {
-            if (ACTION_CONFIRMAR_RESERVA.equals(command)) {
-                confirmarReserva();
-            } else if (ACTION_CERRAR.equals(command)) {
-                cerrar();
-            } else if (ACTION_SELECCIONAR_FOTO.equals(command)) {
-                seleccionarFoto();
-            } else if (ACTION_FINALIZAR.equals(command)) {
-                finalizar();
+            switch (command) {
+                case ACTION_SELECCIONAR_FOTO -> seleccionarFoto();
+                case ACTION_FINALIZAR -> validarImagenYContinuar(); 
+                case ACTION_CONFIRMAR_RESERVA -> procesarPagoYConfirmar(); 
+                case ACTION_CERRAR -> view.dispose();
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(view, "Ocurrio un error inesperado: " + ex.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
+            view.showMessage("Error: " + ex.getMessage());
         }
     }
 
-    private void confirmarReserva() {
-        view.mostrarSeccionSubida();
-    }
-
-    private void cerrar() {
-        view.dispose();
-    }
-
-    private void seleccionarFoto() {
-        JFileChooser chooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Imagenes (JPG, PNG)", "jpg", "png", "jpeg");
-        chooser.setFileFilter(filter);
-
-        int returnVal = chooser.showOpenDialog(view);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            selectedFile = chooser.getSelectedFile();
-            ImageIcon originalIcon = new ImageIcon(selectedFile.getAbsolutePath());
-            Image img = originalIcon.getImage();
-            Image newImg = img.getScaledInstance(200, 150, Image.SCALE_SMOOTH);
-            view.setPreviewImage(new ImageIcon(newImg));
-        }
-    }
-
-    private void finalizar() {
+   
+    //  Valida que la imagen coincida y cambia a la vista de detalles.
+    
+    private void validarImagenYContinuar() {
         if (selectedFile == null) {
             view.showMessage("Por favor seleccione una imagen primero.");
             return;
@@ -93,35 +65,60 @@ public class ValidacionBIOController implements ActionListener {
 
         UserSession session = UserSession.getInstance();
         if (session == null || !session.isActive()) {
-            view.showMessage("No hay una sesion activa.");
+            view.showMessage("No hay una sesión activa.");
             return;
         }
 
         String rutaEsperada = session.getPfpPath();
-
+        
+        // Comparación biométrica/imagen
         boolean esValido = Utils.CompararImagenes(selectedFile.getAbsolutePath(), rutaEsperada);
+        
+        
         if (esValido) {
-            Usuario currentUser = session.getUsuario();
-            double precio = view.getPrecio();
-
-            if (currentUser.getSaldo() < precio) {
-                view.showMessage("Saldo insuficiente para realizar la reserva.");
-                return;
-            }
-            currentUser.subSaldo((float) precio);
-            boolean success = userModel.actualizarUsuario(currentUser);
-
-            if (success) {
-                view.showMessage("Reserva validada y pagada correctamente.");
-                view.dispose();
-            } else {
-                // Revertir cambio en caso de error
-                currentUser.addSaldo((float) precio);
-                view.showMessage("Error al procesar el pago de la reserva.");
-            }
+            // Si es válida, pasamos a la siguiente pestaña de la vista
+            view.mostrarSeccionDetalles();
         } else {
-            view.showMessage("El comprobante no es valido.");
+            view.showMessage("La validación de identidad ha fallado. Intente de nuevo.");
+        }
+    }
+
+  
+    //  Realiza el cobro y finaliza la transacción.
+    
+    private void procesarPagoYConfirmar() {
+        UserSession session = UserSession.getInstance();
+        Usuario currentUser = session.getUsuario();
+        double precio = view.getPrecio();
+
+        // Verificación de saldo
+        if (currentUser.getSaldo() < precio) {
+            view.showMessage("Saldo insuficiente en el monedero.");
+            return;
+        }
+
+        // Lógica de descuento
+        currentUser.subSaldo((float) precio);
+        boolean success = userModel.actualizarUsuario(currentUser);
+
+        if (success) {
+            view.showMessage("Pago procesado. ¡Reserva confirmada!");
+            view.dispose();
+        } else {
+            currentUser.addSaldo((float) precio); // Revertir
+            view.showMessage("Error crítico al actualizar el saldo.");
+        }
+    }
+
+    private void seleccionarFoto() {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileFilter(new FileNameExtensionFilter("Imagenes (JPG, PNG)", "jpg", "png", "jpeg"));
+
+        if (chooser.showOpenDialog(view) == JFileChooser.APPROVE_OPTION) {
+            selectedFile = chooser.getSelectedFile();
+            ImageIcon originalIcon = new ImageIcon(selectedFile.getAbsolutePath());
+            Image newImg = originalIcon.getImage().getScaledInstance(200, 150, Image.SCALE_SMOOTH);
+            view.setPreviewImage(new ImageIcon(newImg));
         }
     }
 }
-
