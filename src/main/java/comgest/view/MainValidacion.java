@@ -165,7 +165,7 @@ public class MainValidacion extends JFrame {
     public static void main(String[] args) {
         // Ejemplo para abrir la ventana con datos de prueba
         SwingUtilities.invokeLater(() -> {
-            mostrarReserva("Ejemplo Título", "Descripción de ejemplo", 10.0, null);
+            mostrarReserva("COBRO AUTOMATICO", "Descripción de ejemplo", 10.0, null);
         });
     }
 }

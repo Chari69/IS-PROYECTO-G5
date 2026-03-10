@@ -66,8 +66,8 @@ public class ReservarController implements ActionListener {
 
      UserSession session = UserSession.getInstance();
      Usuario currentUser = session.getUsuario();
-      ListCom listcomensales = new ListCom();
-       listcomensales.agregarComensal(currentUser.getCedula()  + "-" + currentUser.getRole());
+    //   ListCom listcomensales = new ListCom();
+    //    listcomensales.agregarComensal(currentUser.getCedula()  + "-" + currentUser.getRole());
     }
 
     private void cerrar() {
