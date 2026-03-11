@@ -21,6 +21,7 @@ public class CuentaUSGUI {
     private BotonSimple administrarMenu;
     private BotonSimple ccb;
     private BotonSimple lista;
+    private BotonSimple tipoUsuario;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -97,14 +98,16 @@ public class CuentaUSGUI {
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(saldo, gdc);
 
-        //Boton de ir a la lista
+        // Boton de ir a la lista
         lista = new BotonSimple("Lista Comensales");
+        tipoUsuario = new BotonSimple("Agregar Tipo Usuario");
         gdc.gridx = 0;
         gdc.gridy = 4;
         gdc.weightx = 0.0;
         gdc.weighty = 0.0;
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(lista, gdc);
+        botones.add(tipoUsuario, gdc);
 
         setAdminVisible(false);
 
@@ -222,7 +225,7 @@ public class CuentaUSGUI {
         // Botón Logout Izquierda
         logout = new BotonSimple("Logout");
         logout.setPreferredSize(new Dimension(150, 50));
-        filaBotones.add(logout, BorderLayout.WEST);
+        // filaBotones.add(logout, BorderLayout.WEST);
 
         // Panel Inferior PUI
         PanelInferiorPUI PanelAbajo = new PanelInferiorPUI();
@@ -279,7 +282,7 @@ public class CuentaUSGUI {
         if (ccb != null) {
             ccb.setVisible(visible);
         }
-        if(lista != null) {
+        if (lista != null) {
             lista.setVisible(visible);
         }
     }

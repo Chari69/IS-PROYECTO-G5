@@ -3,19 +3,23 @@ package comgest.view.components;
 import javax.swing.*;
 
 import comgest.controller.ControladorView;
+import comgest.controller.CuentaUSController;
+import comgest.view.components.PanelInferiorPUI.Boton_Menu;
 
-//import javax.swing.border.Border;
 import java.awt.*;
 
 public class PanelInferiorPUI extends JPanel {
 
     Boton_Menu boton_menu;
     Boton_Menu boton_Micuenta;
+    Boton_Menu boton_Logout;
+    
 
     // Constructor
     public PanelInferiorPUI() {
         boton_menu = new Boton_Menu("resources/image1.png", "Menú");
         boton_Micuenta = new Boton_Menu("resources/myaccount.png", "Mi Cuenta");
+        boton_Logout = new Boton_Menu("resources/logout-logo-icon-png-svg.png", "Logout");
 
         Modificar_Panel_inf();
 
@@ -33,9 +37,17 @@ public class PanelInferiorPUI extends JPanel {
 
             }
         });
-
+        boton_menu.getboton().getBoton().addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                
+            }
+            
+        });
+        
         this.add(boton_menu);
         this.add(boton_Micuenta);
+        this.add(boton_Logout);
     }
 
     public void Modificar_Panel_inf() {
@@ -44,6 +56,22 @@ public class PanelInferiorPUI extends JPanel {
         this.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
     }
 
+    public void asignarControlador(CuentaUSController controller) {
+    // Como es un JPanel, usamos MouseListener para detectar el clic
+    boton_Logout.getboton().getBoton().addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent e) {
+            // "Traducimos" el clic del mouse a una ActionEvent que el controlador entienda
+            controller.actionPerformed(new java.awt.event.ActionEvent(
+                e.getSource(), 
+                java.awt.event.ActionEvent.ACTION_PERFORMED, 
+                CuentaUSController.ACTION_LOGOUT
+            ));
+        }
+    });
+}
+
+   
     // Clase del boton del menu
     public class Boton_Menu extends JPanel {
 
