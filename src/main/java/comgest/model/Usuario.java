@@ -13,6 +13,7 @@ public class Usuario {
     private String role;
     private float saldo;
     private String pfpPath;
+    private float porcentajeBecado;
 
     public Usuario(String name, String password, String email, String cedula, String role, float saldo,
             String pfpPath) {
@@ -57,6 +58,14 @@ public class Usuario {
 
     public String getPfpPath() {
         return pfpPath;
+    }
+
+    public float getPorcentajeBecado() {
+        return porcentajeBecado;
+    }
+
+    public void setPorcentajeBecado(float porcentajeBecado) {
+        this.porcentajeBecado = porcentajeBecado;
     }
 
     public void addSaldo(float saldo) {

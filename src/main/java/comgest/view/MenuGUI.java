@@ -434,7 +434,7 @@ public class MenuGUI extends JPanel {
         actualizarTitulo(tituloDesayuno, titulo);
         actualizarTexto(descripcionDesayuno, descripcion);
         actualizarHorario(horarioDesayuno, horario);
-        actualizarTexto(precioDesayuno, "Precio: $" + precio);
+        actualizarTexto(precioDesayuno, "Precio: $" + String.format("%.2f", precio));
         actualizarImagen(imgLabelDesayuno, imgPath);
     }
 
@@ -444,7 +444,7 @@ public class MenuGUI extends JPanel {
         actualizarTitulo(tituloAlmuerzo, titulo);
         actualizarTexto(descripcionAlmuerzo, descripcion);
         actualizarHorario(horarioAlmuerzo, horario);
-        actualizarTexto(precioAlmuerzo, "Precio: $" + precio);
+        actualizarTexto(precioAlmuerzo, "Precio: $" + String.format("%.2f", precio));
         actualizarImagen(imgLabelAlmuerzo, imgPath);
     }
 

@@ -95,7 +95,7 @@ public class LoginGUI {
         ctextos.add(contrasena, gdc);
 
         // boton de confirmar login
-        bttmlogin = new BotonSimple("Loguearse");
+        bttmlogin = new BotonSimple("Iniciar Sesión");
         gdc.gridx = 0;
         gdc.gridy = 2; // FILA 1 MAS ABAJO
         gdc.weightx = 1.0;
@@ -131,7 +131,8 @@ public class LoginGUI {
         lblpass.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(null, "Redirigiendo a recuperación...");
+                JOptionPane.showMessageDialog(null,
+                        "Escribe un correo a ayudacomedor@ucv.ve\npara que se te restablezca la contraseña.");
             }
 
             @Override

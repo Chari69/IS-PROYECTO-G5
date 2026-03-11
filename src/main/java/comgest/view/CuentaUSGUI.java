@@ -73,13 +73,13 @@ public class CuentaUSGUI {
         botones.setOpaque(false);
         botones.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0)); // PARA SUBIRLOS A LA ALTURA DEL PERFIL
 
-        administrarMenu = new BotonSimple("Administrar Menù");
+        tipoUsuario = new BotonSimple("Agregar Tipo Usuario");
         gdc.gridx = 0;
         gdc.gridy = 1;
         gdc.weightx = 0.0;
         gdc.weighty = 0.0;
         gdc.anchor = GridBagConstraints.CENTER;
-        botones.add(administrarMenu, gdc);
+        botones.add(tipoUsuario, gdc);
 
         ccb = new BotonSimple("CCB");
         gdc.gridx = 0;
@@ -100,14 +100,12 @@ public class CuentaUSGUI {
 
         // Boton de ir a la lista
         lista = new BotonSimple("Lista Comensales");
-        tipoUsuario = new BotonSimple("Agregar Tipo Usuario");
         gdc.gridx = 0;
         gdc.gridy = 4;
         gdc.weightx = 0.0;
         gdc.weighty = 0.0;
         gdc.anchor = GridBagConstraints.CENTER;
         botones.add(lista, gdc);
-        botones.add(tipoUsuario, gdc);
 
         setAdminVisible(false);
 
@@ -252,12 +250,17 @@ public class CuentaUSGUI {
 
         if (administrarMenu != null) {
             administrarMenu.setActionCommand(CuentaUSController.ACTION_ADMIN_MENU);
-            administrarMenu.addActionListener(controller);
+            administrarMenu.addActionListener(controller); // TODO
         }
 
         if (ccb != null) {
             ccb.setActionCommand(CuentaUSController.ACTION_CCB);
             ccb.addActionListener(controller);
+        }
+
+        if (lista != null) {
+            lista.setActionCommand(CuentaUSController.ACTION_LISTA);
+            lista.addActionListener(controller);
         }
     }
 
