@@ -247,9 +247,6 @@ public class CuentaUSGUI {
     }
 
     public void asignarControlador(CuentaUSController controller) {
-        logout.setActionCommand(CuentaUSController.ACTION_LOGOUT);
-        logout.addActionListener(controller);
-
         saldo.setActionCommand(CuentaUSController.ACTION_VER_SALDO);
         saldo.addActionListener(controller);
 
