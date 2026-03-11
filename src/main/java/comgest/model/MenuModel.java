@@ -11,14 +11,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MenuModel {
+    private static MenuModel instance;
+
     private List<MenuItem> menu_items;
     private String database_path = "src\\main\\java\\comgest\\data\\DB_menu.json";
     private Gson gson;
+    private boolean dirty = true;
 
     public MenuModel() {
         this.menu_items = new ArrayList<>();
         this.gson = new Gson();
         cargarMenuItems();
+    }
+
+    public static MenuModel getInstance() {
+        if (instance == null) {
+            instance = new MenuModel();
+        }
+        return instance;
     }
 
     public void agregarMenuItem(String name, String descripcion, String imgPath, String horario) {
@@ -56,7 +66,7 @@ public class MenuModel {
                 menu_items.remove(i);
                 guardarMenuItems();
                 // eliminar reservas asociadas a este item
-                new ReservaModel().eliminarReservasPorMenu(idNormalizado);
+                ReservaModel.getInstance().eliminarReservasPorMenu(idNormalizado);
                 return true;
             }
         }
@@ -69,8 +79,9 @@ public class MenuModel {
     }
 
     public void cargarMenuItems() {
+        if (!dirty)
+            return;
         try (FileReader reader = new FileReader(database_path)) {
-            // Definimos que el JSON es una lista de objetos MenuItem
             Type tipoLista = new TypeToken<ArrayList<MenuItem>>() {
             }.getType();
 
@@ -79,14 +90,20 @@ public class MenuModel {
             if (this.menu_items == null) {
                 this.menu_items = new ArrayList<>();
             }
+            dirty = false;
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 
+    public void invalidar() {
+        dirty = true;
+    }
+
     private void guardarMenuItems() {
         try (FileWriter writer = new FileWriter(database_path)) {
             gson.toJson(menu_items, writer);
+            dirty = false;
             System.out.println("Menu actualizado.");
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());

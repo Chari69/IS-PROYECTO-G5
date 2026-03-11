@@ -12,16 +12,26 @@ import java.util.Iterator;
 import java.util.List;
 
 public class ReservaModel {
+    private static ReservaModel instance;
+
     private List<Reserva> reservas;
     private String database_path = "src\\main\\java\\comgest\\data\\DB_reservas.json";
     private Gson gson;
     private MenuModel menuModel;
+    private boolean dirty = true;
 
     public ReservaModel() {
         this.reservas = new ArrayList<>();
         this.gson = new Gson();
-        this.menuModel = new MenuModel();
+        this.menuModel = MenuModel.getInstance();
         cargarReservas();
+    }
+
+    public static ReservaModel getInstance() {
+        if (instance == null) {
+            instance = new ReservaModel();
+        }
+        return instance;
     }
 
     /**
@@ -137,6 +147,8 @@ public class ReservaModel {
     }
 
     public void cargarReservas() {
+        if (!dirty)
+            return;
         try (FileReader reader = new FileReader(database_path)) {
             Type tipoLista = new TypeToken<ArrayList<Reserva>>() {
             }.getType();
@@ -146,6 +158,7 @@ public class ReservaModel {
             if (this.reservas == null) {
                 this.reservas = new ArrayList<>();
             }
+            dirty = false;
             System.out.println("Reservas cargadas: " + reservas.size());
         } catch (IOException e) {
             this.reservas = new ArrayList<>();
@@ -153,9 +166,14 @@ public class ReservaModel {
         }
     }
 
+    public void invalidar() {
+        dirty = true;
+    }
+
     private void guardarReservas() {
         try (FileWriter writer = new FileWriter(database_path)) {
             gson.toJson(reservas, writer);
+            dirty = false;
             System.out.println("Reservas actualizadas.");
         } catch (IOException e) {
             System.out.println("Error al guardar reservas: " + e.getMessage());

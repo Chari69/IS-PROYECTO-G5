@@ -14,12 +14,22 @@ import au.com.bytecode.opencsv.CSVReader;
 //LIBRERIAS USADAS: BCRYPT para hashear contraseñas, OpenCSV para leer la DB de secretaria y Gson para json
 
 public class UserModel {
+    private static UserModel instance;
+
     private List<Usuario> lista_usuarios;
     private String database_path = "src\\main\\java\\comgest\\data";
+    private boolean dirty = true;
 
     public UserModel() {
         this.lista_usuarios = new ArrayList<>();
         cargarUsuarios();
+    }
+
+    public static UserModel getInstance() {
+        if (instance == null) {
+            instance = new UserModel();
+        }
+        return instance;
     }
 
     public boolean RegistrarUsuario(String name, String password, String email, String cedula, float saldo) {
@@ -38,6 +48,7 @@ public class UserModel {
         try (FileWriter writer = new FileWriter(database_path + "/DB_usuarios.json")) {
             gson.toJson(lista_usuarios, writer);
             System.out.println("Lista actualizada exitosamente.");
+            dirty = false;
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
             return false;
@@ -57,8 +68,9 @@ public class UserModel {
     }
 
     public void cargarUsuarios() {
+        if (!dirty)
+            return;
         try (FileReader reader = new FileReader(database_path + "/DB_usuarios.json")) {
-            // Definimos que el JSON es una lista de objetos Usuario
             Type tipoLista = new TypeToken<ArrayList<Usuario>>() {
             }.getType();
 
@@ -67,11 +79,17 @@ public class UserModel {
             if (this.lista_usuarios == null) {
                 this.lista_usuarios = new ArrayList<>();
             }
+            dirty = false;
             System.out.println("Usuarios cargados: " + lista_usuarios.size());
         } catch (IOException e) {
             this.lista_usuarios = new ArrayList<>();
             System.out.println("No se encontró el archivo, se creó una lista nueva.");
         }
+    }
+
+    // Fuerza la recarga en el próximo cargarUsuarios()
+    public void invalidar() {
+        dirty = true;
     }
 
     public boolean verificarCorreoExistente(String email) {
@@ -160,6 +178,7 @@ public class UserModel {
         try (FileWriter writer = new FileWriter(database_path + "/DB_usuarios.json")) {
             gson.toJson(lista_usuarios, writer);
             System.out.println("Usuario actualizado exitosamente y guardado en JSON.");
+            dirty = false;
             return true;
         } catch (IOException e) {
             System.out.println("Error al actualizar usuario: " + e.getMessage());
