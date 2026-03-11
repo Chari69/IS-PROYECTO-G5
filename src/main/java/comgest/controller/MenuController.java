@@ -29,7 +29,7 @@ public class MenuController implements ActionListener {
     private final CCBModel ccbModel;
 
     public MenuController(MenuGUI view) {
-        this(view, new MenuModel(), new CCBModel());
+        this(view, MenuModel.getInstance(), new CCBModel());
     }
 
     public MenuController(MenuGUI view, MenuModel menuModel) {
@@ -56,29 +56,14 @@ public class MenuController implements ActionListener {
         String command = e.getActionCommand();
 
         switch (command) {
-            case ACTION_ORDENAR_DESAYUNO:
-                ordenarComida("Desayuno");
-                break;
-            case ACTION_ORDENAR_ALMUERZO:
-                ordenarComida("Almuerzo");
-                break;
-            case ACTION_AGREGAR_MENU:
-                agregarMenu();
-                break;
-            case ACTION_EDITAR_DESAYUNO:
-                editarMenu("Desayuno");
-                break;
-            case ACTION_EDITAR_ALMUERZO:
-                editarMenu("Almuerzo");
-                break;
-            case ACTION_ELIMINAR_DESAYUNO:
-                eliminarMenu("Desayuno");
-                break;
-            case ACTION_ELIMINAR_ALMUERZO:
-                eliminarMenu("Almuerzo");
-                break;
-            default:
-                System.err.println("Comando desconocido: " + command);
+            case ACTION_ORDENAR_DESAYUNO -> ordenarComida("Desayuno");
+            case ACTION_ORDENAR_ALMUERZO -> ordenarComida("Almuerzo");
+            case ACTION_AGREGAR_MENU -> agregarMenu();
+            case ACTION_EDITAR_DESAYUNO -> editarMenu("Desayuno");
+            case ACTION_EDITAR_ALMUERZO -> editarMenu("Almuerzo");
+            case ACTION_ELIMINAR_DESAYUNO -> eliminarMenu("Desayuno");
+            case ACTION_ELIMINAR_ALMUERZO -> eliminarMenu("Almuerzo");
+            default -> System.err.println("Comando desconocido: " + command);
         }
     }
 
@@ -121,7 +106,7 @@ public class MenuController implements ActionListener {
     }
 
     private void ordenarComida(String tipoComida) {
-        UserSession session = getSessionOrRedirect();
+        UserSession session = Utils.getSessionOrRedirect();
         if (session == null)
             return;
 
@@ -135,7 +120,7 @@ public class MenuController implements ActionListener {
         }
 
         // Verificar si ya consumió este menú
-        ReservaModel reservaModel = new ReservaModel();
+        ReservaModel reservaModel = ReservaModel.getInstance();
         if (reservaModel.buscarReservaConsumida(session.getCedula(), menuItemId) != null) {
             view.showMessage("Ya consumiste este menú. No puedes reservar de nuevo.");
             return;
@@ -154,9 +139,11 @@ public class MenuController implements ActionListener {
 
         double precio = 0;
         String textoCompleto = esDesayuno ? view.getPrecioDesayuno() : view.getPrecioAlmuerzo();
-        String soloNumero = textoCompleto.replace("Precio: $", "").replace(",", ".").trim();
-        if (!soloNumero.isEmpty()) {
-            precio = Double.parseDouble(soloNumero);
+        try {
+            precio = Utils.parsearPrecio(textoCompleto);
+        } catch (NumberFormatException ex) {
+            view.showMessage("Error al leer el precio.");
+            return;
         }
 
         javax.swing.Icon icon = esDesayuno ? view.getIconDesayuno() : view.getIconAlmuerzo();
@@ -294,7 +281,7 @@ public class MenuController implements ActionListener {
     }
 
     private boolean verificarAdmin() {
-        UserSession session = getSessionOrRedirect();
+        UserSession session = Utils.getSessionOrRedirect();
         if (session == null)
             return false;
 
@@ -306,21 +293,7 @@ public class MenuController implements ActionListener {
         return true;
     }
 
-    private UserSession getSessionOrRedirect() {
-        UserSession session = UserSession.getInstance();
-        if (session == null || !session.isActive()) {
-            view.showMessage("Sesión no activa");
-            ControladorView.mostrarLogin();
-            return null;
-        }
-        return session;
-    }
-
-    // === MÉTODOS HELPER PARA REDUCIR DUPLICACIÓN ===
-
-    /**
-     * Obtiene el ID del menú según el tipo
-     */
+    // Obtiene el ID del menú según el tipo
     private String obtenerIdMenu(String tipoComida) {
         String itemId = tipoComida.equalsIgnoreCase("Desayuno")
                 ? view.getIdDesayuno()

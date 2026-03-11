@@ -15,7 +15,7 @@ public class RegisterController implements ActionListener {
     private final RegisterGUI view;
 
     public RegisterController(RegisterGUI view) {
-        this(new UserModel(), view);
+        this(UserModel.getInstance(), view);
     }
 
     public RegisterController(UserModel userModel, RegisterGUI view) {

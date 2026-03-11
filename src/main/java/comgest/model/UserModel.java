@@ -123,6 +123,32 @@ public class UserModel {
         return null;
     }
 
+    public boolean modificarSaldo(Usuario usuario, float cantidad) {
+        if (usuario == null)
+            return false;
+
+        if (cantidad < 0 && usuario.getSaldo() < Math.abs(cantidad)) {
+            return false; // Saldo insuficiente
+        }
+
+        if (cantidad > 0) {
+            usuario.addSaldo(cantidad);
+        } else {
+            usuario.subSaldo(Math.abs(cantidad));
+        }
+
+        boolean success = actualizarUsuario(usuario);
+        if (!success) {
+            // Revertir
+            if (cantidad > 0) {
+                usuario.subSaldo(cantidad);
+            } else {
+                usuario.addSaldo(Math.abs(cantidad));
+            }
+        }
+        return success;
+    }
+
     private String[] obtenerDatosSecretaria(String cedula) {
         if (cedula == null) {
             return null;

@@ -2,9 +2,7 @@ package comgest.controller;
 
 import comgest.view.MenuFormDialog;
 
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -29,17 +27,11 @@ public class MenuFormController {
     }
 
     private void seleccionarImagen() {
-        JFileChooser chooser = new JFileChooser();
-        chooser.setDialogTitle("Seleccionar imagen");
-        chooser.setFileFilter(new FileNameExtensionFilter(
-                "Imagenes", "jpg", "jpeg", "png", "gif", "bmp", "webp"));
-
-        int result = chooser.showOpenDialog(view);
-        if (result != JFileChooser.APPROVE_OPTION) {
+        java.io.File origen = comgest.utils.Utils.seleccionarArchivoImagen(view);
+        if (origen == null) {
             return;
         }
 
-        File origen = chooser.getSelectedFile();
         String rutaRelativa = guardarImagenEnData(origen);
         if (rutaRelativa == null) {
             JOptionPane.showMessageDialog(view, "No se pudo guardar la imagen.");

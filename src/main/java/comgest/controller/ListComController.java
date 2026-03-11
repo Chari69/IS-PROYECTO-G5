@@ -20,7 +20,7 @@ public class ListComController implements ActionListener {
     private final UserModel userModel;
 
     public ListComController(ListCom view) {
-        this(view, new ReservaModel(), new MenuModel(), new UserModel());
+        this(view, ReservaModel.getInstance(), MenuModel.getInstance(), UserModel.getInstance());
     }
 
     public ListComController(ListCom view, ReservaModel reservaModel, MenuModel menuModel, UserModel userModel) {
@@ -46,8 +46,11 @@ public class ListComController implements ActionListener {
     }
 
     private void filtrar() {
+        // Forzar recarga desde disco para datos frescos
+        reservaModel.invalidar();
         reservaModel.cargarReservas();
         menuModel.cargarMenuItems();
+        userModel.invalidar();
         userModel.cargarUsuarios();
 
         String filtroServicio = view.getFiltroServicio();

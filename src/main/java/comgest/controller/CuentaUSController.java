@@ -44,7 +44,7 @@ public class CuentaUSController implements ActionListener {
     }
 
     public void cargarPerfil() {
-        UserSession session = getSessionOrRedirect();
+        UserSession session = Utils.getSessionOrRedirect();
         if (session == null) {
             view.cargarDatos("Sin sesión", "", "", "", false, "", "");
             return;
@@ -59,15 +59,5 @@ public class CuentaUSController implements ActionListener {
         String pfpPath = session.getPfpPath();
 
         view.cargarDatos(nombre, correo, cedula, rol, isAdmin, saldo, pfpPath);
-    }
-
-    private UserSession getSessionOrRedirect() {
-        UserSession session = UserSession.getInstance();
-        if (session == null || !session.isActive()) {
-            view.showMessage("Sesion no activa");
-            ControladorView.mostrarLogin();
-            return null;
-        }
-        return session;
     }
 }

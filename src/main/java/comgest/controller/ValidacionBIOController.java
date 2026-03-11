@@ -17,8 +17,6 @@ import java.io.File;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.ImageIcon;
 import java.awt.Image;
 
@@ -40,7 +38,7 @@ public class ValidacionBIOController implements ActionListener {
     private MenuItem menuItemActivo;
 
     public ValidacionBIOController(MainValidacion view) {
-        this(view, new UserModel(), new ReservaModel(), new CCBModel());
+        this(view, UserModel.getInstance(), ReservaModel.getInstance(), new CCBModel());
     }
 
     public ValidacionBIOController(MainValidacion view, UserModel userModel, ReservaModel reservaModel,
@@ -85,7 +83,7 @@ public class ValidacionBIOController implements ActionListener {
 
         // Buscar usuario por cédula
         userModel.cargarUsuarios();
-        usuarioEncontrado = buscarUsuarioPorCedula(cedula);
+        usuarioEncontrado = userModel.buscarPorCedula(cedula);
         if (usuarioEncontrado == null) {
             view.showMessage("No se encontró un usuario con la cédula: " + cedula);
             return;
@@ -106,7 +104,7 @@ public class ValidacionBIOController implements ActionListener {
 
         for (Reserva r : pendientes) {
             MenuItem item = reservaModel.getMenuModel().buscarPorId(r.getIdMenu());
-            if (item != null && estaEnHorario(item.getHorario(), ahora)) {
+            if (item != null && Utils.estaEnHorario(item.getHorario(), ahora)) {
                 reservaActiva = r;
                 menuItemActivo = item;
                 break;
@@ -157,8 +155,6 @@ public class ValidacionBIOController implements ActionListener {
         }
 
         String rutaEsperada = usuarioEncontrado.getPfpPath();
-
-        // Comparación biométrica/imagen
         boolean esValido = Utils.CompararImagenes(selectedFile.getAbsolutePath(), rutaEsperada);
 
         if (esValido) {
@@ -181,9 +177,8 @@ public class ValidacionBIOController implements ActionListener {
             return;
         }
 
-        // Descontar saldo
-        usuarioEncontrado.subSaldo((float) precio);
-        boolean success = userModel.actualizarUsuario(usuarioEncontrado);
+        // Descontar saldo de forma atómica
+        boolean success = userModel.modificarSaldo(usuarioEncontrado, (float) -precio);
 
         if (success) {
             // Marcar reserva como consumida
@@ -198,77 +193,17 @@ public class ValidacionBIOController implements ActionListener {
             selectedFile = null;
             view.mostrarSeccionCedula();
         } else {
-            // Revertir saldo
-            usuarioEncontrado.addSaldo((float) precio);
             view.showMessage("Error crítico al actualizar el saldo.");
         }
     }
 
     private void seleccionarFoto() {
-        JFileChooser chooser = new JFileChooser();
-        chooser.setFileFilter(new FileNameExtensionFilter("Imagenes (JPG, PNG)", "jpg", "png", "jpeg"));
-
-        if (chooser.showOpenDialog(view) == JFileChooser.APPROVE_OPTION) {
-            selectedFile = chooser.getSelectedFile();
+        File archivo = Utils.seleccionarArchivoImagen(view);
+        if (archivo != null) {
+            selectedFile = archivo;
             ImageIcon originalIcon = new ImageIcon(selectedFile.getAbsolutePath());
             Image newImg = originalIcon.getImage().getScaledInstance(200, 150, Image.SCALE_SMOOTH);
             view.setPreviewImage(new ImageIcon(newImg));
-        }
-    }
-
-    /**
-     * Busca un usuario por cédula usando el UserModel.
-     */
-    private Usuario buscarUsuarioPorCedula(String cedula) {
-        return userModel.buscarPorCedula(cedula);
-    }
-
-    /**
-     * Verifica si la hora actual está dentro del rango del horario del menú.
-     * Formato esperado: "7:00 AM - 10:00 AM"
-     */
-    private boolean estaEnHorario(String horario, LocalTime ahora) {
-        if (horario == null || horario.trim().isEmpty()) {
-            return true; // Si no tiene horario, siempre es válido
-        }
-
-        try {
-            String[] partes = horario.split("-");
-            if (partes.length != 2) {
-                return true;
-            }
-
-            LocalTime inicio = parsearHora(partes[0].trim());
-            LocalTime fin = parsearHora(partes[1].trim());
-
-            if (inicio == null || fin == null) {
-                return true;
-            }
-
-            // Verificar si la hora actual está en el rango [inicio, fin]
-            return !ahora.isBefore(inicio) && !ahora.isAfter(fin);
-        } catch (Exception e) {
-            System.out.println("Error parseando horario: " + e.getMessage());
-            return true; // En caso de error, permitir
-        }
-    }
-
-    /**
-     * Parsea una hora en formato "7:00 AM" o "10:00 PM" a LocalTime.
-     */
-    private LocalTime parsearHora(String texto) {
-        try {
-            texto = texto.trim().toUpperCase();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm a", java.util.Locale.US);
-            return LocalTime.parse(texto, formatter);
-        } catch (Exception e) {
-            try {
-                DateTimeFormatter formatter24 = DateTimeFormatter.ofPattern("H:mm");
-                return LocalTime.parse(texto.trim(), formatter24);
-            } catch (Exception e2) {
-                System.out.println("No se pudo parsear la hora: " + texto);
-                return null;
-            }
         }
     }
 
@@ -284,7 +219,6 @@ public class ValidacionBIOController implements ActionListener {
         } catch (Exception e) {
             System.out.println("Error obteniendo CCB: " + e.getMessage());
         }
-        // Valor por defecto si no se puede calcular
         return 0;
     }
 }

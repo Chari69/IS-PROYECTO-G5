@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import comgest.model.UserModel;
 import comgest.model.UserSession;
 import comgest.model.Usuario;
+import comgest.utils.Utils;
 import comgest.view.Recargar_SaldoMenuUI;
 
 public class RecargarSaldoController implements ActionListener {
@@ -15,7 +16,7 @@ public class RecargarSaldoController implements ActionListener {
     private final UserModel userModel;
 
     public RecargarSaldoController(Recargar_SaldoMenuUI view) {
-        this(view, new UserModel());
+        this(view, UserModel.getInstance());
     }
 
     public RecargarSaldoController(Recargar_SaldoMenuUI view, UserModel userModel) {
@@ -69,27 +70,20 @@ public class RecargarSaldoController implements ActionListener {
             return;
         }
 
-        UserSession session = UserSession.getInstance();
-        if (session == null || !session.isActive()) {
+        UserSession session = Utils.getSessionOrRedirect();
+        if (session == null) {
             view.showMessage("No hay una sesión activa. Por favor inicie sesión.");
-            ControladorView.mostrarLogin();
             return;
         }
 
         Usuario currentUser = session.getUsuario();
 
-        // Agregar el saldo al usuario en memoria
-        currentUser.addSaldo(monto);
-
-        // Guardar cambios en la BDD
-        boolean success = userModel.actualizarUsuario(currentUser);
+        boolean success = userModel.modificarSaldo(currentUser, monto);
 
         if (success) {
             view.showMessage("Saldo recargado exitosamente.");
             ControladorView.mostrarCuenta();
         } else {
-            // revertir cambio en caso de error
-            currentUser.subSaldo(monto);
             view.showMessage("Ocurrió un error al procesar la recarga.");
         }
     }

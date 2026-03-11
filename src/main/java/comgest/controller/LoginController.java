@@ -17,7 +17,7 @@ public class LoginController implements ActionListener {
     private final LoginGUI view;
 
     public LoginController(LoginGUI view) {
-        this(new UserModel(), view);
+        this(UserModel.getInstance(), view);
     }
 
     public LoginController(UserModel userModel, LoginGUI view) {

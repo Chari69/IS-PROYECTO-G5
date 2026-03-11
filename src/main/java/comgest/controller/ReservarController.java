@@ -17,7 +17,7 @@ public class ReservarController implements ActionListener {
     private final ReservaModel reservaModel;
 
     public ReservarController(ReservarGUI view) {
-        this(view, new ReservaModel());
+        this(view, ReservaModel.getInstance());
     }
 
     public ReservarController(ReservarGUI view, ReservaModel reservaModel) {
