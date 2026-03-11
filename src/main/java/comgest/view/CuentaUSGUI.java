@@ -18,7 +18,6 @@ public class CuentaUSGUI {
     private JLabel perfilLabel;
     private BotonSimple logout;
     private BotonSimple saldo;
-    private BotonSimple administrarMenu;
     private BotonSimple ccb;
     private BotonSimple lista;
     private BotonSimple tipoUsuario;
@@ -248,11 +247,6 @@ public class CuentaUSGUI {
         saldo.setActionCommand(CuentaUSController.ACTION_VER_SALDO);
         saldo.addActionListener(controller);
 
-        if (administrarMenu != null) {
-            administrarMenu.setActionCommand(CuentaUSController.ACTION_ADMIN_MENU);
-            administrarMenu.addActionListener(controller); // TODO
-        }
-
         if (ccb != null) {
             ccb.setActionCommand(CuentaUSController.ACTION_CCB);
             ccb.addActionListener(controller);
@@ -261,6 +255,11 @@ public class CuentaUSGUI {
         if (lista != null) {
             lista.setActionCommand(CuentaUSController.ACTION_LISTA);
             lista.addActionListener(controller);
+        }
+
+        if (tipoUsuario != null) {
+            tipoUsuario.setActionCommand(CuentaUSController.ACTION_TIPO_USUARIO);
+            tipoUsuario.addActionListener(controller);
         }
     }
 
@@ -276,8 +275,8 @@ public class CuentaUSGUI {
     }
 
     public void setAdminVisible(boolean visible) {
-        if (administrarMenu != null) {
-            administrarMenu.setVisible(visible);
+        if (tipoUsuario != null) {
+            tipoUsuario.setVisible(visible);
         }
         if (ccb != null) {
             ccb.setVisible(visible);

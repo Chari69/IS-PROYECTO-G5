@@ -92,6 +92,16 @@ public class BotonPlayHolder extends JPanel {
         return contenido;
     }
 
+    public void setText(String text) {
+        if (text == null || text.isEmpty()) {
+            Texto.setText(textoSugerencia);
+            Texto.setForeground(COLOR_PLACEHOLDER);
+        } else {
+            Texto.setText(text);
+            Texto.setForeground(COLOR_TEXTO);
+        }
+    }
+
     public boolean isEmpty() {
         return getTexto().isEmpty();
     }
