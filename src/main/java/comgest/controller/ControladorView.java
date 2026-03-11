@@ -24,6 +24,8 @@ public class ControladorView {
     private static RecargarSaldoController recargaSaldoController;
     private static ListCom listComView;
     private static ListComController listComController;
+    private static RegistrarTipoUsuario tipoUsuarioView;
+    private static RegistrarTipoUsuarioController tipoUsuarioController;
 
     public static void main(String[] args) {
         JFrame pantalla = FrameStyle.crearFramePrincipal("COMGEST-UCV");
@@ -70,6 +72,12 @@ public class ControladorView {
         JPanel pantallaListCom = listComView.crearVentana();
         listComController = new ListComController(listComView);
         contenedor.add(pantallaListCom, "LISTA_COMENSALES");
+
+        tipoUsuarioView = new RegistrarTipoUsuario();
+        JPanel pantallaTipoUsuario = tipoUsuarioView.crearVentana();
+        tipoUsuarioController = new RegistrarTipoUsuarioController(tipoUsuarioView);
+        tipoUsuarioView.asignarControlador(tipoUsuarioController);
+        contenedor.add(pantallaTipoUsuario, "TIPO_USUARIO");
 
         pantalla.add(contenedor);
 
@@ -118,5 +126,9 @@ public class ControladorView {
             listComController.cargarListaComensales();
         }
         cardLayout.show(contenedor, "LISTA_COMENSALES");
+    }
+
+    public static void mostrarRegistrarTipoUsuario() {
+        cardLayout.show(contenedor, "TIPO_USUARIO");
     }
 }

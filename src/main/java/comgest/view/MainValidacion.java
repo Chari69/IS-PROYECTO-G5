@@ -35,7 +35,7 @@ public class MainValidacion extends JFrame {
         this.setBackground(new Color(228, 228, 255));
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(440, 360);
-        this.setResizable(false);
+        this.setResizable(true);
         this.setLocationRelativeTo(null);
 
         // Icono de la aplicación

@@ -117,12 +117,8 @@ public class ValidacionBIOController implements ActionListener {
             return;
         }
 
-        // Calcular precio con CCB (incluye descuento por rol)
-        double precioFinal = calcularPrecioBandeja(usuarioEncontrado.getRole());
-        double porcentajeBeca = usuarioEncontrado.getPorcentajeBecado();
-        if (porcentajeBeca > 0) {
-            precioFinal = precioFinal * (1.0 - porcentajeBeca / 100.0);
-        }
+        // Calcular precio final con CCB (incluye descuento por rol y beca)
+        double precioFinal = calcularPrecioBandeja(usuarioEncontrado.getRole(), usuarioEncontrado.getPorcentajeBecado());
 
         // Pasar los datos a la vista
         String descripcion = menuItemActivo.getDescripcion()
@@ -130,8 +126,11 @@ public class ValidacionBIOController implements ActionListener {
                 + "\nUsuario: " + usuarioEncontrado.getName()
                 + "\nCédula: " + usuarioEncontrado.getCedula();
 
-        if (porcentajeBeca > 0) {
-            descripcion += "\nDescuento beca: " + porcentajeBeca + "%";
+        String rolNorm = usuarioEncontrado.getRole().trim().toLowerCase();
+        if (rolNorm.equals("estudiante (b)")) {
+            descripcion += "\nDescuento beca: " + usuarioEncontrado.getPorcentajeBecado() + "%";
+        } else if (rolNorm.equals("estudiante (e)")) {
+            descripcion += "\nExonerado (paga $0)";
         }
 
         view.setDatosReserva(menuItemActivo.getName(), descripcion, precioFinal);
@@ -207,14 +206,11 @@ public class ValidacionBIOController implements ActionListener {
         }
     }
 
-    /**
-     * Calcula el precio por bandeja usando el CCB con descuento por rol.
-     */
-    private double calcularPrecioBandeja(String role) {
+    private double calcularPrecioBandeja(String role, double porcentajeBeca) {
         try {
             CCB ccb = ccbModel.obtenerCCB();
             if (ccb != null && ccb.getCCBValor() > 0) {
-                return ccb.calcularPrecioConDescuento(role);
+                return ccb.calcularPrecioFinal(role, porcentajeBeca);
             }
         } catch (Exception e) {
             System.out.println("Error obteniendo CCB: " + e.getMessage());

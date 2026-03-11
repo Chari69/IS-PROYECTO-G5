@@ -212,9 +212,6 @@ public class LoginGUI {
         gpdc.anchor = GridBagConstraints.NORTH;
         panel.add(registrogo, gpdc);
 
-        // AÑADIR TODO A LA VENTANA
-        // frame.add(panel, BorderLayout.CENTER);
-        // frame.setVisible(true);
         return panel;
     }
 
