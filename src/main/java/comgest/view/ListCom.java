@@ -13,6 +13,7 @@ public class ListCom {
     private JComboBox<String> comboServicio;
     private JComboBox<String> comboTipo;
     private JButton btnFiltrar;
+    private JLabel lblContador;
 
     public ListCom() {
     }
@@ -65,9 +66,19 @@ public class ListCom {
 
         panel.add(scrollPane, BorderLayout.CENTER);
 
-        // Panel inferior con PanelInferiorPUI
+        // Contador de resultados
+        lblContador = new JLabel("Total: 0 comensales");
+        lblContador.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lblContador.setHorizontalAlignment(SwingConstants.CENTER);
+        lblContador.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
+
+        // Panel inferior: contador + PanelInferiorPUI
+        JPanel panelSur = new JPanel(new BorderLayout());
+        panelSur.setOpaque(false);
+        panelSur.add(lblContador, BorderLayout.NORTH);
         PanelInferiorPUI panelAbajo = new PanelInferiorPUI();
-        panel.add(panelAbajo, BorderLayout.SOUTH);
+        panelSur.add(panelAbajo, BorderLayout.SOUTH);
+        panel.add(panelSur, BorderLayout.SOUTH);
 
         return panel;
     }
@@ -110,5 +121,9 @@ public class ListCom {
 
     public void showMessage(String message) {
         JOptionPane.showMessageDialog(null, message);
+    }
+
+    public void setContador(int count) {
+        lblContador.setText("Total: " + count + " comensales");
     }
 }
