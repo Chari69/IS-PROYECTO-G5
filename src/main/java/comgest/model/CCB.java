@@ -63,25 +63,46 @@ public class CCB {
     }
 
     public double calcularPrecioConDescuento(String role) {
-        double descuentoPorcentaje = obtenerDescuentoPorRol(role);
-        return CCBValor * (descuentoPorcentaje / 100.0);
+        double porcentaje = obtenerPorcentajePago(role);
+        return CCBValor * (porcentaje / 100.0);
     }
 
-    private double obtenerDescuentoPorRol(String role) {
+    public double calcularPrecioFinal(String role, double porcentajeBeca) {
+        double precioBase = calcularPrecioConDescuento(role);
+
+        // Exonerados siempre pagan 0
+        String normalized = role != null ? role.trim().toLowerCase() : "";
+        if (normalized.equals("estudiante (e)")) {
+            return 0;
+        }
+
+        // Becados: aplicar descuento adicional sobre el precio de estudiante
+        if (normalized.equals("estudiante (b)") && porcentajeBeca > 0) {
+            precioBase = precioBase * (1.0 - porcentajeBeca / 100.0);
+        }
+
+        return Math.round(precioBase * 100.0) / 100.0;
+    }
+
+    // Retorna el porcentaje del CCB que paga cada rol
+    public double obtenerPorcentajePago(String role) {
         if (role == null)
-            return 100; // Sin descuento devuelve 100% del precio
+            return 100;
 
         String normalized = role.trim().toLowerCase();
 
         switch (normalized) {
             case "profesor":
-                return 90; // Pagan el 90%
+                return 90;
             case "empleado":
-                return 110; // Pagan el 110%
+                return 110;
             case "estudiante":
-                return 30; // Pagan el 30%
+            case "estudiante (b)":
+                return 30; // Becados pagan base igual a estudiante, luego se aplica descuento extra
+            case "estudiante (e)":
+                return 0; // Exonerados pagan 0%
             default:
-                return 100; // Sin descuento por defecto
+                return 100;
         }
     }
 }

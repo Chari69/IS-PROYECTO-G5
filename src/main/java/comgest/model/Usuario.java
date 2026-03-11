@@ -68,6 +68,10 @@ public class Usuario {
         this.porcentajeBecado = porcentajeBecado;
     }
 
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public void addSaldo(float saldo) {
         this.saldo += saldo;
     }
