@@ -22,6 +22,8 @@ public class ControladorView {
     private static CalculoCCBController calculoCCBController;
     private static Recargar_SaldoMenuUI recargaSaldoView;
     private static RecargarSaldoController recargaSaldoController;
+    private static ListCom listComView;
+    private static ListComController listComController;
 
     public static void main(String[] args) {
         JFrame pantalla = FrameStyle.crearFramePrincipal("COMGEST-UCV");
@@ -64,13 +66,18 @@ public class ControladorView {
         contenedor.add(pantallaCuenta, "CUENTA");
         contenedor.add(pantallaRecargaSaldo, "RECARGA_SALDO");
 
+        listComView = new ListCom();
+        JPanel pantallaListCom = listComView.crearVentana();
+        listComController = new ListComController(listComView);
+        contenedor.add(pantallaListCom, "LISTA_COMENSALES");
+
         pantalla.add(contenedor);
 
         // Mostrar panel inicial
         mostrarLogin();
 
         pantalla.setVisible(true);
-   
+
     }
 
     public static void mostrarMenu() {
@@ -104,5 +111,12 @@ public class ControladorView {
 
     public static void mostrarRecargaSaldo() {
         cardLayout.show(contenedor, "RECARGA_SALDO");
+    }
+
+    public static void mostrarListaComensales() {
+        if (listComController != null) {
+            listComController.cargarListaComensales();
+        }
+        cardLayout.show(contenedor, "LISTA_COMENSALES");
     }
 }

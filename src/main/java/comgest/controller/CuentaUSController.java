@@ -6,12 +6,13 @@ import comgest.model.UserSession;
 import comgest.view.CuentaUSGUI;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;;
+import java.awt.event.ActionListener;
 
 public class CuentaUSController implements ActionListener {
     public static final String ACTION_VER_SALDO = "VER_SALDO";
     public static final String ACTION_ADMIN_MENU = "ADMIN_MENU";
     public static final String ACTION_CCB = "CCB";
+    public static final String ACTION_LISTA = "LISTA_COMENSALES";
 
     private final CuentaUSGUI view;
 
@@ -29,12 +30,16 @@ public class CuentaUSController implements ActionListener {
             ControladorView.mostrarRecargaSaldo();
             return;
         }
-        if (ACTION_ADMIN_MENU.equals(command)) {
+        if (ACTION_ADMIN_MENU.equals(command)) { // TODO
             ControladorView.mostrarMenu();
             return;
         }
         if (ACTION_CCB.equals(command)) {
             ControladorView.mostrarCbb();
+            return;
+        }
+        if (ACTION_LISTA.equals(command)) {
+            ControladorView.mostrarListaComensales();
         }
     }
 

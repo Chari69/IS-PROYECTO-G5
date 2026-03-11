@@ -55,6 +55,8 @@ public class MenuModel {
             if (idNormalizado.equals(menu_items.get(i).getId())) {
                 menu_items.remove(i);
                 guardarMenuItems();
+                // eliminar reservas asociadas a este item
+                new ReservaModel().eliminarReservasPorMenu(idNormalizado);
                 return true;
             }
         }
