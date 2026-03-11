@@ -11,6 +11,7 @@ import comgest.view.Recargar_SaldoMenuUI;
 
 public class RecargarSaldoController implements ActionListener {
     public static final String ACTION_SUBMIT = "SUBMIT_RECARGA";
+    public static final String ACTION_PANITA = "TOGGLE_PANITA";
 
     private final Recargar_SaldoMenuUI view;
     private final UserModel userModel;
@@ -32,7 +33,14 @@ public class RecargarSaldoController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!ACTION_SUBMIT.equals(e.getActionCommand())) {
+        String command = e.getActionCommand();
+
+        if (ACTION_PANITA.equals(command)) {
+            view.togglePanita();
+            return;
+        }
+
+        if (!ACTION_SUBMIT.equals(command)) {
             return;
         }
 
@@ -76,12 +84,45 @@ public class RecargarSaldoController implements ActionListener {
             return;
         }
 
-        Usuario currentUser = session.getUsuario();
+        // Determinar a quién recargar
+        Usuario targetUser;
 
-        boolean success = userModel.modificarSaldo(currentUser, monto);
+        if (view.isSaldoPana()) {
+            // Saldo Pana: recargar a otro usuario por CI
+            String ciPana = view.get_Cedula();
+            if (ciPana == null || ciPana.trim().isEmpty() || ciPana.equals("Ej: 32298110")) {
+                view.showMessage("Debe ingresar la cédula del beneficiario.");
+                return;
+            }
+
+            try {
+                Long.parseLong(ciPana.trim());
+            } catch (NumberFormatException ex) {
+                view.showMessage("La cédula debe ser un número válido.");
+                return;
+            }
+
+            userModel.invalidar();
+            userModel.cargarUsuarios();
+            targetUser = userModel.buscarPorCedula(ciPana.trim());
+            if (targetUser == null) {
+                view.showMessage("No se encontró un usuario con la cédula: " + ciPana.trim());
+                return;
+            }
+        } else {
+            // Recarga personal
+            targetUser = session.getUsuario();
+        }
+
+        boolean success = userModel.modificarSaldo(targetUser, monto);
 
         if (success) {
-            view.showMessage("Saldo recargado exitosamente.");
+            if (view.isSaldoPana()) {
+                view.showMessage("Saldo recargado exitosamente al usuario: " + targetUser.getName());
+            } else {
+                view.showMessage("Saldo recargado exitosamente.");
+            }
+            view.resetPanita();
             ControladorView.mostrarCuenta();
         } else {
             view.showMessage("Ocurrió un error al procesar la recarga.");

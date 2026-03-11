@@ -98,10 +98,6 @@ public class ListComController implements ActionListener {
             count++;
         }
 
-        if (count == 0) {
-            view.showMessage("No se encontraron comensales con los filtros aplicados.");
-        } else {
-            view.showMessage("Total de comensales: " + count);
-        }
+        view.setContador(count);
     }
 }
