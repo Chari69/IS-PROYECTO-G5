@@ -12,10 +12,12 @@ public class ReservarGUI extends JDialog {
     private JLabel lblPreview;
     private ActionListener controlador;
     private double precio;
+    private String menuItemId;
 
-    public ReservarGUI(Window owner, String titulo, String descripcion, double precio, Icon imagen) {
+    public ReservarGUI(Window owner, String titulo, String descripcion, double precio, Icon imagen, String menuItemId) {
         super(owner instanceof Frame ? (Frame) owner : null, "Reservar: " + titulo, ModalityType.APPLICATION_MODAL);
         this.precio = precio;
+        this.menuItemId = menuItemId;
         initComponents(titulo, descripcion, precio, imagen);
     }
 
@@ -59,7 +61,7 @@ public class ReservarGUI extends JDialog {
         JPanel pie = new JPanel(new BorderLayout());
         pie.setOpaque(false);
 
-        JLabel lblPrecio = new JLabel("Precio: $" + precio, SwingConstants.LEFT);
+        JLabel lblPrecio = new JLabel("Precio: $" + String.format("%.2f", precio), SwingConstants.LEFT);
         lblPrecio.setFont(new Font("Segoe UI", Font.BOLD, 14));
         pie.add(lblPrecio, BorderLayout.WEST);
 
@@ -86,9 +88,6 @@ public class ReservarGUI extends JDialog {
         if (btnConfirmar != null) {
             btnConfirmar.setActionCommand("CONFIRMAR_RESERVA");
             btnConfirmar.addActionListener(ctrl);
-            btnConfirmar.addActionListener(e -> {
-            javax.swing.JOptionPane.showMessageDialog(this, "Confirmando...");
-        });
         }
         if (btnCerrar != null) {
             btnCerrar.setActionCommand("CERRAR");
@@ -96,12 +95,12 @@ public class ReservarGUI extends JDialog {
         }
     }
 
-    public static void mostrarReserva(Window owner, String titulo, String descripcion, double precio, Icon imagen) {
-        ReservarGUI res = new ReservarGUI(owner, titulo, descripcion, precio, imagen);
+    public static void mostrarReserva(Window owner, String titulo, String descripcion, double precio, Icon imagen,
+            String menuItemId) {
+        ReservarGUI res = new ReservarGUI(owner, titulo, descripcion, precio, imagen, menuItemId);
         new comgest.controller.ReservarController(res);
         res.setVisible(true);
     }
-
 
     public void setPreviewImage(Icon icon) {
         if (lblPreview != null) {
@@ -116,5 +115,9 @@ public class ReservarGUI extends JDialog {
 
     public double getPrecio() {
         return this.precio;
+    }
+
+    public String getMenuItemId() {
+        return this.menuItemId;
     }
 }

@@ -6,6 +6,7 @@ import comgest.model.MenuModel;
 import comgest.model.UserSession;
 import comgest.model.CCBModel;
 import comgest.model.CCB;
+import comgest.model.ReservaModel;
 import comgest.view.MenuGUI;
 import comgest.view.MenuFormDialog;
 import comgest.view.ReservarGUI;
@@ -120,7 +121,31 @@ public class MenuController implements ActionListener {
     }
 
     private void ordenarComida(String tipoComida) {
+        UserSession session = getSessionOrRedirect();
+        if (session == null)
+            return;
+
         boolean esDesayuno = tipoComida.equalsIgnoreCase("Desayuno");
+
+        // Obtener el ID del menu item
+        String menuItemId = esDesayuno ? view.getIdDesayuno() : view.getIdAlmuerzo();
+        if (menuItemId == null || menuItemId.trim().isEmpty()) {
+            view.showMessage("Error: no se encontró el menú.");
+            return;
+        }
+
+        // Verificar si ya consumió este menú
+        ReservaModel reservaModel = new ReservaModel();
+        if (reservaModel.buscarReservaConsumida(session.getCedula(), menuItemId) != null) {
+            view.showMessage("Ya consumiste este menú. No puedes reservar de nuevo.");
+            return;
+        }
+
+        // Verificar si ya tiene reserva pendiente para este menú
+        if (reservaModel.buscarReservaPendiente(session.getCedula(), menuItemId) != null) {
+            view.showMessage("Ya tienes una reserva pendiente para este menú.");
+            return;
+        }
 
         String titulo = esDesayuno ? view.getTituloDesayuno() : view.getTituloAlmuerzo();
         titulo = titulo.replaceAll("<[^>]*>", "").trim();
@@ -129,14 +154,15 @@ public class MenuController implements ActionListener {
 
         double precio = 0;
         String textoCompleto = esDesayuno ? view.getPrecioDesayuno() : view.getPrecioAlmuerzo();
-        String soloNumero = textoCompleto.replace("Precio: $", "").trim();
+        String soloNumero = textoCompleto.replace("Precio: $", "").replace(",", ".").trim();
         if (!soloNumero.isEmpty()) {
             precio = Double.parseDouble(soloNumero);
         }
 
         javax.swing.Icon icon = esDesayuno ? view.getIconDesayuno() : view.getIconAlmuerzo();
 
-        ReservarGUI.mostrarReserva(SwingUtilities.getWindowAncestor(view), titulo, descripcion, precio, icon);
+        ReservarGUI.mostrarReserva(SwingUtilities.getWindowAncestor(view), titulo, descripcion, precio, icon,
+                menuItemId);
     }
 
     private void agregarMenu() {

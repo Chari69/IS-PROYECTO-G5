@@ -86,10 +86,23 @@ public class UserModel {
     public boolean verificarCedulaExistente(String cedula) {
         for (Usuario u : lista_usuarios) {
             if (u.getCedula().equalsIgnoreCase(cedula)) {
-                return true; // La cedula ya está registrado
+                return true;
             }
         }
         return false;
+    }
+
+    public List<Usuario> getUsuarios() {
+        return lista_usuarios;
+    }
+
+    public Usuario buscarPorCedula(String cedula) {
+        for (Usuario u : lista_usuarios) {
+            if (u.getCedula().equals(cedula)) {
+                return u;
+            }
+        }
+        return null;
     }
 
     private String[] obtenerDatosSecretaria(String cedula) {
