@@ -86,7 +86,7 @@ public class ListComController implements ActionListener {
             // Filtrar por tipo de usuario si no es "todos"
             if (!"todos".equals(filtroTipo) && usuario != null) {
                 String rolNorm = rolUsuario.toLowerCase().trim();
-                if (!rolNorm.contains(filtroTipo.toLowerCase())) {
+                if (!rolNorm.equals(filtroTipo.toLowerCase())) {
                     continue;
                 }
             }
