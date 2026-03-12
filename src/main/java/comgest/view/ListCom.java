@@ -41,7 +41,7 @@ public class ListCom {
         panelFiltro.add(lblTipo);
 
         comboTipo = new JComboBox<>(
-                new String[] { "todos", "estudiante", "becado", "exonerado", "profesor", "trabajador" });
+                new String[] { "todos", "estudiante", "estudiante (b)", "estudiante (e)", "profesor", "trabajador" });
         configurarEstiloCombo(comboTipo);
         panelFiltro.add(comboTipo);
 
