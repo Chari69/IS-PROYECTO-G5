@@ -10,13 +10,11 @@ public class EliminarReservaCBTest {
     @Before
     public void setUp() {
         sistema = new ReservaModel();
-        // Limpiamos o inicializamos según sea necesario
     }
 
     // Camino 1: Lista de reservas vacía
     @Test
     public void testEliminar_ListaVacia() {
-        // Aseguramos que reservas.size() es 0
         boolean resultado = sistema.eliminarReserva("test6", "d7c9d611-3297-453a-9e51-cb61570c7dc5");
         assertFalse(resultado);
     }
@@ -43,7 +41,5 @@ public class EliminarReservaCBTest {
         sistema.agregarReserva("test4", "d7c9d611-3297-453a-9e51-cb61570c7dc5");
         boolean resultado = sistema.eliminarReserva("test4", "d7c9d611-3297-453a-9e51-cb61570c7dc5");
         assertTrue(resultado);
-        // Verificación adicional de caja blanca: la lista debe estar vacía ahora
-        // assertEquals(0, sistema.getReservas().size());
     }
 }

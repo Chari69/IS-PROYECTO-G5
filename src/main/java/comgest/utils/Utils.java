@@ -55,11 +55,7 @@ public class Utils {
         }
     }
 
-    /**
-     * Verifica si hay sesión activa. Si no, muestra mensaje y redirige al login.
-     * 
-     * @return UserSession activa o null si no hay sesión.
-     */
+    // Verifica si hay sesión activa. Si no, muestra mensaje y redirige al login.
     public static UserSession getSessionOrRedirect() {
         UserSession session = UserSession.getInstance();
         if (session == null || !session.isActive()) {
@@ -69,10 +65,8 @@ public class Utils {
         return session;
     }
 
-    /**
-     * Parsea una hora en formato "7:00 AM" o "10:00 PM" a LocalTime.
-     * Usa Locale.US para compatibilidad con AM/PM en cualquier locale del sistema.
-     */
+    // Parsea una hora en formato "7:00 AM" o "10:00 PM" a LocalTime.
+    // Usa Locale.US para compatibilidad con AM/PM en cualquier locale del sistema.
     public static LocalTime parsearHora(String texto) {
         if (texto == null || texto.trim().isEmpty())
             return null;
@@ -91,10 +85,8 @@ public class Utils {
         }
     }
 
-    /**
-     * Verifica si la hora dada está dentro del rango de horario.
-     * Formato esperado: "7:00 AM - 10:00 AM"
-     */
+    // Verifica si la hora dada está dentro del rango de horario.
+    // Formato esperado: "7:00 AM - 10:00 AM"
     public static boolean estaEnHorario(String horario, LocalTime ahora) {
         if (horario == null || horario.trim().isEmpty()) {
             return true;
@@ -117,11 +109,7 @@ public class Utils {
         }
     }
 
-    /**
-     * Abre un JFileChooser para seleccionar una imagen (JPG, PNG).
-     * 
-     * @return File seleccionado o null si se canceló.
-     */
+    // Abre un JFileChooser para seleccionar una imagen (JPG, PNG).
     public static File seleccionarArchivoImagen(Component parent) {
         JFileChooser chooser = new JFileChooser();
         chooser.setDialogTitle("Seleccionar imagen");
@@ -134,10 +122,8 @@ public class Utils {
         return null;
     }
 
-    /**
-     * Parsea un string de precio quitando prefijos como "Precio: $" y
-     * manejando separadores decimales de diferentes locales (, o .).
-     */
+    // Parsea un string de precio quitando prefijos como "Precio: $" y
+    // manejando separadores decimales de diferentes locales (, o .).
     public static double parsearPrecio(String texto) {
         if (texto == null || texto.trim().isEmpty())
             return 0;

@@ -17,7 +17,6 @@ public class MainValidacion extends JFrame {
     private JLabel lblPreview;
     private ActionListener controlador;
 
-    // Datos de la reserva encontrada (se llenan desde el controlador)
     private String tituloReserva;
     private String descripcionReserva;
     private double precioReserva;
@@ -28,9 +27,6 @@ public class MainValidacion extends JFrame {
         prepararConfiguracionBase();
     }
 
-    /**
-     * Configuración básica del Frame (tamaño, icono, cierre)
-     */
     private void prepararConfiguracionBase() {
         this.setBackground(new Color(228, 228, 255));
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -38,7 +34,6 @@ public class MainValidacion extends JFrame {
         this.setResizable(true);
         this.setLocationRelativeTo(null);
 
-        // Icono de la aplicación
         try {
             ImageIcon icon = new ImageIcon(MainValidacion.class.getResource("/comgest/view/resources/logocompng.png"));
             this.setIconImage(icon.getImage());
@@ -47,9 +42,7 @@ public class MainValidacion extends JFrame {
         }
     }
 
-    /**
-     * VISTA 1: Ingreso de Cédula
-     */
+    // VISTA 1: Ingreso de Cédula
     public void mostrarSeccionCedula() {
         Container content = getContentPane();
         content.removeAll();
@@ -102,9 +95,7 @@ public class MainValidacion extends JFrame {
         content.repaint();
     }
 
-    /**
-     * VISTA 2: Subida de Imagen (verificación biométrica)
-     */
+    // VISTA 2: Subida de Imagen (verificación biométrica)
     public void mostrarSeccionSubida() {
         Container content = getContentPane();
         content.removeAll();
@@ -150,9 +141,7 @@ public class MainValidacion extends JFrame {
         content.repaint();
     }
 
-    /**
-     * VISTA 3: Detalles y Confirmación de Pago
-     */
+    // VISTA 3: Detalles y Confirmación de Pago
     public void mostrarSeccionDetalles() {
         Container content = getContentPane();
         content.removeAll();
@@ -222,9 +211,6 @@ public class MainValidacion extends JFrame {
         mostrarSeccionCedula();
     }
 
-    /**
-     * Abre el POS como ventana standalone.
-     */
     public static void abrirPOS() {
         MainValidacion pos = new MainValidacion();
         new comgest.controller.ValidacionBIOController(pos);
@@ -247,7 +233,7 @@ public class MainValidacion extends JFrame {
         return this.precioReserva;
     }
 
-    // --- Setters para datos de reserva (usados por el controlador) ---
+    // --- Setters ---
     public void setDatosReserva(String titulo, String descripcion, double precio) {
         this.tituloReserva = titulo;
         this.descripcionReserva = descripcion;
