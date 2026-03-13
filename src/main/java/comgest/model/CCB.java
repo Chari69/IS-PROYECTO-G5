@@ -85,7 +85,7 @@ public class CCB {
     }
 
     // Retorna el porcentaje del CCB que paga cada rol
-    public double obtenerPorcentajePago(String role) {
+    private double obtenerPorcentajePago(String role) {
         if (role == null)
             return 100;
 

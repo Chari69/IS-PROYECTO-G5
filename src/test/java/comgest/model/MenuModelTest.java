@@ -116,6 +116,7 @@ public class MenuModelTest {
         MenuModel m = new MenuModel();
         setDatabasePath(m, new File(dataDir, "DB_menu.json").getAbsolutePath());
         m.getMenuItems().clear();
+        m.invalidar();
         m.cargarMenuItems();
         return m;
     }

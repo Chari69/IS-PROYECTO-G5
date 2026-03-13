@@ -112,6 +112,58 @@ public class CCBTests {
         model.actualizarCCB(1, 1, -5, 5); // <0 es ilegal
     }
 
+    // TESTS DE PRECIO FINAL (Becados y Exonerados)
+
+    @Test
+    public void precioFinalEstudianteRegularSinBeca() {
+        CCB c = new CCB(100.0, 50.0, 10.0, 0.0); // CCBValor = 15.0, Estudiante = 30% => 4.50
+        assertEquals(4.50, c.calcularPrecioFinal("Estudiante", 0), 0.01);
+    }
+
+    @Test
+    public void precioFinalEstudianteBecadoConPorcentaje() {
+        CCB c = new CCB(100.0, 50.0, 10.0, 0.0); // CCBValor = 15.0
+        // Estudiante (b) = 30% => 4.50, luego beca 50% => 4.50 * 0.50 = 2.25
+        assertEquals(2.25, c.calcularPrecioFinal("Estudiante (b)", 50), 0.01);
+    }
+
+    @Test
+    public void precioFinalEstudianteBecadoCienPorCiento() {
+        CCB c = new CCB(100.0, 50.0, 10.0, 0.0); // CCBValor = 15.0
+        // Estudiante (b) con 100% beca => 4.50 * 0.0 = 0.0
+        assertEquals(0.0, c.calcularPrecioFinal("Estudiante (b)", 100), 0.01);
+    }
+
+    @Test
+    public void precioFinalEstudianteExoneradoPagaCero() {
+        CCB c = new CCB(100.0, 50.0, 10.0, 0.0); // CCBValor = 15.0
+        assertEquals(0.0, c.calcularPrecioFinal("Estudiante (e)", 0), 0.01);
+    }
+
+    @Test
+    public void precioFinalProfesor() {
+        CCB c = new CCB(100.0, 50.0, 10.0, 0.0); // CCBValor = 15.0, Profesor = 90% => 13.50
+        assertEquals(13.50, c.calcularPrecioFinal("Profesor", 0), 0.01);
+    }
+
+    @Test
+    public void precioFinalEmpleado() {
+        CCB c = new CCB(100.0, 50.0, 10.0, 0.0); // CCBValor = 15.0, Empleado = 110% => 16.50
+        assertEquals(16.50, c.calcularPrecioFinal("Empleado", 0), 0.01);
+    }
+
+    @Test
+    public void precioFinalRolDesconocidoUsaCienPorCiento() {
+        CCB c = new CCB(100.0, 50.0, 10.0, 0.0); // CCBValor = 15.0
+        assertEquals(15.0, c.calcularPrecioFinal("OtroRol", 0), 0.01);
+    }
+
+    @Test
+    public void precioFinalRolNuloUsaCienPorCiento() {
+        CCB c = new CCB(100.0, 50.0, 10.0, 0.0); // CCBValor = 15.0
+        assertEquals(15.0, c.calcularPrecioFinal(null, 0), 0.01);
+    }
+
     // TESTS DEL MODELO
 
     @Test

@@ -129,10 +129,68 @@ public class UserModelTest {
         assertFalse(model.actualizarUsuario(null));
     }
 
+    // TESTS DE MODIFICAR SALDO
+
+    @Test
+    public void modificarSaldoAgregaCantidadPositiva() throws Exception {
+        List<Usuario> usuarios = new ArrayList<>();
+        String hashed = BCrypt.hashpw("secret", BCrypt.gensalt());
+        Usuario u = new Usuario("user", hashed, "mod@ucv.ve", "555", "Estudiante", 100.0f, "default.png");
+        usuarios.add(u);
+        writeText(new File(dataDir, "DB_usuarios.json"), new Gson().toJson(usuarios));
+
+        UserModel model = createModelWithTempData();
+        Usuario loaded = model.buscarPorCedula("555");
+
+        boolean result = model.modificarSaldo(loaded, 50.0f);
+        assertTrue("Deberia poder agregar saldo", result);
+        assertEquals(150.0f, loaded.getSaldo(), 0.01f);
+    }
+
+    @Test
+    public void modificarSaldoRestaCantidadNegativa() throws Exception {
+        List<Usuario> usuarios = new ArrayList<>();
+        String hashed = BCrypt.hashpw("secret", BCrypt.gensalt());
+        Usuario u = new Usuario("user", hashed, "mod@ucv.ve", "556", "Estudiante", 100.0f, "default.png");
+        usuarios.add(u);
+        writeText(new File(dataDir, "DB_usuarios.json"), new Gson().toJson(usuarios));
+
+        UserModel model = createModelWithTempData();
+        Usuario loaded = model.buscarPorCedula("556");
+
+        boolean result = model.modificarSaldo(loaded, -30.0f);
+        assertTrue("Deberia poder restar saldo", result);
+        assertEquals(70.0f, loaded.getSaldo(), 0.01f);
+    }
+
+    @Test
+    public void modificarSaldoInsuficienteRetornaFalse() throws Exception {
+        List<Usuario> usuarios = new ArrayList<>();
+        String hashed = BCrypt.hashpw("secret", BCrypt.gensalt());
+        Usuario u = new Usuario("user", hashed, "mod@ucv.ve", "557", "Estudiante", 20.0f, "default.png");
+        usuarios.add(u);
+        writeText(new File(dataDir, "DB_usuarios.json"), new Gson().toJson(usuarios));
+
+        UserModel model = createModelWithTempData();
+        Usuario loaded = model.buscarPorCedula("557");
+
+        boolean result = model.modificarSaldo(loaded, -50.0f);
+        assertFalse("Saldo insuficiente deberia retornar false", result);
+        assertEquals(20.0f, loaded.getSaldo(), 0.01f); // saldo no cambio
+    }
+
+    @Test
+    public void modificarSaldoNuloRetornaFalse() throws Exception {
+        UserModel model = createModelWithTempData();
+        boolean result = model.modificarSaldo(null, 10.0f);
+        assertFalse("Usuario nulo deberia retornar false", result);
+    }
+
     // Metodos Auxiliares
     private UserModel createModelWithTempData() throws Exception {
         UserModel model = new UserModel();
         setDatabasePath(model, dataDir.getAbsolutePath());
+        model.invalidar();
         model.cargarUsuarios();
         return model;
     }
